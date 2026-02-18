@@ -1,6 +1,6 @@
 import classNames from 'classnames';
 
-import LoadingSvg from '@/assets/icons/loading-icon.svg?react';
+import ZerveLoaderGif from '@/assets/zerve-loader.gif?url';
 
 import styles from './index.module.scss';
 
@@ -9,7 +9,11 @@ type Props = {
 };
 
 const LoadingIcon = ({ className }: Props) => (
-  <LoadingSvg className={classNames(styles.loadingIcon, className)} />
+  <img
+    src={ZerveLoaderGif}
+    alt="Loading..."
+    className={classNames(styles.loadingIcon, className)}
+  />
 );
 
 export default LoadingIcon;
