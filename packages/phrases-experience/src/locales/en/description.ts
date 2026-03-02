@@ -56,6 +56,8 @@ const description = {
     'For added security, please link your email or phone with the account.',
   continue_with_more_information: 'For added security, please complete below account details.',
   create_your_account: 'Create your account',
+  use_work_email_hint:
+    'Use your work email for the best experience and get {{credits}} additional credits',
   sign_in_to_your_account: 'Sign in to your account',
   no_region_code_found: 'No region code found',
   verify_email: 'Verify your email',

@@ -53,6 +53,8 @@ const description = {
   link_email_or_phone_description: 'لزيادة الأمان، يرجى ربط بريدك الإلكتروني أو هاتفك بالحساب.',
   continue_with_more_information: 'لزيادة الأمان، يرجى استكمال تفاصيل الحساب أدناه.',
   create_your_account: 'إنشاء حسابك',
+  use_work_email_hint:
+    'Use your work email for the best experience and get {{credits}} additional credits',
   sign_in_to_your_account: 'تسجيل الدخول إلى حسابك',
   no_region_code_found: 'لم يتم العثور على رمز المنطقة',
   verify_email: 'تحقق من بريدك الإلكتروني',

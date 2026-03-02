@@ -52,6 +52,8 @@ const description = {
   link_email_or_phone_description: '더 나은 보안을 위해 이메일 또는 휴대전화번호를 연동해 주세요.',
   continue_with_more_information: '더 나은 보안을 위해 아래 자세한 내용을 따라 주세요.',
   create_your_account: '계정 생성하기',
+  use_work_email_hint:
+    'Use your work email for the best experience and get {{credits}} additional credits',
   sign_in_to_your_account: '계정에 로그인하세요',
   no_region_code_found: '지역 코드를 찾을 수 없습니다.',
   verify_email: '이메일 인증',

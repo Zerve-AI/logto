@@ -55,6 +55,8 @@ const description = {
     'เพื่อความปลอดภัยเพิ่มเติม กรุณาเชื่อมโยงอีเมลหรือเบอร์โทรศัพท์กับบัญชีของคุณ',
   continue_with_more_information: 'เพื่อความปลอดภัย กรุณากรอกรายละเอียดบัญชีด้านล่างให้ครบถ้วน',
   create_your_account: 'สร้างบัญชีของคุณ',
+  use_work_email_hint:
+    'Use your work email for the best experience and get {{credits}} additional credits',
   sign_in_to_your_account: 'เข้าสู่บัญชีของคุณ',
   no_region_code_found: 'ไม่พบรหัสประเทศ',
   verify_email: 'ยืนยันอีเมลของคุณ',

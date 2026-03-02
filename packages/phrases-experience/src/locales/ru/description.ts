@@ -58,6 +58,8 @@ const description = {
   continue_with_more_information:
     'Для дополнительной безопасности, пожалуйста, заполните приведенные ниже данные учетной записи.',
   create_your_account: 'Создайте свой аккаунт',
+  use_work_email_hint:
+    'Use your work email for the best experience and get {{credits}} additional credits',
   sign_in_to_your_account: 'Войди в свой аккаунт',
   no_region_code_found: 'Не удалось определить код региона',
   verify_email: 'Подтвердите Ваш электронный адрес',

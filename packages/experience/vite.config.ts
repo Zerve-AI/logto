@@ -10,7 +10,7 @@ const buildConfig = (mode: string): UserConfig => ({
   server: {
     port: 5001,
     hmr: {
-      port: 6001,
+      port: 6002, // 6001 might be used by Zerve frontend
     },
   },
   css: {

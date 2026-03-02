@@ -18,9 +18,14 @@
 }
 
 .createAccount,
+.useWorkEmailHint,
 .singleSignOn {
   text-align: center;
   margin-bottom: _.unit(4);
+}
+
+.useWorkEmailHint {
+  padding: 0 _.unit(6);
 }
 
 .placeHolder {

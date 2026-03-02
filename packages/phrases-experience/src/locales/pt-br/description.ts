@@ -54,6 +54,8 @@ const description = {
   link_email_or_phone_description: 'Para maior segurança, vincule seu e-mail ou telefone à conta.',
   continue_with_more_information: 'Para maior segurança, preencha os detalhes da conta abaixo.',
   create_your_account: 'Crie sua conta',
+  use_work_email_hint:
+    'Use your work email for the best experience and get {{credits}} additional credits',
   sign_in_to_your_account: 'Faça login na sua conta',
   no_region_code_found: 'Não foi possível encontrar o código de região do seu telefone.',
   verify_email: 'Verificar e-mail',

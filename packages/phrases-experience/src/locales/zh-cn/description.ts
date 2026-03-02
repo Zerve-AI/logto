@@ -49,6 +49,8 @@ const description = {
   link_email_or_phone_description: '绑定邮箱或手机号以保障你的账号安全',
   continue_with_more_information: '为保障你的账号安全，需要你补充以下信息。',
   create_your_account: '注册你的账号',
+  use_work_email_hint:
+    'Use your work email for the best experience and get {{credits}} additional credits',
   sign_in_to_your_account: '登录你的账号',
   no_region_code_found: '没有找到区域码',
   verify_email: '验证你的邮箱',

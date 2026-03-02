@@ -58,6 +58,8 @@ const description = {
   continue_with_more_information:
     'Für zusätzliche Sicherheit, vervollständige bitte deine Informationen.',
   create_your_account: 'Erstelle dein Konto',
+  use_work_email_hint:
+    'Use your work email for the best experience and get {{credits}} additional credits',
   sign_in_to_your_account: 'Melde dich in deinem Konto an',
   no_region_code_found: 'Kein Regionencode gefunden',
   verify_email: 'Bestätige deine E-Mail-Adresse',
