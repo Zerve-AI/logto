@@ -117,7 +117,14 @@ const Register = () => {
   return (
     <LandingPageLayout title="description.create_your_account">
       <div className={styles.useWorkEmailHint}>
-        {t('description.use_work_email_hint', { credits: 100 })}
+        {/* 
+          The backend (Logto core) needs to be rebuilt and redeployed after a key 
+          was added to packages/phrases-experience.
+          Uncomment this after the backend is properly deployed.
+          Use hardcoded string below as a fallback in the meantime.
+        */}
+        {/* {t('description.use_work_email_hint', { credits: 100 })} */}
+        Use your work email for the best experience and get <b>100</b> additional credits
       </div>
       <GoogleOneTap context="signup" />
       <SingleSignOnFormModeContextProvider>
