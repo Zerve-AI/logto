@@ -55,6 +55,8 @@ const description = {
   continue_with_more_information:
     'Daha fazla güvenlik için lütfen aşağıdaki hesap ayrıntılarını tamamlayın.',
   create_your_account: 'Hesabını oluştur',
+  use_work_email_hint:
+    'Use your work email for the best experience and get {{credits}} additional credits',
   sign_in_to_your_account: 'Hesabına giriş yap',
   no_region_code_found: 'Bölge kodu bulunamadı',
   verify_email: 'E-postanızın doğrulanması',

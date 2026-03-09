@@ -102,6 +102,7 @@ const RegisterFooter = () => {
 };
 
 const Register = () => {
+  const { t } = useTranslation();
   const { signUpMethods, socialConnectors, signInMode } = useSieMethods();
   const { agreeToTermsPolicy } = useTerms();
 
@@ -115,6 +116,9 @@ const Register = () => {
 
   return (
     <LandingPageLayout title="description.create_your_account">
+      <div className={styles.useWorkEmailHint}>
+        {t('description.use_work_email_hint', { credits: 100 })}
+      </div>
       <GoogleOneTap context="signup" />
       <SingleSignOnFormModeContextProvider>
         {signUpMethods.length > 0 && (

@@ -1,28 +1,16 @@
 @use '@/shared/scss/underscore' as _;
 
 .loadingIcon {
-  color: var(--color-type-primary);
-  animation: rotating 1s steps(12, end) infinite;
+  width: 100%;
+  height: 100%;
 }
 
 .container {
-  width: 60px;
-  height: 60px;
-  border-radius: var(--radius);
-  background-color: var(--color-bg-toast);
+  width: 50px;
+  height: 50px;
   @include _.flex-column;
 
   .loadingIcon {
     color: var(--color-static-dark-type-primary);
-  }
-}
-
-@keyframes rotating {
-  from {
-    transform: rotate(0deg);
-  }
-
-  to {
-    transform: rotate(360deg);
   }
 }

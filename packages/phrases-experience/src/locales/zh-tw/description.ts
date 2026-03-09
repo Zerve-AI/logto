@@ -49,6 +49,8 @@ const description = {
   link_email_or_phone_description: '綁定郵箱或手機號碼以保障你的帳號安全',
   continue_with_more_information: '為保障你的帳號安全，需要你補充以下信息。',
   create_your_account: '註冊你的帳號',
+  use_work_email_hint:
+    'Use your work email for the best experience and get {{credits}} additional credits',
   sign_in_to_your_account: '登錄你的帳號',
   no_region_code_found: '沒有找到區域碼',
   verify_email: '驗證你的郵箱',

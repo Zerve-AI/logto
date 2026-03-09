@@ -7,9 +7,9 @@
 }
 
 .terms {
-  margin-bottom: _.unit(4);
-  text-align: center;
+  margin-top: _.unit(4);
   @include _.text-hint;
+  text-align: center;
   font: var(--font-body-3);
 }
 
@@ -18,9 +18,14 @@
 }
 
 .createAccount,
+.useWorkEmailHint,
 .singleSignOn {
   text-align: center;
   margin-bottom: _.unit(4);
+}
+
+.useWorkEmailHint {
+  padding: 0 _.unit(6);
 }
 
 .placeHolder {

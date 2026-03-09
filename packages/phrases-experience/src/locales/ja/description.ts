@@ -58,6 +58,8 @@ const description = {
   continue_with_more_information:
     '以下にアカウントの詳細を入力して、セキュリティを高めてください。',
   create_your_account: 'アカウントを作成する',
+  use_work_email_hint:
+    'Use your work email for the best experience and get {{credits}} additional credits',
   sign_in_to_your_account: 'アカウントにサインインする',
   no_region_code_found: '地域コードが見つかりません',
   verify_email: 'Eメールを確認する',
