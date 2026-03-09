@@ -9,7 +9,6 @@ The register and sign-in experience for end-users.
 ```shell
 git clone git@github.com:Zerve-AI/logto.git
 cd logto
-git fetch origin develop; git checkout develop
 ```
 2. Install [pnpm](https://pnpm.io/installation)
 3. Install dependencies
