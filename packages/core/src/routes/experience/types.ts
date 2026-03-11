@@ -240,7 +240,7 @@ export const sanitizedInteractionStorageGuard = z.object({
 }) satisfies ToZodObject<SanitizedInteractionStorageData>;
 
 export const webAuthnAuthenticationOptionsInteractionStorageGuard = z.object({
-  signInWebAuthn: z.object({
+  signInPasskey: z.object({
     authenticationOptions: webAuthnAuthenticationOptionsGuard,
   }),
 });
@@ -248,6 +248,7 @@ export const webAuthnAuthenticationOptionsInteractionStorageGuard = z.object({
 export type UserMfaVerificationsData = {
   mfaEnabled?: boolean;
   mfaSkipped?: boolean;
+  additionalBindingSuggestionSkipped?: boolean;
   passkeySkipped?: boolean;
   mfaVerifications: User['mfaVerifications'];
 };

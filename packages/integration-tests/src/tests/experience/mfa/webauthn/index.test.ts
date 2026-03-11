@@ -173,15 +173,15 @@ devFeatureTest.describe('MFA - Passkey sign-in should skip MFA verification', ()
     });
 
     // Step 4: Sign in using the passkey sign-in button
-    // The passkey sign-in creates a SignInWebAuthn verification record,
+    // The passkey sign-in creates a SignInPasskey verification record,
     // which should skip MFA verification according to the new logic
     await experience.startWith(demoAppUrl, 'sign-in');
 
     // Wait for the page and passkey sign-in button to load
     await waitFor(1000);
 
-    // Click the "Continue with Passkey" button
-    await experience.toClick('button', 'Continue with Passkey');
+    // Click the "Continue with passkey" button
+    await experience.toClick('button', 'Continue with passkey');
 
     // Step 5: Verify the user is signed in successfully without MFA verification prompt
     // If MFA was not skipped, the user would be redirected to the MFA verification page
@@ -289,7 +289,7 @@ devFeatureTest.describe('Passkey sign-in should be blocked for SSO users', () =>
     await experience.startWith(demoAppUrl, 'sign-in');
     await waitFor(1000);
 
-    await experience.toClick('button', 'Continue with Passkey', false);
+    await experience.toClick('button', 'Continue with passkey', false);
 
     await experience.waitForToast(/not eligible for SSO users/);
 

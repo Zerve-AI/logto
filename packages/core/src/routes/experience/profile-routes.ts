@@ -204,7 +204,7 @@ export default function interactionProfileRoutes<T extends ExperienceInteraction
     }
   );
 
-  // Mark optional additional MFA binding suggestion as skipped in current interaction
+  // Mark optional additional MFA binding suggestion as skipped.
   router.post(
     `${experienceRoutes.mfa}/mfa-suggestion-skipped`,
     koaGuard({ status: [204, 400, 404] }),
@@ -251,7 +251,7 @@ export default function interactionProfileRoutes<T extends ExperienceInteraction
       const { verificationId } = guard.body;
 
       const log = ctx.createLog(
-        `Interaction.${experienceInteraction.interactionEvent}.BindMfa.${MfaFactor.WebAuthn}.Submit`
+        `Interaction.${experienceInteraction.interactionEvent}.SignInPasskey.Submit`
       );
 
       log.append({
