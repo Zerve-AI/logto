@@ -7,9 +7,9 @@ import {
   type LogtoConfig,
   type LogtoConfigKey,
   type LogtoOidcConfigKey,
-  type OidcConfigKey,
   type LogtoJwtTokenKey,
   idTokenConfigGuard,
+  type LogtoOidcConfigType,
 } from '@logto/schemas';
 import type { CommonQueryMethods } from '@silverhand/slonik';
 import { sql } from '@silverhand/slonik';
@@ -26,13 +26,13 @@ export const createLogtoConfigQueries = (
   wellKnownCache: WellKnownCache
 ) => {
   const getAdminConsoleConfig = async () =>
-    pool.one<Record<string, unknown>>(sql`
+    pool.one<{ value: unknown }>(sql`
       select ${fields.value} from ${table}
       where ${fields.key} = ${LogtoTenantConfigKey.AdminConsole}
     `);
 
   const updateAdminConsoleConfig = async (value: Partial<AdminConsoleData>) =>
-    pool.one<Record<string, unknown>>(sql`
+    pool.one<{ value: unknown }>(sql`
       update ${table}
       set ${fields.value} = coalesce(${fields.value},'{}'::jsonb) || ${sql.jsonb(value)}
       where ${fields.key} = ${LogtoTenantConfigKey.AdminConsole}
@@ -40,7 +40,7 @@ export const createLogtoConfigQueries = (
     `);
 
   const getCloudConnectionData = async () =>
-    pool.one<Record<string, unknown>>(sql`
+    pool.one<{ value: unknown }>(sql`
       select ${fields.value} from ${table}
       where ${fields.key} = ${LogtoTenantConfigKey.CloudConnection}
     `);
@@ -62,12 +62,15 @@ export const createLogtoConfigQueries = (
     }
   };
 
-  const updateOidcConfigsByKey = async (key: LogtoOidcConfigKey, value: OidcConfigKey[]) =>
+  const updateOidcConfigsByKey = async <T extends LogtoOidcConfigKey>(
+    key: T,
+    value: LogtoOidcConfigType[T]
+  ) =>
     pool.query(sql`
-      update ${table}
-      set ${fields.value} = ${sql.jsonb(value)}
-      where ${fields.key} = ${key}
-      returning *
+      insert into ${table} (${fields.key}, ${fields.value})
+        values (${key}, ${sql.jsonb(value)})
+        on conflict (${fields.tenantId}, ${fields.key}) do update set ${fields.value} = ${sql.jsonb(value)}
+        returning *
     `);
 
   // Can not narrow down the type of value if we utilize `buildInsertIntoWithPool` method.
@@ -100,7 +103,7 @@ export const createLogtoConfigQueries = (
 
   const upsertIdTokenConfig = wellKnownCache.mutate(
     async (value: IdTokenConfig) =>
-      pool.one<Record<string, unknown>>(sql`
+      pool.one<{ value: unknown }>(sql`
         insert into ${table} (${fields.key}, ${fields.value})
           values (${LogtoTenantConfigKey.IdToken}, ${sql.jsonb(value)})
           on conflict (${fields.tenantId}, ${fields.key}) do update set ${fields.value} = ${sql.jsonb(value)}
