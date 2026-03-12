@@ -21,7 +21,7 @@ const buildConfig = (mode: string): UserConfig => ({
   server: {
     port: 5002,
     hmr: {
-      port: 6002,
+      port: 6022,
     },
   },
   css: {
