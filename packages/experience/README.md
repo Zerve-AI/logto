@@ -42,7 +42,7 @@ npx @logto/tunnel -p 9000 --experience-uri http://localhost:5001/ --endpoint htt
 ```
 4. Change environment variable in the [frontend](https://github.com/Zerve-AI/frontend) repository
 ```
-VITE_LOGTO_ENDPOINT=http://localhost:9000/ 
+VITE_OIDC_AUTHORITY=http://localhost:9000/oidc
 ```
 
 Now the local app will show the local Logto experience.
