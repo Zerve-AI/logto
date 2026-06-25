@@ -57,7 +57,7 @@ const description = {
   continue_with_more_information: 'เพื่อความปลอดภัย กรุณากรอกรายละเอียดบัญชีด้านล่างให้ครบถ้วน',
   create_your_account: 'สร้างบัญชีของคุณ',
   use_work_email_hint:
-    'Use your work email for the best experience and get {{credits}} additional credits',
+    'Get {{start_credits}} credits to start — plus an extra {{work_email_credits}} when you use your work email',
   sign_in_to_your_account: 'เข้าสู่บัญชีของคุณ',
   device_activation: 'เปิดใช้งานอุปกรณ์',
   device_activation_description:

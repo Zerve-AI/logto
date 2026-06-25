@@ -56,6 +56,8 @@ const description = {
     'برای امنیت بیشتر، لطفاً ایمیل یا تلفن خود را با حساب پیوند دهید.',
   continue_with_more_information: 'برای امنیت بیشتر، لطفاً اطلاعات حساب زیر را تکمیل کنید.',
   create_your_account: 'حساب خود را ایجاد کنید',
+  use_work_email_hint:
+    'Get {{start_credits}} credits to start — plus an extra {{work_email_credits}} when you use your work email',
   sign_in_to_your_account: 'وارد حساب خود شوید',
   device_activation: 'فعال‌سازی دستگاه',
   device_activation_description:

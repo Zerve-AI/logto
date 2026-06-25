@@ -57,6 +57,8 @@ const description = {
     'Pro zvýšení bezpečnosti, prosím, propoj svůj e-mail nebo telefonní číslo s účtem.',
   continue_with_more_information: 'Pro zvýšení bezpečnosti, prosím, vyplň níže údaje k účtu.',
   create_your_account: 'Vytvoř si účet',
+  use_work_email_hint:
+    'Get {{start_credits}} credits to start — plus an extra {{work_email_credits}} when you use your work email',
   sign_in_to_your_account: 'Přihlas se ke svému účtu',
   device_activation: 'Aktivace zařízení',
   device_activation_description:

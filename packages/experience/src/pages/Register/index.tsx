@@ -123,7 +123,7 @@ const Register = () => {
           Uncomment this after the backend is properly deployed.
           Use hardcoded string below as a fallback in the meantime.
         */}
-        {/* {t('description.use_work_email_hint', { credits: 100 })} */}
+        {/* {t('description.use_work_email_hint', { start_credits: 300, work_email_credits: 100 })} */}
         Get <b>300</b> credits to start — plus an extra <b>100</b> when you use your work email
       </div>
       <GoogleOneTap context="signup" />
