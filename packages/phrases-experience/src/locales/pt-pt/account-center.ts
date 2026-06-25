@@ -3,6 +3,17 @@ const account_center = {
     title: 'Página não encontrada',
     description: 'Esta página não está disponível.',
   },
+  page: {
+    title: 'Conta',
+    security_title: 'Segurança',
+    security_description: 'Altere aqui as definições da sua conta para garantir a sua segurança.',
+    profile_title: 'Informações pessoais',
+    profile_description: 'Altere as suas informações pessoais aqui.',
+    sidebar_personal_info: 'Informações pessoais',
+    sidebar_security: 'Segurança',
+    sidebar_sessions: 'Sessões',
+    support: 'Suporte',
+  },
   verification: {
     title: 'Verificação de segurança',
     description:
@@ -12,6 +23,9 @@ const account_center = {
     error_verify_failed: 'Falha na verificação. Introduza novamente o código.',
     verification_required: 'A verificação expirou. Confirme novamente a sua identidade.',
     try_another_method: 'Tente outro método para verificar',
+    no_available_methods_title: 'Não há métodos de verificação disponíveis',
+    no_available_methods_description:
+      'Não tem qualquer método de verificação configurado. Adicione primeiro uma palavra-passe, e-mail ou número de telefone à sua conta.',
   },
   password_verification: {
     title: 'Verificar palavra-passe',
@@ -55,7 +69,69 @@ const account_center = {
   username: {
     title: 'Definir nome de utilizador',
     description: 'O nome de utilizador deve conter apenas letras, números e sublinhados.',
+    policy_description: '{{requirements}}',
     success: 'Nome de utilizador atualizado com sucesso.',
+  },
+  security: {
+    add: 'Adicionar',
+    change: 'Alterar',
+    remove: 'Remover',
+    not_set: 'Não definido',
+    social_sign_in: 'Início de sessão social',
+    social_not_linked: 'Não associada',
+    email_phone: 'E-mail / Telefone',
+    email: 'E-mail',
+    phone: 'Telefone',
+    password: 'Palavra-passe',
+    configured: 'Configurado',
+    not_configured: 'Não configurado',
+    two_step_verification: 'Verificação em dois passos',
+    authenticator_app: 'Aplicação de autenticação',
+    passkeys: 'Passkeys',
+    backup_codes: 'Códigos de cópia de segurança',
+    email_verification_code: 'Código de verificação por e-mail',
+    phone_verification_code: 'Código de verificação por telefone',
+    passkeys_count_one: '{{count}} passkey',
+    passkeys_count_other: '{{count}} passkeys',
+    backup_codes_count_one: '{{count}} código restante',
+    backup_codes_count_other: '{{count}} códigos restantes',
+    view: 'Ver',
+    manage: 'Gerir',
+    turn_on_2_step_verification_description:
+      'Adicione uma camada extra de segurança. Será solicitada uma segunda etapa de verificação ao iniciar sessão.',
+    turn_off_2_step_verification: 'Desativar verificação em duas etapas',
+    turn_off_2_step_verification_description:
+      'Desativar a verificação em duas etapas irá remover a camada extra de proteção da sua conta ao iniciar sessão. Tem a certeza de que pretende continuar?',
+    disable_2_step_verification: 'Desativar',
+    no_verification_method_warning:
+      'Não adicionou um segundo método de verificação. Adicione pelo menos um para ativar a verificação em duas etapas ao iniciar sessão.',
+    passkey_sign_in_prompt: 'Solicitar a configuração de uma passkey',
+    passkey_sign_in_prompt_description:
+      'Quando ativado, ser-lhe-á pedido para configurar uma passkey para um início de sessão mais rápido e seguro.',
+    account_removal: 'Eliminação da conta',
+    delete_your_account: 'Elimine a sua conta',
+    delete_account: 'Eliminar conta',
+    remove_username_confirmation_title: 'Remover nome de utilizador',
+    remove_username_confirmation_description:
+      'Após a remoção, deixará de poder iniciar sessão com este nome de utilizador. Tem a certeza de que pretende continuar?',
+    remove_email_confirmation_title: 'Remover endereço de e-mail',
+    remove_email_confirmation_description:
+      'Após a remoção, deixará de poder iniciar sessão com este endereço de e-mail. Tem a certeza de que pretende continuar?',
+    remove_phone_confirmation_title: 'Remover número de telefone',
+    remove_phone_confirmation_description:
+      'Após a remoção, deixará de poder iniciar sessão com este número de telefone. Tem a certeza de que pretende continuar?',
+    email_removed: 'Endereço de e-mail removido com sucesso.',
+    phone_removed: 'Número de telefone removido com sucesso.',
+    username_removed: 'Nome de utilizador removido com sucesso.',
+  },
+  social: {
+    linked: '{{connector}} associada com sucesso.',
+    not_enabled:
+      'Este método de início de sessão social não está ativado. Contacte o seu administrador para obter ajuda.',
+    removed: '{{connector}} removida com sucesso.',
+    remove_confirmation_title: 'Remover conta social',
+    remove_confirmation_description:
+      'Se remover {{connector}}, poderá deixar de conseguir iniciar sessão com esta conta até a adicionar novamente.',
   },
   password: {
     title: 'Definir palavra-passe',
@@ -137,6 +213,10 @@ const account_center = {
       title: 'Aplicação de autenticação adicionada!',
       description: 'A sua aplicação de autenticação foi associada com sucesso à sua conta.',
     },
+    totp_replaced: {
+      title: 'Aplicativo autenticador substituído!',
+      description: 'Seu aplicativo autenticador foi substituído com sucesso.',
+    },
     backup_code: {
       title: 'Códigos de cópia de segurança gerados!',
       description:
@@ -179,6 +259,28 @@ const account_center = {
     name_passkey_description:
       'Verificou este dispositivo com sucesso para autenticação em duas etapas. Personalize o nome para o reconhecer se tiver várias chaves.',
     name_input_label: 'Nome',
+  },
+  sessions: {
+    page_title: 'Sessões',
+    page_description: 'Gerir as suas sessões ativas e aplicações de terceiros autorizadas.',
+    title: 'Sessões',
+    current_session: 'Sessão atual',
+    signed_in_at: 'Sessão iniciada em {{date}}',
+    revoke_session: 'Terminar sessão',
+    revoke_session_title: 'Terminar sessão',
+    revoke_session_description:
+      'Isto terminará a sessão e revogará todos os acessos associados. Tem a certeza de que pretende continuar?',
+    no_other_sessions: 'Nenhuma outra sessão ativa.',
+    loading: 'A carregar...',
+    third_party_apps_title: 'Aplicações de terceiros',
+    no_third_party_apps: 'Nenhuma aplicação de terceiros autorizada.',
+    third_party_apps_load_failed: 'Falha ao carregar aplicações de terceiros. Tente novamente.',
+    granted_at: 'Autorizado em {{date}}',
+    revoke_grant: 'Remover',
+    revoke_grant_title: 'Remover acesso da aplicação de terceiros',
+    revoke_grant_description:
+      'Isto revogará todos os acessos concedidos a esta aplicação. Tem a certeza de que pretende continuar?',
+    revoke_grant_failed: 'Falha ao revogar algumas permissões. Tente novamente.',
   },
 };
 

@@ -1,5 +1,28 @@
 # @logto/connector-kook
 
+## 0.4.6
+
+### Patch Changes
+
+- Updated dependencies [41a56f79e3]
+  - @logto/connector-kit@5.0.1
+  - @logto/connector-oauth@1.7.6
+
+## 0.4.5
+
+### Patch Changes
+
+- @logto/connector-oauth@1.7.5
+
+## 0.4.4
+
+### Patch Changes
+
+- Updated dependencies [4e25126228]
+- Updated dependencies [4e25126228]
+  - @logto/connector-kit@5.0.0
+  - @logto/connector-oauth@1.7.4
+
 ## 0.4.3
 
 ### Patch Changes

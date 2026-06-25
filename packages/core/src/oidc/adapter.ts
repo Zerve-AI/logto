@@ -4,6 +4,7 @@ import {
   accountCenterApplicationId,
   adminConsoleApplicationId,
   demoAppApplicationId,
+  deviceDemoAppApplicationId,
 } from '@logto/schemas';
 import { appendPath, tryThat, conditional } from '@silverhand/essentials';
 import { addSeconds } from 'date-fns';
@@ -15,6 +16,7 @@ import { EnvSet } from '#src/env-set/index.js';
 import { getTenantUrls } from '#src/env-set/utils.js';
 import type Queries from '#src/tenants/Queries.js';
 
+import { appLevelAccessControlMetadataKey } from './application-access-control.js';
 import { getConstantClientMetadata } from './utils.js';
 
 /**
@@ -53,6 +55,27 @@ const buildDemoAppClientMetadata = (envSet: EnvSet): AllClientMetadata => {
     client_id: demoAppApplicationId,
     client_name: 'Live Preview',
     redirect_uris: urlStrings,
+    post_logout_redirect_uris: urlStrings,
+  };
+};
+
+/**
+ * Real device flow clients (TVs, CLIs) cannot perform RP-Initiated Logout because they have no
+ * browser redirect capability — they can only revoke tokens locally.
+ *
+ * However, since this demo app runs in a browser to simulate a device, we register
+ * `post_logout_redirect_uris` so the "Sign out" button can end the OIDC session and redirect back,
+ * providing a smooth demo experience.
+ */
+const buildDeviceDemoAppClientMetadata = (envSet: EnvSet): AllClientMetadata => {
+  const urlStrings = getTenantUrls(envSet.tenantId, EnvSet.values, envSet.endpoint).map(
+    (url) => appendPath(url, '/device-demo-app').href
+  );
+
+  return {
+    ...getConstantClientMetadata(envSet, ApplicationType.Native, { isDeviceFlow: true }),
+    client_id: deviceDemoAppApplicationId,
+    client_name: 'Device Flow Preview',
     post_logout_redirect_uris: urlStrings,
   };
 };
@@ -115,7 +138,8 @@ export default function postgresAdapter(
       consumeInstanceById,
       destroyInstanceById,
       findPayloadById,
-      findPayloadByPayloadField,
+      findPayloadByUid,
+      findPayloadByUserCode,
       revokeInstanceByGrantId,
       upsertInstance,
     },
@@ -133,12 +157,14 @@ export default function postgresAdapter(
         type,
         oidcClientMetadata,
         customClientMetadata,
+        appLevelAccessControlEnabled,
       }: CreateApplication,
       clientScopes?: string[]
     ): AllClientMetadata => ({
       client_id,
       client_secret,
       client_name,
+      [appLevelAccessControlMetadataKey]: appLevelAccessControlEnabled,
       ...getConstantClientMetadata(envSet, type, customClientMetadata),
       ...transpileMetadata(client_id, snakecaseKeys(oidcClientMetadata)),
       // `node-oidc-provider` won't camelCase custom parameter keys, so we need to keep the keys camelCased
@@ -155,6 +181,9 @@ export default function postgresAdapter(
         }
         if (id === accountCenterApplicationId) {
           return buildAccountCenterClientMetadata(envSet);
+        }
+        if (id === deviceDemoAppApplicationId) {
+          return buildDeviceDemoAppClientMetadata(envSet);
         }
 
         const application = await tryThat(
@@ -186,8 +215,8 @@ export default function postgresAdapter(
         expiresAt: addSeconds(Date.now(), expiresIn).valueOf(),
       }),
     find: async (id) => findPayloadById(modelName, id),
-    findByUserCode: async (userCode) => findPayloadByPayloadField(modelName, 'userCode', userCode),
-    findByUid: async (uid) => findPayloadByPayloadField(modelName, 'uid', uid),
+    findByUserCode: async (userCode) => findPayloadByUserCode(modelName, userCode),
+    findByUid: async (uid) => findPayloadByUid(modelName, uid),
     consume: async (id) => consumeInstanceById(modelName, id),
     destroy: async (id) => destroyInstanceById(modelName, id),
     revokeByGrantId: async (grantId) => revokeInstanceByGrantId(modelName, grantId),

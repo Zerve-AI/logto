@@ -4,6 +4,7 @@ import {
   adminTenantId,
   type CreateUser,
   InteractionEvent,
+  type SignInExperience,
   SignInIdentifier,
   SignInMode,
   type User,
@@ -71,10 +72,16 @@ const createSignInInteraction = ({
   headers,
   interactionEvent = InteractionEvent.SignIn,
   adaptiveMfaEnabled = false,
+  user = mockUser,
+  interactionResult = {},
+  signInExperienceOverrides = {},
 }: {
   headers?: Record<string, string>;
   interactionEvent?: InteractionEvent;
   adaptiveMfaEnabled?: boolean;
+  user?: User;
+  interactionResult?: Record<string, unknown>;
+  signInExperienceOverrides?: Partial<SignInExperience>;
 } = {}) => {
   const userGeoLocations = {
     upsertUserGeoLocation: jest.fn().mockResolvedValue(null),
@@ -87,12 +94,16 @@ const createSignInInteraction = ({
     findDefaultSignInExperience: jest.fn().mockResolvedValue({
       ...mockSignInExperience,
       adaptiveMfa: { enabled: adaptiveMfaEnabled },
+      passwordExpiration: {
+        enabled: false,
+      },
+      ...signInExperienceOverrides,
     }),
   };
   const signInUserQueries = {
     ...userQueries,
-    findUserById: jest.fn().mockResolvedValue(mockUser),
-    updateUserById: jest.fn().mockResolvedValue(mockUser),
+    findUserById: jest.fn().mockResolvedValue(user),
+    updateUserById: jest.fn().mockResolvedValue(user),
   };
   const signInTenant = new MockTenant(
     createMockProvider(),
@@ -119,7 +130,8 @@ const createSignInInteraction = ({
   );
   // @ts-expect-error --mock test context
   const signInContext: WithHooksAndLogsContext = {
-    assignInteractionHookResult: jest.fn(),
+    assignReleaseOnSuccessInteractionHookResult: jest.fn(),
+    assignReleaseAnywayInteractionHookResult: jest.fn(),
     appendDataHookContext: jest.fn(),
     appendExceptionHookContext: jest.fn(),
     ...baseContext,
@@ -128,7 +140,8 @@ const createSignInInteraction = ({
   const interactionDetails = {
     result: {
       interactionEvent,
-      userId: mockUser.id,
+      userId: user.id,
+      ...interactionResult,
     },
   } as unknown as Interaction;
 
@@ -166,7 +179,8 @@ describe('ExperienceInteraction class', () => {
 
   // @ts-expect-error --mock test context
   const ctx: WithHooksAndLogsContext = {
-    assignInteractionHookResult: jest.fn(),
+    assignReleaseOnSuccessInteractionHookResult: jest.fn(),
+    assignReleaseAnywayInteractionHookResult: jest.fn(),
     appendDataHookContext: jest.fn(),
     ...createContextWithRouteParameters(),
     ...createMockLogContext(),
@@ -207,6 +221,9 @@ describe('ExperienceInteraction class', () => {
         {
           id: 'uid',
           primaryEmail: mockEmail,
+          logtoConfig: {
+            mfa: { enabled: false },
+          },
         },
         { isInteractive: true, roleNames: ['user', 'default:admin'] }
       );
@@ -223,15 +240,19 @@ describe('ExperienceInteraction class', () => {
   });
 
   describe('sign-in submission', () => {
-    it('should skip geo context recording when dev features are disabled', async () => {
+    it('should record geo context when dev features are disabled', async () => {
       setDevFeaturesEnabled(false);
       const { experienceInteraction, userGeoLocations, userSignInCountries } =
         createSignInInteraction();
 
       await experienceInteraction.submit();
 
-      expect(userGeoLocations.upsertUserGeoLocation).not.toHaveBeenCalled();
-      expect(userSignInCountries.upsertUserSignInCountry).not.toHaveBeenCalled();
+      expect(userGeoLocations.upsertUserGeoLocation).toHaveBeenCalledWith(
+        mockUser.id,
+        37.7749,
+        -122.4194
+      );
+      expect(userSignInCountries.upsertUserSignInCountry).toHaveBeenCalledWith(mockUser.id, 'US');
     });
 
     it('should record geo location and sign-in country when dev features are enabled', async () => {

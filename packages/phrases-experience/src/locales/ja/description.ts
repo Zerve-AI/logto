@@ -47,6 +47,7 @@ const description = {
   enter_username: 'ユーザー名を入力する',
   enter_username_description:
     'ユーザー名はサインインの代替手段です。ユーザー名には、文字、数字、アンダースコアのみを含める必要があります。',
+  enter_username_policy_description: 'ユーザー名はサインインの代替手段です。{{requirements}}',
   link_email: 'メールアドレスをリンクする',
   link_phone: '電話番号をリンクする',
   link_email_or_phone: 'メールアドレスまたは電話番号をリンクする',
@@ -61,6 +62,12 @@ const description = {
   use_work_email_hint:
     'Use your work email for the best experience and get {{credits}} additional credits',
   sign_in_to_your_account: 'アカウントにサインインする',
+  device_activation: 'デバイスの有効化',
+  device_activation_description:
+    'デバイスに表示されているコードを入力してください。コードが一致していることを確認し、このデバイスへのサインインを続けてください。',
+  device_activation_error_description: 'デバイスに表示されているコードを入力してください。',
+  device_activation_success: 'デバイスが接続されました！',
+  device_activation_success_description: 'デバイスに戻って続行してください。',
   no_region_code_found: '地域コードが見つかりません',
   verify_email: 'Eメールを確認する',
   verify_phone: '電話番号を確認する',
@@ -76,6 +83,17 @@ const description = {
     character_types_few: '大文字、小文字、数字、記号のうち {{count}} 種類を含む必要があります',
     character_types_many: '大文字、小文字、数字、記号のうち {{count}} 種類を含む必要があります',
     character_types_other: '大文字、小文字、数字、記号のうち {{count}} 種類を含む必要があります',
+  },
+  username_requirements: 'ユーザー名は{{items, list}}。',
+  username_requirement: {
+    length: '{{min}}〜{{max}}文字である必要があります',
+    characters: '{{characters, list}}のみを使用できます',
+  },
+  username_character: {
+    uppercase: '大文字',
+    lowercase: '小文字',
+    number: '数字',
+    underscore: 'アンダースコア',
   },
   use: '使用する',
   single_sign_on_email_form: '企業のメールアドレスを入力してください',
@@ -100,6 +118,8 @@ const description = {
   identifier_register_description:
     '{{types, list(type: disjunction;)}}を入力して新しいアカウントを作成します。',
   all_account_creation_options: 'すべてのアカウント作成オプション',
+  password_expired: 'パスワードの期限が切れました。サインインする前にリセットする必要があります。',
+  password_expiration_reset: 'パスワードをリセット',
   back_to_sign_in: 'サインインに戻る',
   support_email: 'サポートメール: <link></link>',
   support_website: 'サポートウェブサイト: <link></link>',

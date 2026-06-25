@@ -47,6 +47,8 @@ const description = {
   enter_username: 'Benutzernamen festlegen',
   enter_username_description:
     'Der Benutzername kann für die Anmeldung verwendet werden. Der Benutzername darf nur Buchstaben, Zahlen und Unterstriche enthalten.',
+  enter_username_policy_description:
+    'Der Benutzername kann für die Anmeldung verwendet werden. {{requirements}}',
   link_email: 'Email verknüpfen',
   link_phone: 'Telefonnummer verknüpfen',
   link_email_or_phone: 'Email oder Telefonnummer verknüpfen',
@@ -61,6 +63,12 @@ const description = {
   use_work_email_hint:
     'Use your work email for the best experience and get {{credits}} additional credits',
   sign_in_to_your_account: 'Melde dich in deinem Konto an',
+  device_activation: 'Geräteaktivierung',
+  device_activation_description:
+    'Gib den auf deinem Gerät angezeigten Code ein. Stelle sicher, dass er übereinstimmt, und fahre dann fort, um dich auf diesem Gerät anzumelden.',
+  device_activation_error_description: 'Gib den auf deinem Gerät angezeigten Code ein.',
+  device_activation_success: 'Dein Gerät ist jetzt verbunden!',
+  device_activation_success_description: 'Kehre zu deinem Gerät zurück, um fortzufahren.',
   no_region_code_found: 'Kein Regionencode gefunden',
   verify_email: 'Bestätige deine E-Mail-Adresse',
   verify_phone: 'Bestätige deine Telefonnummer',
@@ -81,6 +89,17 @@ const description = {
       'sollte mindestens {{count}} Kategorien der folgenden Zeichenarten enthalten: Großbuchstaben, Kleinbuchstaben, Zahlen und Symbole',
     character_types_other:
       'sollte mindestens {{count}} Kategorien der folgenden Zeichenarten enthalten: Großbuchstaben, Kleinbuchstaben, Zahlen und Symbole',
+  },
+  username_requirements: 'Benutzername {{items, list}}.',
+  username_requirement: {
+    length: 'muss {{min}} bis {{max}} Zeichen lang sein',
+    characters: 'darf nur {{characters, list}} enthalten',
+  },
+  username_character: {
+    uppercase: 'Großbuchstaben',
+    lowercase: 'Kleinbuchstaben',
+    number: 'Zahlen',
+    underscore: 'Unterstriche',
   },
   use: 'Verwenden',
   single_sign_on_email_form: 'Gib deine Unternehmens-E-Mail-Adresse ein.',
@@ -106,6 +125,9 @@ const description = {
   identifier_register_description:
     'Geben Sie Ihre {{types, list(type: disjunction;)}} ein, um ein neues Konto zu erstellen.',
   all_account_creation_options: 'Alle Kontoerstellungsoptionen',
+  password_expired:
+    'Ihr Passwort ist abgelaufen und muss zurückgesetzt werden, bevor Sie sich anmelden können.',
+  password_expiration_reset: 'Passwort zurücksetzen',
   back_to_sign_in: 'Zurück zur Anmeldung',
   support_email: 'Support-E-Mail: <link></link>',
   support_website: 'Support-Website: <link></link>',

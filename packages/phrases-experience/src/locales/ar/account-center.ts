@@ -3,6 +3,17 @@ const account_center = {
     title: 'الصفحة غير موجودة',
     description: 'هذه الصفحة غير متاحة.',
   },
+  page: {
+    title: 'الحساب',
+    security_title: 'الأمان',
+    security_description: 'غيّر إعدادات حسابك هنا لضمان أمان حسابك.',
+    profile_title: 'المعلومات الشخصية',
+    profile_description: 'قم بتغيير معلوماتك الشخصية هنا.',
+    sidebar_personal_info: 'المعلومات الشخصية',
+    sidebar_security: 'الأمان',
+    sidebar_sessions: 'الجلسات',
+    support: 'الدعم',
+  },
   verification: {
     title: 'التحقق الأمني',
     description:
@@ -12,6 +23,9 @@ const account_center = {
     error_verify_failed: 'فشل التحقق. يرجى إدخال الرمز مرة أخرى.',
     verification_required: 'انتهت صلاحية التحقق. يرجى التحقق من هويتك مرة أخرى.',
     try_another_method: 'جرّب طريقة أخرى للتحقق',
+    no_available_methods_title: 'لا توجد طرق تحقق متاحة',
+    no_available_methods_description:
+      'لم تقم بإعداد أي طرق للتحقق. يرجى إضافة كلمة مرور أو بريد إلكتروني أو رقم هاتف إلى حسابك أولًا.',
   },
   password_verification: {
     title: 'التحقق من كلمة المرور',
@@ -51,7 +65,69 @@ const account_center = {
   username: {
     title: 'تعيين اسم المستخدم',
     description: 'يجب أن يحتوي اسم المستخدم على أحرف وأرقام وشرطات سفلية فقط.',
+    policy_description: '{{requirements}}',
     success: 'تم تحديث اسم المستخدم بنجاح.',
+  },
+  security: {
+    add: 'إضافة',
+    change: 'تغيير',
+    remove: 'إزالة',
+    not_set: 'غير محدد',
+    social_sign_in: 'تسجيل الدخول الاجتماعي',
+    social_not_linked: 'غير مرتبط',
+    email_phone: 'البريد الإلكتروني / الهاتف',
+    email: 'البريد الإلكتروني',
+    phone: 'الهاتف',
+    password: 'كلمة المرور',
+    configured: 'تم الإعداد',
+    not_configured: 'غير معدّ',
+    two_step_verification: 'التحقق بخطوتين',
+    authenticator_app: 'تطبيق المصادقة',
+    passkeys: 'مفاتيح المرور',
+    backup_codes: 'رموز النسخ الاحتياطي',
+    email_verification_code: 'رمز التحقق عبر البريد الإلكتروني',
+    phone_verification_code: 'رمز التحقق عبر الهاتف',
+    passkeys_count_one: '{{count}} مفتاح مرور',
+    passkeys_count_other: '{{count}} مفاتيح مرور',
+    backup_codes_count_one: '{{count}} رمز متبقٍ',
+    backup_codes_count_other: '{{count}} رموز متبقية',
+    view: 'عرض',
+    manage: 'إدارة',
+    turn_on_2_step_verification_description:
+      'أضف طبقة أمان إضافية. ستتم مطالبتك بخطوة تحقق ثانية عند تسجيل الدخول.',
+    turn_off_2_step_verification: 'إيقاف التحقق بخطوتين',
+    turn_off_2_step_verification_description:
+      'سيؤدي تعطيل التحقق بخطوتين إلى إزالة طبقة الحماية الإضافية من حسابك عند تسجيل الدخول. هل أنت متأكد أنك تريد المتابعة؟',
+    disable_2_step_verification: 'تعطيل',
+    no_verification_method_warning:
+      'لم تقم بإضافة طريقة تحقق ثانية. أضف طريقة واحدة على الأقل لتفعيل التحقق بخطوتين عند تسجيل الدخول.',
+    passkey_sign_in_prompt: 'مطالبة بإعداد مفتاح مرور',
+    passkey_sign_in_prompt_description:
+      'عند التفعيل، سيُطلب منك إعداد مفتاح مرور لتسجيل دخول أسرع وأكثر أمانًا.',
+    account_removal: 'حذف الحساب',
+    delete_your_account: 'احذف حسابك',
+    delete_account: 'حذف الحساب',
+    remove_username_confirmation_title: 'إزالة اسم المستخدم',
+    remove_username_confirmation_description:
+      'بعد الإزالة، لن تتمكن بعد ذلك من تسجيل الدخول باستخدام اسم المستخدم هذا. هل أنت متأكد أنك تريد المتابعة؟',
+    remove_email_confirmation_title: 'إزالة عنوان البريد الإلكتروني',
+    remove_email_confirmation_description:
+      'بعد الإزالة، لن تتمكن بعد ذلك من تسجيل الدخول باستخدام عنوان البريد الإلكتروني هذا. هل أنت متأكد أنك تريد المتابعة؟',
+    remove_phone_confirmation_title: 'إزالة رقم الهاتف',
+    remove_phone_confirmation_description:
+      'بعد الإزالة، لن تتمكن بعد ذلك من تسجيل الدخول باستخدام رقم الهاتف هذا. هل أنت متأكد أنك تريد المتابعة؟',
+    email_removed: 'تمت إزالة عنوان البريد الإلكتروني بنجاح.',
+    phone_removed: 'تمت إزالة رقم الهاتف بنجاح.',
+    username_removed: 'تمت إزالة اسم المستخدم بنجاح.',
+  },
+  social: {
+    linked: 'تم ربط {{connector}} بنجاح.',
+    not_enabled:
+      'طريقة تسجيل الدخول الاجتماعي هذه غير مفعلة. يُرجى التواصل مع المسؤول للحصول على المساعدة.',
+    removed: 'تمت إزالة {{connector}} بنجاح.',
+    remove_confirmation_title: 'إزالة الحساب الاجتماعي',
+    remove_confirmation_description:
+      'إذا أزلت {{connector}}، فقد لا تتمكن من تسجيل الدخول به حتى تقوم بإضافته مرة أخرى.',
   },
   password: {
     title: 'تعيين كلمة المرور',
@@ -126,6 +202,10 @@ const account_center = {
       title: 'تمت إضافة تطبيق المصادقة!',
       description: 'تم ربط تطبيق المصادقة بحسابك بنجاح.',
     },
+    totp_replaced: {
+      title: 'تم استبدال تطبيق المصادقة!',
+      description: 'تم استبدال تطبيق المصادقة الخاص بك بنجاح.',
+    },
     backup_code: {
       title: 'تم إنشاء رموز النسخ الاحتياطي!',
       description: 'تم حفظ رموز النسخ الاحتياطي الخاصة بك. احتفظ بها في مكان آمن.',
@@ -168,6 +248,28 @@ const account_center = {
     name_passkey_description:
       'لقد نجحت في التحقق من هذا الجهاز للمصادقة بخطوتين. خصص الاسم للتعرف عليه إذا كان لديك مفاتيح متعددة.',
     name_input_label: 'الاسم',
+  },
+  sessions: {
+    page_title: 'الجلسات',
+    page_description: 'إدارة جلساتك النشطة والتطبيقات المعتمدة من جهات خارجية.',
+    title: 'الجلسات',
+    current_session: 'الجلسة الحالية',
+    signed_in_at: 'تم تسجيل الدخول {{date}}',
+    revoke_session: 'تسجيل الخروج',
+    revoke_session_title: 'تسجيل الخروج من الجلسة',
+    revoke_session_description:
+      'سيؤدي هذا إلى تسجيل الخروج من الجلسة وإلغاء جميع الوصول المرتبط. هل أنت متأكد أنك تريد المتابعة؟',
+    no_other_sessions: 'لا توجد جلسات نشطة أخرى.',
+    loading: 'جارٍ التحميل...',
+    third_party_apps_title: 'تطبيقات الطرف الثالث',
+    no_third_party_apps: 'لا توجد تطبيقات طرف ثالث معتمدة.',
+    third_party_apps_load_failed: 'فشل تحميل تطبيقات الطرف الثالث. يُرجى المحاولة مرة أخرى.',
+    granted_at: 'تم التفويض {{date}}',
+    revoke_grant: 'إزالة',
+    revoke_grant_title: 'إزالة وصول تطبيق الطرف الثالث',
+    revoke_grant_description:
+      'سيؤدي هذا إلى إلغاء جميع الوصول الممنوح لهذا التطبيق. هل أنت متأكد أنك تريد المتابعة؟',
+    revoke_grant_failed: 'فشل إلغاء بعض التفويضات. يرجى المحاولة مرة أخرى.',
   },
 };
 

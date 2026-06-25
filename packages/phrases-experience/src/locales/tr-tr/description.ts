@@ -45,6 +45,8 @@ const description = {
   enter_username: 'Kullanıcı adını ayarla',
   enter_username_description:
     'Kullanıcı adı, oturum açmak için bir alternatiftir. Kullanıcı adı yalnızca harf, sayı ve alt çizgi içermelidir.',
+  enter_username_policy_description:
+    'Kullanıcı adı, oturum açmak için bir alternatiftir. {{requirements}}',
   link_email: 'E-postayı bağla',
   link_phone: 'Telefonu bağla',
   link_email_or_phone: 'E-posta veya telefon bağlantısı',
@@ -58,6 +60,12 @@ const description = {
   use_work_email_hint:
     'Use your work email for the best experience and get {{credits}} additional credits',
   sign_in_to_your_account: 'Hesabına giriş yap',
+  device_activation: 'Cihaz etkinleştirme',
+  device_activation_description:
+    'Cihazınızda gösterilen kodu girin. Eşleştiğinden emin olun ve bu cihazda oturum açmaya devam edin.',
+  device_activation_error_description: 'Cihazınızda görüntülenen kodu girin.',
+  device_activation_success: 'Cihazınız bağlandı!',
+  device_activation_success_description: 'Devam etmek için cihazınıza dönün.',
   no_region_code_found: 'Bölge kodu bulunamadı',
   verify_email: 'E-postanızın doğrulanması',
   verify_phone: 'Telefon numaranızın doğrulanması',
@@ -75,6 +83,17 @@ const description = {
       'en az {{count}} tane büyük harf, küçük harf, rakam ve sembol içermelidir',
     character_types_other:
       'en az {{count}} tane büyük harf, küçük harf, rakam ve sembol içermelidir',
+  },
+  username_requirements: 'Kullanıcı adı {{items, list}}.',
+  username_requirement: {
+    length: '{{min}} ile {{max}} karakter arasında olmalıdır',
+    characters: 'yalnızca {{characters, list}} içerebilir',
+  },
+  username_character: {
+    uppercase: 'büyük harfler',
+    lowercase: 'küçük harfler',
+    number: 'rakamlar',
+    underscore: 'alt çizgiler',
   },
   use: 'Kullan',
   single_sign_on_email_form: 'Kurumsal e-posta adresinizi girin',
@@ -99,6 +118,8 @@ const description = {
   identifier_register_description:
     'Yeni bir hesap oluşturmak için {{types, list(type: disjunction;)}} girin.',
   all_account_creation_options: 'Tüm hesap oluşturma seçenekleri',
+  password_expired: 'Şifrenizin süresi doldu ve giriş yapmadan önce sıfırlanması gerekiyor.',
+  password_expiration_reset: 'Şifreyi sıfırla',
   back_to_sign_in: 'Girişe dön',
   support_email: 'Destek e-postası: <link></link>',
   support_website: 'Destek web sitesi: <link></link>',

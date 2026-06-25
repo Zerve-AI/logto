@@ -25,13 +25,14 @@ const mfa = {
   add_mfa_factors: 'Add 2-step verification',
   add_mfa_description:
     'Two-factor verification is enabled. Select your second verification method for secure sign-in.',
-  add_another_mfa_factor: 'Add another one 2-step verification',
+  add_another_mfa_factor: 'Add another 2-step verification',
   add_another_mfa_description:
     'Select another way to add for verifying your identity when sign-in.',
   verify_mfa_factors: '2-step verification',
   verify_mfa_description:
     '2-step verification has been enabled for this account. Please select the second way to verify your identity.',
   add_authenticator_app: 'Add authenticator app',
+  replace_authenticator_app: 'Replace authenticator app',
   step: 'Step {{step, number}}: {{content}}',
   scan_qr_code: 'Scan this QR code',
   scan_qr_code_description:

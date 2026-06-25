@@ -1,6 +1,7 @@
 import type { CommonQueryMethods } from '@silverhand/slonik';
 
 import { type WellKnownCache } from '#src/caches/well-known.js';
+import { createApplicationAccessControlQueries } from '#src/queries/application-access-control.js';
 import { ApplicationSecretQueries } from '#src/queries/application-secrets.js';
 import createApplicationSignInExperienceQueries from '#src/queries/application-sign-in-experience.js';
 import { createApplicationQueries } from '#src/queries/application.js';
@@ -49,6 +50,7 @@ import { VerificationRecordQueries } from '../queries/verification-records.js';
 
 export default class Queries {
   applications = createApplicationQueries(this.pool);
+  applicationAccessControl = createApplicationAccessControlQueries(this.pool);
   applicationSecrets = new ApplicationSecretQueries(this.pool);
   applicationSignInExperiences = createApplicationSignInExperienceQueries(this.pool);
   connectors = createConnectorQueries(this.pool, this.wellKnownCache);
@@ -57,7 +59,7 @@ export default class Queries {
   logs = createLogQueries(this.pool);
   oidcModelInstances = createOidcModelInstanceQueries(this.pool);
   passcodes = createPasscodeQueries(this.pool);
-  resources = createResourceQueries(this.pool);
+  resources = createResourceQueries(this.pool, this.wellKnownCache);
   rolesScopes = createRolesScopesQueries(this.pool);
   roles = createRolesQueries(this.pool);
   scopes = createScopeQueries(this.pool);

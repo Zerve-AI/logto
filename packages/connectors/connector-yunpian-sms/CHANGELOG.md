@@ -1,5 +1,20 @@
 # @logto/connector-yunpian-sms
 
+## 1.2.3
+
+### Patch Changes
+
+- Updated dependencies [41a56f79e3]
+  - @logto/connector-kit@5.0.1
+
+## 1.2.2
+
+### Patch Changes
+
+- Updated dependencies [4e25126228]
+- Updated dependencies [4e25126228]
+  - @logto/connector-kit@5.0.0
+
 ## 1.2.1
 
 ### Patch Changes

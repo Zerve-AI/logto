@@ -46,6 +46,7 @@ const description = {
   enter_username: 'Встановити ім’я користувача',
   enter_username_description:
     'Ім’я користувача є альтернативою для входу. Воно має містити лише літери, цифри та підкреслення.',
+  enter_username_policy_description: 'Ім’я користувача є альтернативою для входу. {{requirements}}',
   link_email: 'Зв’язати електронну пошту',
   link_phone: 'Зв’язати телефон',
   link_email_or_phone: 'Зв’язати електронну пошту або телефон',
@@ -61,6 +62,12 @@ const description = {
   use_work_email_hint:
     'Використовуйте свою робочу електронну пошту для найкращого досвіду та отримайте {{credits}} додаткових кредитів',
   sign_in_to_your_account: 'Увійдіть до свого облікового запису',
+  device_activation: 'Активація пристрою',
+  device_activation_description:
+    'Введіть код, що відображається на вашому пристрої. Переконайтеся, що він збігається, потім продовжіть вхід на цьому пристрої.',
+  device_activation_error_description: 'Введіть код, що відображається на вашому пристрої.',
+  device_activation_success: 'Ваш пристрій підключено!',
+  device_activation_success_description: 'Поверніться до свого пристрою, щоб продовжити.',
   no_region_code_found: 'Код регіону не знайдено',
   verify_email: 'Підтвердіть вашу електронну пошту',
   verify_phone: 'Підтвердіть ваш номер телефону',
@@ -81,6 +88,17 @@ const description = {
       'має містити щонайменше {{count}} типів символів: великі літери, малі літери, цифри та спеціальні символи',
     character_types_other:
       'має містити щонайменше {{count}} типів символів: великі літери, малі літери, цифри та спеціальні символи',
+  },
+  username_requirements: "Ім'я користувача {{items, list}}.",
+  username_requirement: {
+    length: 'має містити від {{min}} до {{max}} символів',
+    characters: 'може містити лише {{characters, list}}',
+  },
+  username_character: {
+    uppercase: 'великі літери',
+    lowercase: 'малі літери',
+    number: 'цифри',
+    underscore: 'підкреслення',
   },
   use: 'Використовувати',
   single_sign_on_email_form: 'Введіть вашу корпоративну електронну адресу',
@@ -106,6 +124,8 @@ const description = {
   identifier_register_description:
     'Введіть {{types, list(type: disjunction;)}} для створення нового облікового запису.',
   all_account_creation_options: 'Усі варіанти створення облікового запису',
+  password_expired: 'Термін дії вашого пароля закінчився, і його потрібно скинути перед входом.',
+  password_expiration_reset: 'Скинути пароль',
   back_to_sign_in: 'Повернутися до входу',
   support_email: 'Електронна пошта підтримки: <link></link>',
   support_website: 'Вебсайт підтримки: <link></link>',

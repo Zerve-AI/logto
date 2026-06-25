@@ -1,4 +1,5 @@
 /* eslint-disable max-lines */
+
 import { appInsights } from '@logto/app-insights/node';
 import {
   InteractionEvent,
@@ -10,8 +11,8 @@ import {
 import { maskEmail, maskPhone } from '@logto/shared';
 import { conditional, trySafe } from '@silverhand/essentials';
 
-import { EnvSet } from '#src/env-set/index.js';
 import RequestError from '#src/errors/RequestError/index.js';
+import { buildUserPasswordPayload } from '#src/libraries/user.utils.js';
 import { type LogEntry } from '#src/middleware/koa-audit-log.js';
 import type TenantContext from '#src/tenants/TenantContext.js';
 import assertThat from '#src/utils/assert-that.js';
@@ -33,6 +34,7 @@ import {
   parseMfaPropertiesToUserConfig,
 } from './helpers.js';
 import { AdaptiveMfaValidator } from './libraries/adaptive-mfa-validator/index.js';
+import { type AdaptiveMfaResult } from './libraries/adaptive-mfa-validator/types.js';
 import { CaptchaValidator } from './libraries/captcha-validator.js';
 import { MfaValidator } from './libraries/mfa-validator.js';
 import { ProvisionLibrary } from './libraries/provision-library.js';
@@ -147,7 +149,6 @@ export default class ExperienceInteraction {
     this.profile = new Profile(libraries, queries, profile, interactionContext);
     this.mfa = new Mfa(libraries, queries, mfa, interactionContext);
     this.captcha = captcha;
-
     for (const record of verificationRecords) {
       const instance = buildVerificationRecord(libraries, queries, record);
       this.verificationRecords.setValue(instance);
@@ -368,13 +369,13 @@ export default class ExperienceInteraction {
       return;
     }
 
-    if (EnvSet.values.isDevFeaturesEnabled && adaptiveMfaResult?.requiresMfa) {
-      this.ctx.assignInteractionHookResult({
-        event: InteractionHookEvent.PostSignInAdaptiveMfaTriggered,
-        payload: { adaptiveMfaResult },
-        userId: user.id,
-      });
+    const isMfaVerified = mfaValidator.isMfaVerified(this.verificationRecordsArray);
+
+    if (isMfaVerified) {
+      return;
     }
+
+    this.assignAdaptiveMfaHookResult(user.id, adaptiveMfaResult);
 
     const { primaryEmail, primaryPhone } = user;
     const maskedIdentifiers: Record<string, string> = {
@@ -391,7 +392,7 @@ export default class ExperienceInteraction {
     };
 
     assertThat(
-      mfaValidator.isMfaVerified(this.verificationRecordsArray),
+      isMfaVerified,
       new RequestError(
         { code: 'session.mfa.require_mfa_verification', status: 403 },
         {
@@ -400,6 +401,15 @@ export default class ExperienceInteraction {
         }
       )
     );
+  }
+
+  /**
+   * Guard current interaction is identified and the identified user exists.
+   *
+   * @throws {RequestError} with 404 if the user is not identified or not found
+   */
+  public async guardIdentifiedUser() {
+    await this.getIdentifiedUser();
   }
 
   /**
@@ -485,13 +495,15 @@ export default class ExperienceInteraction {
       );
 
       const updatedUser = await userQueries.updateUserById(user.id, {
-        passwordEncrypted,
-        passwordEncryptionMethod,
+        ...buildUserPasswordPayload({
+          passwordEncrypted,
+          passwordEncryptionMethod,
+        }),
       });
 
       await this.cleanUp();
 
-      this.ctx.assignInteractionHookResult({ userId: user.id });
+      this.ctx.assignReleaseOnSuccessInteractionHookResult({ userId: user.id });
       this.ctx.appendDataHookContext('User.Data.Updated', { user: updatedUser });
 
       return;
@@ -511,7 +523,7 @@ export default class ExperienceInteraction {
       hasVerifiedSsoIdentity: this.hasVerifiedSsoIdentity,
     });
 
-    if (EnvSet.values.isDevFeaturesEnabled && !this.hasVerifiedSsoIdentity) {
+    if (!this.hasVerifiedSsoIdentity) {
       // Check if passkey sign-in is enabled in the sign-in experience, if yes, check if user has `WebAuthn`
       // type of MFA verification record in `users.mfaVerifications`. Suggest user to add a passkey if not.
       await this.mfa.assertPasskeySignInFulfilled();
@@ -531,6 +543,8 @@ export default class ExperienceInteraction {
       jitOrganizationIds,
       socialConnectorTokenSetSecret,
       enterpriseSsoConnectorTokenSetSecret,
+      passwordEncrypted,
+      passwordEncryptionMethod,
       ...rest
     } = this.profile.data;
     const userMfaVerifications = this.mfa.toUserMfaVerifications();
@@ -539,6 +553,14 @@ export default class ExperienceInteraction {
     // Update user profile
     const updatedUser = await userQueries.updateUserById(user.id, {
       ...rest,
+      ...conditional(
+        passwordEncrypted &&
+          passwordEncryptionMethod &&
+          buildUserPasswordPayload({
+            passwordEncrypted,
+            passwordEncryptionMethod,
+          })
+      ),
       ...conditional(
         socialIdentity && {
           identities: {
@@ -614,18 +636,16 @@ export default class ExperienceInteraction {
 
     // The geo context is only recorded when the `submit()` function succeeds.
     // The recorded geo context will affect the evaluation results of the adaptive MFA afterwards.
-    if (EnvSet.values.isDevFeaturesEnabled) {
-      void trySafe(
-        async () => this.adaptiveMfaValidator.recordSignInGeoContext(user, this.#interactionEvent),
-        (error) => {
-          void appInsights.trackException(error, buildAppInsightsTelemetry(this.ctx));
-        }
-      );
-    }
+    void trySafe(
+      async () => this.adaptiveMfaValidator.recordSignInGeoContext(user, this.#interactionEvent),
+      (error) => {
+        void appInsights.trackException(error, buildAppInsightsTelemetry(this.ctx));
+      }
+    );
 
     this.ctx.body = { redirectTo };
 
-    this.ctx.assignInteractionHookResult({ userId: user.id });
+    this.ctx.assignReleaseOnSuccessInteractionHookResult({ userId: user.id });
 
     if (Object.keys(this.profile.data).length > 0 || mfaVerifications.length > 0) {
       this.ctx.appendDataHookContext('User.Data.Updated', { user: updatedUser });
@@ -663,6 +683,18 @@ export default class ExperienceInteraction {
       mfa: this.mfa.sanitizedData,
       verificationRecords: this.verificationRecordsArray.map((record) => record.toSanitizedJson()),
     };
+  }
+
+  private assignAdaptiveMfaHookResult(userId: string, adaptiveMfaResult?: AdaptiveMfaResult) {
+    if (!adaptiveMfaResult?.requiresMfa) {
+      return;
+    }
+
+    this.ctx.assignReleaseAnywayInteractionHookResult({
+      event: InteractionHookEvent.PostSignInAdaptiveMfaTriggered,
+      payload: { adaptiveMfaResult },
+      userId,
+    });
   }
 
   private get verificationRecordsArray() {

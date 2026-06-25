@@ -21,6 +21,14 @@ const user_details = {
     new_password: 'Nouveau mot de passe :',
     password: 'Mot de passe :',
   },
+  expire_password: {
+    button: 'Expirer',
+    title: 'Êtes-vous sûr de vouloir faire expirer ce mot de passe ?',
+    content:
+      "L'utilisateur devra réinitialiser son mot de passe lors de sa prochaine connexion. Cette action ne peut être annulée.",
+    success: "Le mot de passe de l'utilisateur a été marqué comme expiré.",
+    not_enabled_tooltip: "La politique d'expiration du mot de passe n'est pas activée.",
+  },
   tab_settings: 'Paramètres',
   tab_roles: 'Rôles utilisateur',
   tab_logs: "Journaux de l'utilisateur",
@@ -69,7 +77,6 @@ const user_details = {
     field_name: 'Authentification à deux facteurs',
     field_description: "Cet utilisateur a activé des facteurs d'authentification à 2 étapes.",
     name_column: 'Authentification à deux facteurs',
-
     field_description_empty:
       "Cet utilisateur n'a pas activé les facteurs d'authentification à deux étapes.",
     deletion_confirmation:
@@ -155,7 +162,6 @@ const user_details = {
     name_column: 'Nom',
     session_id_column: 'ID de session',
     location_column: 'Emplacement',
-
     browser_on_os: '{{browser}} sur {{os}}',
     user: 'Utilisateur',
     applications: 'Applications',
@@ -167,6 +173,21 @@ const user_details = {
     revoke_session: 'Révoquer la session',
     revoke_session_confirmation:
       'Si vous supprimez cette session, les utilisateurs devront se réauthentifier.',
+  },
+  third_party_apps: {
+    title: 'Applications tierces',
+    description:
+      "Utilisez Logto comme fournisseur d'identité pour autoriser des applications tierces. Consultez et gérez les applications auxquelles cet utilisateur a accordé l'accès.",
+    field_name: 'Applications tierces autorisées',
+    multiple_authorized: 'Cet utilisateur a autorisé plusieurs applications et services tiers.',
+    not_authorized:
+      "Cet utilisateur n'a encore autorisé aucune application ni aucun service tiers.",
+    name_column: 'Nom',
+    app_id_column: "ID de l'application",
+    access_created_at_column: 'Accès créé le',
+    revoke_access_title: "Révoquer l'accès ?",
+    revoke_access_description:
+      "Cette action révoquera l'accès de l'application au compte de cet utilisateur sur tous les appareils. L'utilisateur devra la réautoriser pour rétablir l'accès.",
   },
   connections: {
     title: 'Connexion',

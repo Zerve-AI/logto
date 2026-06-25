@@ -1,5 +1,341 @@
 # Change Log
 
+## 1.40.1
+
+### Patch Changes
+
+- Updated dependencies [e4eaa5aef5]
+  - @logto/core-kit@2.10.0
+  - @logto/account@0.4.1
+  - @logto/cli@1.40.1
+  - @logto/console@1.37.0
+  - @logto/demo-app@1.5.0
+  - @logto/device-demo-app@0.1.0
+  - @logto/experience@1.19.2
+  - @logto/phrases-experience@1.13.3
+  - @logto/schemas@1.40.1
+
+## 1.40.0
+
+### Minor Changes
+
+- cc0d70335: add `enableCap=true` query parameter to `GET /logs` and `GET /hooks/:id/recent-logs` to reduce the chance of `statement_timeout` on tenants with very large log volumes.
+
+  When the param is passed:
+
+  - The count query short-circuits at ~10,000 rows, returning `10001` as a saturation sentinel.
+  - The response includes a `Total-Number-Is-Capped: true` header when the cap is hit.
+  - In capped responses, both `Link: rel="last"` and `Link: rel="next"` are omitted because the saturated count makes the derived page count unreliable. Clients should construct page URLs themselves and stop on an empty response.
+
+  Default request behavior (without `enableCap`) is unchanged.
+
+- 57c27d42f: add `start_time` and `end_time` query parameters to `GET /api/logs` and `GET /api/hooks/{id}/recent-logs` for filtering logs by a time window.
+
+  Both are exclusive bounds in unix milliseconds (`createdAt > start_time AND createdAt < end_time`). Either value is optional; when both are present, the endpoint returns `400` if `start_time >= end_time`. Either value being non-numeric also returns `400`.
+
+  On `GET /api/hooks/{id}/recent-logs`, supplying either `start_time` or `end_time` replaces the endpoint's default 24-hour lower bound so callers can query an arbitrary historical window. Default behavior (no time params supplied) is unchanged: the endpoint still returns logs from the last 24 hours.
+
+- c4c34e6af0: enrich `Organization.Membership.Updated` webhook payload with explicit delta fields describing the exact membership change:
+
+  - `addedUserIds` / `removedUserIds` on `POST /organizations/:id/users`, `PUT /organizations/:id/users`, and `DELETE /organizations/:id/users/:userId`.
+  - `addedApplicationIds` / `removedApplicationIds` on `POST /organizations/:id/applications`, `PUT /organizations/:id/applications`, and `DELETE /organizations/:id/applications/:applicationId`.
+  - `addedUserIds` on invitation accept (`PUT /organization-invitations/:id/status`) and experience-flow just-in-time provisioning (email-domain JIT and enterprise SSO JIT during sign-up / sign-in).
+
+  Each delta array is capped silently at 5000 entries; for bulk operations that exceed the cap, consumers should reconcile authoritative membership via `GET /organizations/:id/users` or `GET /organizations/:id/applications`. Empty deltas are omitted from the payload entirely, and consumers must treat a missing field as "no change on that side," not as "an empty change." The `PUT` replace handlers report the truly-new and truly-removed IDs (not the entire declared set). Re-accepting an invitation by a user who is already a member still produces the legacy `{ organizationId }`-only shape.
+
+  No breaking change: the four delta fields are additive optional fields; the previously emitted `data: null` field is unchanged. See the [webhook reference](https://docs.logto.io/developers/webhooks/webhooks-request#organizationmembershipupdated-payload) for the full payload contract.
+
+  Supersedes #8752, thanks @chiche84.
+
+- 42f3969840: add protected app ID token claim scopes and tenant custom domain SDK endpoint support
+
+  Protected App settings in Console let you choose which ID token claims (such as `roles`, `custom_data`, and `organizations`) are forwarded to your origin via the `Logto-ID-Token` header. When a tenant custom domain is active, Protected App remote config uses that domain as the SDK endpoint.
+
+### Patch Changes
+
+- ebbc8f43aa: declare `additionalProperties: true` on arbitrary JSON object schemas in the OpenAPI document. Generated TypeScript clients (e.g. `@logto/api`) now type fields such as `customData` as `{ [key: string]: unknown }` instead of `Record<string, never>`, which previously forbade every property at compile time
+- a27d81309: allow users who have no password, no primary email, and no primary phone to set their initial password without a verification record through Account API
+- 671a7b73d7: read admin tenant signing keys directly from the database in OSS to reduce self-hosted deployment friction
+
+  Self-hosted OSS deployments no longer need extra host or DNS mappings that let the Logto container fetch its own admin tenant OIDC configuration through the externally configured endpoint.
+
+- 3edda5243: speed up `GET /organizations/:id/users` on large memberships by aggregating roles via `LATERAL`
+
+  The entities query for `getUsersByOrganizationId` joined `organization_role_user_relations` and `organization_roles` before applying `GROUP BY users.id` + `LIMIT`. Postgres had to build the entire `members × roles_per_member` intermediate result on every paginated request, aggregate it, then slice. A 20-row page over a 10k-member org with 3 roles each materialized ~30k intermediate rows regardless of page size.
+
+  The rewrite moves the role aggregation into a `LATERAL` subquery joined per user row. `LIMIT` now prunes the outer user set before the role-table lookups fire, so the aggregation runs `limit` times instead of once over the full join, and each lateral lookup hits `organization_role_user_relations__tenant_id_org_id_user_id` (added in the prior Phase 0.5 migration) directly. The row ordering, previously incidental under the `GROUP BY` plan, is now pinned by an explicit `ORDER BY` so pagination is deterministic across calls.
+
+- 26c8c3f2ed: add `TwoRelationsQueries.replaceWithDelta()` for high-cardinality relation tables; switch `PUT /organizations/:id/users` to use it
+
+  The existing `replace()` runs `DELETE WHERE schema1_id = X` + bulk `INSERT` inside a transaction, rewriting O(N) rows on every call. The new `replaceWithDelta()` computes the added/removed sets in a single CTE statement, so a no-op call writes zero rows and a one-row delta writes exactly one row. It returns `{ added, removed }` so downstream consumers (notably the membership-webhook payload work in LOG-13462) can read the delta without a re-query.
+
+  `replace()` is unchanged. The new method is opt-in. This PR migrates one call site — `PUT /organizations/:id/users` — where organization membership can grow into the 10k+ range. The other nine `TwoRelationsQueries` subclasses continue to use `replace()`.
+
+  For relation tables upstream of an `on delete cascade` FK (e.g. `organization_user_relations` → `organization_role_user_relations`), `replace()` cascades for every current row on every call — silently dropping dependents of unchanged members. `replaceWithDelta()` only cascades for truly-departing rows, so dependents of surviving members are preserved. The migrated `PUT /organizations/:id/users` now keeps a member's role assignments when their membership survives the PUT; a new integration test guards this.
+
+- 16553c027: expose `isCurrent` on the Account API sessions response
+
+  `GET /api/my-account/sessions` now returns `isCurrent: boolean` on every entry. The session whose OIDC uid backs the calling access token is `true`; the others are `false`. Use this to mark the "This device" entry in session-management UIs and to avoid revoking the caller's own session.
+
+  The admin user-sessions endpoints (`GET /users/:userId/sessions` and `GET /users/:userId/sessions/:sessionId`) are unchanged — they have no caller-session concept and continue to use the original response shape.
+
+  Closes [#8681](https://github.com/logto-io/logto/issues/8681).
+
+- Updated dependencies [32c40b1ad]
+- Updated dependencies [8407ecd410]
+- Updated dependencies [346816a350]
+- Updated dependencies [2ae0a420f]
+- Updated dependencies [6b9944d01f]
+- Updated dependencies [fafe81e8f]
+- Updated dependencies [617275158]
+- Updated dependencies [7b7a5c8f6]
+- Updated dependencies [41a56f79e3]
+- Updated dependencies [42f3969840]
+- Updated dependencies [16553c027]
+- Updated dependencies [32c9ea4d81]
+- Updated dependencies [7c30c2adb]
+- Updated dependencies [be5fa483a2]
+  - @logto/account@0.4.1
+  - @logto/phrases-experience@1.13.2
+  - @logto/console@1.37.0
+  - @logto/experience@1.19.2
+  - @logto/schemas@1.40.0
+  - @logto/connector-kit@5.0.1
+  - @logto/cli@1.40.0
+  - @logto/demo-app@1.5.0
+  - @logto/device-demo-app@0.1.0
+
+## 1.39.0
+
+### Minor Changes
+
+- ab073bb65f: support blocking token issuance when custom JWT scripts fail
+
+  This update adds configurable JWT customizer error handling for access tokens and client credentials flows.
+
+  - core now preserves `api.denyAccess()` as `access_denied` and converts other blocking-mode script failures into localized `invalid_request` responses
+  - console adds a dedicated `Error handling` tab for configuring the behavior, defaults `blockIssuanceOnError` to enabled for newly created scripts, keeps existing scripts without a saved value on the legacy disabled default, and aligns the related guidance copy
+  - schemas, phrases, and integration coverage are updated to match the new blocking behavior and localized error messages
+
+- 3350b13ec8: add grace period support to private signing key rotation
+
+  This update adds support for a grace period during private signing key rotation, through the environment variable `PRIVATE_KEY_ROTATION_GRACE_PERIOD`, or CLI `--gracePeriod` option.
+
+  During the grace period, the new signing key is marked as "Next", and the existing signing key remains active. This allows for a smoother transition when rotating keys, as it provides a window of time for clients to refresh cached JWKS without experiencing downtime or authentication failures.
+
+  After the grace period ends, the new private signing key will transition to "Current" state, and the old signing key will be marked as "Previous".
+
+  Check out the [documentation](https://docs.logto.io/logto-oss/using-cli/rotate-signing-keys) for more details.
+
+### Patch Changes
+
+- 5c83985dbe: return response bodies from organization user and role assignment APIs
+
+  - POST `/organizations/:id/users` now returns `{ userIds: string[] }` echoing the user IDs that were sent with the request
+  - POST `/organizations/:id/users/:userId/roles` now returns `{ organizationRoleIds: string[] }` with the final deduplicated role IDs that were assigned, resolved from any provided role names
+
+- 8eeba717c0: return a unified verification_code.code_mismatch error in forgot-password flows to prevent account enumeration
+
+  Forgot-password verification no longer exposes whether an email or phone exists through differing error responses.
+
+- 33a588e34f: fix: pass request IP to connector when sending verification codes
+- Updated dependencies [cc9857d073]
+- Updated dependencies [93523a1ae0]
+- Updated dependencies [ab073bb65f]
+- Updated dependencies [d4570beed5]
+- Updated dependencies [3350b13ec8]
+  - @logto/experience@1.19.1
+  - @logto/core-kit@2.9.0
+  - @logto/console@1.36.0
+  - @logto/phrases@1.28.0
+  - @logto/schemas@1.39.0
+  - @logto/account@0.4.0
+  - @logto/cli@1.39.0
+  - @logto/shared@3.4.0
+  - @logto/demo-app@1.5.0
+  - @logto/device-demo-app@0.1.0
+  - @logto/phrases-experience@1.13.1
+
+## 1.38.0
+
+### Minor Changes
+
+- 43548d10a4: add `includePasswordHash` query parameter to `GET /users` and `GET /users/:userId`
+
+  When set to `true`, the response will include `passwordDigest` and `passwordAlgorithm` fields. This is intended for migration use cases where the raw password hash is needed.
+
+- 7cee48bd97: support OAuth 2.0 Device Authorization Grant (device flow)
+
+  Device flow lets users sign in on input-limited devices such as smart TVs, CLI tools, IoT gadgets, and gaming consoles by completing authentication on a separate device like a phone or laptop.
+
+  How it works:
+
+  1. The device displays a short user code and a verification URL.
+  2. The user opens the URL on another device, enters the code, and signs in.
+  3. Once approved, the original device receives tokens and completes authentication.
+
+  To create a device flow application in Console:
+
+  - Select "Input-limited app / CLI" under the Native framework list, or
+  - Create an app without framework, then choose "Device flow" as the authorization flow, or
+  - Create a third-party Native app, then choose "Device flow" as the authorization flow.
+
+  The application settings page shows a device-flow-specific guide and a built-in demo you can try immediately.
+
+- d189d8f5aa: introduce user application grant management endpoints for account and management APIs
+
+  Account API:
+
+  - Added `GET /my-account/grants` to list active application grants for the current user.
+  - Added `DELETE /my-account/grants/:grantId` to revoke a specific grant for the current user.
+
+  Management API:
+
+  - Added `GET /users/:userId/grants` to list active application grants for a given user.
+  - Added `DELETE /users/:userId/grants/:grantId` to revoke a specific grant for a given user.
+
+  Grant listing endpoints support an optional `appType` query parameter:
+
+  - `appType=firstParty` to list first-party app grants only.
+  - `appType=thirdParty` to list third-party app grants only.
+  - Omit `appType` to return all active grants.
+
+- 56cec74a00: support sentinel protection for MFA verification routes
+
+  TOTP, WebAuthn, and backup code MFA verifications now report activity to Sentinel so repeated failures can be detected and blocked consistently during multi-factor authentication.
+
+  The new MFA-specific Sentinel actions keep MFA attempts isolated from the shared primary sign-in pool, which avoids lockouts leaking across unrelated verification stages or factors.
+
+- 67463a9ed6: add support for replacing authenticator app via a dedicated `/authenticator-app/replace` route in Account Center, with a new PUT endpoint in Account API for idempotent TOTP replacement.
+- 5b7f1cb794: support configurable oidc session ttl and add oidc session config management apis
+
+  - Updated OIDC provider initialization logic to respect `oidc.session.ttl` from `logto-config` instead of using only a hard-coded session TTL.
+    When `oidc.session.ttl` is provided, it overrides the default session TTL.
+  - The custom session TTL is loaded during OIDC provider initialization.
+    For OSS deployments, restart the service instance after config changes so the server can pick up the latest OIDC config updates. To apply OIDC config updates automatically without restarting the service, [enable central redis cache](https://docs.logto.io/logto-oss/central-cache).
+  - Added management APIs to manage OIDC session config (currently `ttl` only):
+    - `GET /api/configs/oidc/session`
+    - `PATCH /api/configs/oidc/session`
+
+- a023a97c7c: add a new MFA onboarding page for users to explicitly enable optional MFA
+
+  For users who are not required to set up MFA, we added a new page after credential verification in the sign-in flow to explicitly ask whether they want to enable optional MFA for better account security.
+
+  This is especially important when the passkey sign-in feature is available, since passkeys can be used for both sign-in and MFA verification, and users who set up a passkey for sign-in might not want to enable it as an MFA factor at the same time.
+
+- 6dbafe5f26: support access token exchange for service-to-service delegation
+
+  The standard `subject_token_type` value `urn:ietf:params:oauth:token-type:access_token` now supports access token exchange. This allows services to exchange access tokens (both opaque and JWT formats) issued by Logto for new access tokens with different audiences, enabling service-to-service delegation scenarios.
+
+  Token validation order:
+
+  1. If token starts with `sub_` prefix, treat as legacy impersonation token (backward compatibility)
+  2. Try to find as opaque access token via oidc-provider
+  3. Fallback to JWT verification using the issuer's JWK set
+
+  Access tokens are not consumption-tracked, allowing the same token to be exchanged multiple times (e.g., by different services).
+
+  Additionally, a new `urn:logto:token-type:impersonation_token` type has been added for explicit impersonation token handling.
+
+- a816cf77cb: support adaptive MFA
+
+  - In Console, the MFA settings page always exposes the adaptive MFA option and saves `adaptiveMfa` configuration in the sign-in experience payload.
+  - In Core, when adaptive MFA is enabled in the sign-in experience config, the sign-in flow evaluates adaptive MFA rules against the current sign-in context and requires MFA verification when those rules are triggered.
+  - The sign-in context is now consistently persisted into interaction data, so custom-claims scripts can read it from `context.interaction.signInContext`.
+  - The `PostSignInAdaptiveMfaTriggered` webhook event is emitted when adaptive MFA forces MFA during sign-in.
+
+- a023a97c7c: support passkey sign-in authentication method
+
+  ### Summary
+
+  Passkey sign-in provides a faster, passwordless sign-in experience that reduces friction for end users and helps improve account security. It removes repeated password entry for returning users, works with platform authenticators users already trust (for example Face ID, Touch ID, Windows Hello), and offers a smoother path from account creation to subsequent sign-ins.
+
+  #### Bind passkey for sign-in
+
+  After passkey sign-in is enabled, new users are prompted to bind a passkey during registration. Existing users who have not bound a passkey (WebAuthn) factor yet can be guided to bind one in a later sign-in flow. If a user already has a WebAuthn credential from MFA setup, that credential can be reused directly for passkey sign-in without requiring another registration step.
+
+  #### Various sign-in flows to support different user journeys and preferences
+
+  1. **Passkey sign-in button**: When **Show passkey sign-in button** is enabled, users can click **Continue with passkey** on the sign-in page to immediately trigger the browser passkey chooser and complete sign-in.
+  2. **Identifier-first flow (button hidden)**: When **Show passkey sign-in button** is disabled, sign-in follows an identifier-first flow. Users first enter an identifier (for example email or username) on the first screen. On the next step, the flow prioritizes passkey and prompts users to **Verify via passkey** before falling back to password or verification code when needed.
+  3. **Allow autofill**: When **Allow autofill** is enabled, supported browsers can show passkey suggestions directly from the identifier input on the sign-in page. Users can select a previously saved passkey from the autofill popup and sign in with minimal extra input.
+
+  Check out our [documentation](https://docs.logto.io/end-user-flows/sign-up-and-sign-in/passkey-sign-in) for more details.
+
+- 74c993a91e: introduce session management endpoints for account and management APIs, with optional grants revocation and richer session context.
+
+  Account APIs:
+
+  - List active user sessions: `GET /my-account/sessions`.
+  - Revoke a user session by ID: `DELETE /my-account/sessions/:sessionId`.
+    - Optional query param `revokeGrantsTarget`: `all` revokes grants for all apps; `firstParty` revokes only first-party app grants.
+    - When grants are revoked, previously issued opaque access tokens and refresh tokens for those grants will be invalidated.
+  - Add a new account center permission setting `session` with `off`, `readOnly`, and `edit` to control access to the session management account APIs.
+  - These endpoints are also gated by the `urn:logto:scope:sessions` user scope (`UserScope.Sessions`). Only tokens with this scope granted can access these endpoints.
+
+  Management APIs:
+
+  - List active user sessions: `GET /users/:userId/sessions`.
+  - Get a single active user session: `GET /users/:userId/sessions/:sessionId`.
+  - Revoke a user session by ID: `DELETE /users/:userId/sessions/:sessionId`.
+    - Optional query param `revokeGrantsTarget`: `all` revokes grants for all apps; `firstParty` revokes only first-party app grants.
+    - When grants are revoked, previously issued opaque access tokens and refresh tokens for those grants will be invalidated.
+
+  Session context:
+
+  - Record user IP, user agent, and GEO location (when available from injected-headers) in interaction submission data so it can be returned in `session.lastSubmission`.
+
+- d2afe7351f: add app-level `maxAllowedGrants` config and enforce concurrent grant limits on authorization success
+
+  1. Extended application `customClientMetadata` with a new optional field `maxAllowedGrants`.
+     - Use this field to configure the max concurrent grants limit for the current app.
+     - Default is `undefined`; when not provided, no concurrent grant limit is applied.
+  2. Added a new OIDC `authorization.success` event listener.
+     - Triggered after each successful user authorization.
+     - Validates concurrent grants against the current authorization client and user.
+     - If `customClientMetadata.maxAllowedGrants` is configured, revokes the oldest grants when the active grant count exceeds the limit.
+
+### Patch Changes
+
+- 7991ca7d79: use literal JSONB keys in OIDC adapter `findByUid` and `findByUserCode` queries to ensure expression indexes can be used under prepared generic plans
+- 634efcbbec: retry Postgres pool initialization on transient connection errors
+- 413c602ed3: support `hex:`-prefixed PBKDF2 salt values in legacy password verification during user import
+- 4c70c3631f: improve token exchange performance
+
+  Cache the minimal OIDC resource lookup at the query layer and pre-generating the grant ID during token issuance to avoid an extra write just for grant creation.
+
+- Updated dependencies [7cee48bd97]
+- Updated dependencies [56cec74a00]
+- Updated dependencies [d189d8f5aa]
+- Updated dependencies [67463a9ed6]
+- Updated dependencies [74c993a91e]
+- Updated dependencies [a023a97c7c]
+- Updated dependencies [343410f2b0]
+- Updated dependencies [d2afe7351f]
+- Updated dependencies [4ab0497277]
+- Updated dependencies [4e25126228]
+- Updated dependencies [a816cf77cb]
+- Updated dependencies [5ab931e7ac]
+- Updated dependencies [6eb14455a0]
+- Updated dependencies [5b7f1cb794]
+- Updated dependencies [a023a97c7c]
+- Updated dependencies [74c993a91e]
+- Updated dependencies [5b7f1cb794]
+- Updated dependencies [4e25126228]
+- Updated dependencies [d2afe7351f]
+  - @logto/experience@1.19.0
+  - @logto/console@1.35.0
+  - @logto/phrases@1.27.0
+  - @logto/phrases-experience@1.13.0
+  - @logto/schemas@1.38.0
+  - @logto/account@0.3.0
+  - @logto/core-kit@2.8.0
+  - @logto/connector-kit@5.0.0
+  - @logto/language-kit@1.3.0
+  - @logto/demo-app@1.5.0
+  - @logto/cli@1.38.0
+  - @logto/device-demo-app@0.1.0
+
 ## 1.37.1
 
 ### Patch Changes

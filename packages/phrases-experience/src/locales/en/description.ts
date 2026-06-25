@@ -47,6 +47,7 @@ const description = {
   enter_username: 'Set username',
   enter_username_description:
     'Username is an alternative for sign-in. Username should contain only letters, numbers, and underscores.',
+  enter_username_policy_description: 'Username is an alternative for sign-in. {{requirements}}',
   link_email: 'Link email',
   link_phone: 'Link phone',
   link_email_or_phone: 'Link email or phone',
@@ -59,6 +60,12 @@ const description = {
   use_work_email_hint:
     'Use your work email for the best experience and get {{credits}} additional credits',
   sign_in_to_your_account: 'Sign in to your account',
+  device_activation: 'Device activation',
+  device_activation_description:
+    'Enter the code shown on your device. Make sure it matches, then continue to sign in to this device.',
+  device_activation_error_description: 'Enter the code displayed on your device.',
+  device_activation_success: 'Your device is now connected!',
+  device_activation_success_description: 'Return your device to continue.',
   no_region_code_found: 'No region code found',
   verify_email: 'Verify your email',
   verify_phone: 'Verify your phone number',
@@ -79,6 +86,17 @@ const description = {
       'should contain at least {{count}} types of uppercase letters, lowercase letters, digits, and symbols',
     character_types_other:
       'should contain at least {{count}} types of uppercase letters, lowercase letters, digits, and symbols',
+  },
+  username_requirements: 'Username {{items, list}}.',
+  username_requirement: {
+    length: 'must be {{min}} to {{max}} characters',
+    characters: 'can only contain {{characters, list}}',
+  },
+  username_character: {
+    uppercase: 'uppercase letters',
+    lowercase: 'lowercase letters',
+    number: 'numbers',
+    underscore: 'underscores',
   },
   use: 'Use',
   single_sign_on_email_form: 'Enter your enterprise email address',
@@ -104,6 +122,8 @@ const description = {
     'Enter you {{types, list(type: disjunction;)}} to create a new account.',
   all_account_creation_options: 'All account creation options',
   back_to_sign_in: 'Back to sign in',
+  password_expired: 'Your password has expired and must be reset before you can sign in.',
+  password_expiration_reset: 'Reset password',
   support_email: 'Support email: <link></link>',
   support_website: 'Support website: <link></link>',
   switch_account_title: 'You are currently signed in as {{account}}',

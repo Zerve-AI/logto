@@ -46,6 +46,8 @@ const description = {
   enter_username: 'Ustaw nazwę użytkownika',
   enter_username_description:
     'Nazwa użytkownika jest alternatywną formą logowania. Nazwa użytkownika powinna zawierać tylko litery, cyfry i podkreślenia.',
+  enter_username_policy_description:
+    'Nazwa użytkownika jest alternatywną formą logowania. {{requirements}}',
   link_email: 'Połącz adres email',
   link_phone: 'Połącz numer telefonu',
   link_email_or_phone: 'Połącz adres email lub numer telefonu',
@@ -60,6 +62,12 @@ const description = {
   use_work_email_hint:
     'Use your work email for the best experience and get {{credits}} additional credits',
   sign_in_to_your_account: 'Zaloguj się do swojego konta',
+  device_activation: 'Aktywacja urządzenia',
+  device_activation_description:
+    'Wpisz kod wyświetlony na twoim urządzeniu. Upewnij się, że jest zgodny, a następnie kontynuuj logowanie na tym urządzeniu.',
+  device_activation_error_description: 'Wpisz kod wyświetlony na twoim urządzeniu.',
+  device_activation_success: 'Twoje urządzenie jest teraz połączone!',
+  device_activation_success_description: 'Wróć do swojego urządzenia, aby kontynuować.',
   no_region_code_found: 'Nie znaleziono kodu regionu',
   verify_email: 'Potwierdź swój email',
   verify_phone: 'Potwierdź swój numer telefonu',
@@ -80,6 +88,17 @@ const description = {
       'powinno zawierać co najmniej {{count}} rodzaje liter wielkich, małych liter, cyfr i symboli',
     character_types_other:
       'powinno zawierać co najmniej {{count}} rodzaje liter wielkich, małych liter, cyfr i symboli',
+  },
+  username_requirements: 'Nazwa użytkownika {{items, list}}.',
+  username_requirement: {
+    length: 'musi mieć od {{min}} do {{max}} znaków',
+    characters: 'może zawierać tylko {{characters, list}}',
+  },
+  username_character: {
+    uppercase: 'wielkie litery',
+    lowercase: 'małe litery',
+    number: 'cyfry',
+    underscore: 'podkreślenia',
   },
   use: 'Użyj',
   single_sign_on_email_form: 'Wpisz swój służbowy adres email',
@@ -105,6 +124,8 @@ const description = {
   identifier_register_description:
     'Wprowadź swoje {{types, list(type: disjunction;)}} aby utworzyć nowe konto.',
   all_account_creation_options: 'Wszystkie opcje tworzenia konta',
+  password_expired: 'Twoje hasło wygasło i musi zostać zresetowane przed zalogowaniem się.',
+  password_expiration_reset: 'Resetuj hasło',
   back_to_sign_in: 'Wróć do logowania',
   support_email: 'Email wsparcia: <link></link>',
   support_website: 'Strona wsparcia: <link></link>',

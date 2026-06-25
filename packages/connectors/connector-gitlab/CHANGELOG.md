@@ -1,5 +1,30 @@
 # @logto/connector-gitlab
 
+## 1.2.6
+
+### Patch Changes
+
+- Updated dependencies [41a56f79e3]
+  - @logto/connector-kit@5.0.1
+  - @logto/connector-oauth@1.7.6
+
+## 1.2.5
+
+### Patch Changes
+
+- Updated dependencies [3350b13ec8]
+  - @logto/shared@3.4.0
+  - @logto/connector-oauth@1.7.5
+
+## 1.2.4
+
+### Patch Changes
+
+- Updated dependencies [4e25126228]
+- Updated dependencies [4e25126228]
+  - @logto/connector-kit@5.0.0
+  - @logto/connector-oauth@1.7.4
+
 ## 1.2.3
 
 ### Patch Changes

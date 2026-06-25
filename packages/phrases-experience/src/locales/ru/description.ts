@@ -46,6 +46,8 @@ const description = {
   enter_username: 'Установить имя пользователя',
   enter_username_description:
     'Имя пользователя является альтернативой для входа в систему. Имя пользователя должно содержать только буквы, цифры и символы подчеркивания.',
+  enter_username_policy_description:
+    'Имя пользователя является альтернативой для входа в систему. {{requirements}}',
   link_email: 'Привязать почту',
   link_phone: 'Привязать номер телефона',
   link_email_or_phone: 'Привязать почту или номер телефона',
@@ -61,6 +63,12 @@ const description = {
   use_work_email_hint:
     'Use your work email for the best experience and get {{credits}} additional credits',
   sign_in_to_your_account: 'Войди в свой аккаунт',
+  device_activation: 'Активация устройства',
+  device_activation_description:
+    'Введите код, отображённый на вашем устройстве. Убедитесь, что он совпадает, затем продолжите вход на этом устройстве.',
+  device_activation_error_description: 'Введите код, отображённый на вашем устройстве.',
+  device_activation_success: 'Ваше устройство подключено!',
+  device_activation_success_description: 'Вернитесь к вашему устройству, чтобы продолжить.',
   no_region_code_found: 'Не удалось определить код региона',
   verify_email: 'Подтвердите Ваш электронный адрес',
   verify_phone: 'Подтвердите свой номер телефона',
@@ -81,6 +89,17 @@ const description = {
       'должен содержать по крайней мере {{count}} типов прописных букв, строчных букв, цифр и символов',
     character_types_other:
       'должен содержать по крайней мере {{count}} типа прописных букв, строчных букв, цифр и символов',
+  },
+  username_requirements: 'Имя пользователя {{items, list}}.',
+  username_requirement: {
+    length: 'должно содержать от {{min}} до {{max}} символов',
+    characters: 'может содержать только {{characters, list}}',
+  },
+  username_character: {
+    uppercase: 'прописные буквы',
+    lowercase: 'строчные буквы',
+    number: 'цифры',
+    underscore: 'подчёркивания',
   },
   use: 'Использовать',
   single_sign_on_email_form: 'Введите корпоративный адрес электронной почты',
@@ -105,6 +124,8 @@ const description = {
   identifier_register_description:
     'Введите свои {{types, list(type: disjunction;)}} чтобы создать новую учётную запись.',
   all_account_creation_options: 'Все варианты создания учётной записи',
+  password_expired: 'Срок действия вашего пароля истек, и его необходимо сбросить перед входом.',
+  password_expiration_reset: 'Сбросить пароль',
   back_to_sign_in: 'Вернуться ко входу',
   support_email: 'Поддержка по электронной почте: <link></link>',
   support_website: 'Сайт поддержки: <link></link>',

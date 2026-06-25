@@ -46,6 +46,7 @@ const description = {
   enter_username: 'ตั้งชื่อผู้ใช้',
   enter_username_description:
     'ชื่อผู้ใช้สามารถใช้เข้าสู่ระบบแทนได้ ต้องประกอบด้วยตัวอักษร ตัวเลข และขีดล่างเท่านั้น',
+  enter_username_policy_description: 'ชื่อผู้ใช้สามารถใช้เข้าสู่ระบบแทนได้ {{requirements}}',
   link_email: 'เชื่อมโยงอีเมล',
   link_phone: 'เชื่อมโยงเบอร์โทรศัพท์',
   link_email_or_phone: 'เชื่อมโยงอีเมลหรือเบอร์โทรศัพท์',
@@ -58,6 +59,12 @@ const description = {
   use_work_email_hint:
     'Use your work email for the best experience and get {{credits}} additional credits',
   sign_in_to_your_account: 'เข้าสู่บัญชีของคุณ',
+  device_activation: 'เปิดใช้งานอุปกรณ์',
+  device_activation_description:
+    'ป้อนรหัสที่แสดงบนอุปกรณ์ของคุณ ตรวจสอบให้แน่ใจว่าตรงกัน จากนั้นดำเนินการเข้าสู่ระบบบนอุปกรณ์นี้',
+  device_activation_error_description: 'ป้อนรหัสที่แสดงบนอุปกรณ์ของคุณ',
+  device_activation_success: 'อุปกรณ์ของคุณเชื่อมต่อแล้ว!',
+  device_activation_success_description: 'กลับไปที่อุปกรณ์ของคุณเพื่อดำเนินการต่อ',
   no_region_code_found: 'ไม่พบรหัสประเทศ',
   verify_email: 'ยืนยันอีเมลของคุณ',
   verify_phone: 'ยืนยันหมายเลขโทรศัพท์ของคุณ',
@@ -78,6 +85,17 @@ const description = {
       'ต้องมีอย่างน้อย {{count}} ประเภทในตัวพิมพ์ใหญ่ ตัวพิมพ์เล็ก ตัวเลข และสัญลักษณ์',
     character_types_other:
       'ต้องมีอย่างน้อย {{count}} ประเภทในตัวพิมพ์ใหญ่ ตัวพิมพ์เล็ก ตัวเลข และสัญลักษณ์',
+  },
+  username_requirements: 'ชื่อผู้ใช้{{items, list}}',
+  username_requirement: {
+    length: 'ต้องมี {{min}} ถึง {{max}} อักขระ',
+    characters: 'มีได้เฉพาะ {{characters, list}} เท่านั้น',
+  },
+  username_character: {
+    uppercase: 'ตัวพิมพ์ใหญ่',
+    lowercase: 'ตัวพิมพ์เล็ก',
+    number: 'ตัวเลข',
+    underscore: 'ขีดล่าง',
   },
   use: 'ใช้',
   single_sign_on_email_form: 'กรอกอีเมลบริษัทของคุณ',
@@ -101,6 +119,8 @@ const description = {
   all_sign_in_options: 'ตัวเลือกการเข้าสู่ระบบทั้งหมด',
   identifier_register_description: 'กรอก {{types, list(type: disjunction;)}} เพื่อสร้างบัญชีใหม่',
   all_account_creation_options: 'ตัวเลือกการสร้างบัญชีทั้งหมด',
+  password_expired: 'รหัสผ่านของคุณหมดอายุแล้วและต้องรีเซ็ตก่อนจึงจะสามารถลงชื่อเข้าใช้ได้',
+  password_expiration_reset: 'รีเซ็ตรหัสผ่าน',
   back_to_sign_in: 'กลับไปหน้าเข้าสู่ระบบ',
   support_email: 'อีเมลติดต่อ: <link></link>',
   support_website: 'เว็บไซต์สนับสนุน: <link></link>',

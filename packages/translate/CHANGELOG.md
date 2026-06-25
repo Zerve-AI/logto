@@ -1,5 +1,47 @@
 # @logto/translate
 
+## 0.2.14
+
+### Patch Changes
+
+- Updated dependencies [e4eaa5aef5]
+  - @logto/core-kit@2.10.0
+  - @logto/phrases-experience@1.13.3
+
+## 0.2.13
+
+### Patch Changes
+
+- Updated dependencies [32c40b1ad]
+- Updated dependencies [6b9944d01f]
+  - @logto/phrases-experience@1.13.2
+
+## 0.2.12
+
+### Patch Changes
+
+- Updated dependencies [93523a1ae0]
+- Updated dependencies [ab073bb65f]
+- Updated dependencies [3350b13ec8]
+  - @logto/core-kit@2.9.0
+  - @logto/phrases@1.28.0
+  - @logto/shared@3.4.0
+  - @logto/phrases-experience@1.13.1
+
+## 0.2.11
+
+### Patch Changes
+
+- Updated dependencies [7cee48bd97]
+- Updated dependencies [74c993a91e]
+- Updated dependencies [343410f2b0]
+- Updated dependencies [a816cf77cb]
+- Updated dependencies [5ab931e7ac]
+  - @logto/phrases@1.27.0
+  - @logto/phrases-experience@1.13.0
+  - @logto/core-kit@2.8.0
+  - @logto/language-kit@1.3.0
+
 ## 0.2.10
 
 ### Patch Changes

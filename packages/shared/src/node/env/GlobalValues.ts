@@ -50,6 +50,18 @@ export const parseTimeoutEnv = (value?: string): Optional<number | 'DISABLE_TIME
   return Number.isFinite(parsed) ? parsed : undefined;
 };
 
+export const parseNonNegativeIntegerEnv = (value?: string, fallback = 0): number => {
+  const normalized = value?.trim();
+
+  if (!normalized) {
+    return fallback;
+  }
+
+  const parsed = Number(normalized);
+
+  return Number.isSafeInteger(parsed) && parsed >= 0 ? parsed : fallback;
+};
+
 export default class GlobalValues {
   public readonly isProduction = getEnv('NODE_ENV') === 'production';
   public readonly isIntegrationTest = yes(getEnv('INTEGRATION_TEST'));
@@ -137,6 +149,10 @@ export default class GlobalValues {
   /** If the env explicitly indicates it's in the cloud environment. */
   public readonly isCloud = yes(getEnv('IS_CLOUD'));
 
+  /** Enables protected app local development without Cloud-only behavior. */
+  public readonly isProtectedAppLocalDevEnabled =
+    !this.isProduction && yes(getEnv('PROTECTED_APP_LOCAL_DEV'));
+
   /**
    * Indicates whether this Logto instance supports multiple custom domains.
    *
@@ -146,16 +162,6 @@ export default class GlobalValues {
    * can operate with multiple custom domains across both development and production tenants.
    */
   public readonly isMultipleCustomDomainsEnabled = yes(getEnv('MULTIPLE_CUSTOM_DOMAINS_ENABLED'));
-
-  /**
-   * Indicates whether this Logto instance supports access token exchange.
-   *
-   * **NOTE: Only available to enterprise customers running private instances that need this feature.**
-   *
-   * Controlled by the `ACCESS_TOKEN_EXCHANGE_ENABLED` environment variable. When enabled, the instance
-   * supports exchanging access tokens (opaque or JWT) for new tokens via the token exchange grant.
-   */
-  public readonly isAccessTokenExchangeEnabled = yes(getEnv('ACCESS_TOKEN_EXCHANGE_ENABLED'));
 
   // eslint-disable-next-line unicorn/consistent-function-scoping
   public readonly databaseUrl = tryThat(() => assertEnv('DB_URL'), throwErrorWithDsnMessage);
@@ -184,7 +190,13 @@ export default class GlobalValues {
    */
   public readonly databaseStatementTimeout = parseTimeoutEnv(getEnv('DATABASE_STATEMENT_TIMEOUT'));
 
-  /** Global switch for enabling/disabling case-sensitive usernames. */
+  /**
+   * Global switch for enabling/disabling case-sensitive usernames.
+   *
+   * @deprecated Superseded by per-tenant `signInExperience.usernamePolicy.caseSensitive`.
+   * AND-combined as a runtime override: `false` forces case-insensitive for every tenant.
+   * Slated for removal in the next major.
+   */
   public readonly isCaseSensitiveUsername = yes(getEnv('CASE_SENSITIVE_USERNAME', 'true'));
 
   /**
@@ -206,6 +218,15 @@ export default class GlobalValues {
    * You can set it to a truthy value like `true` or `1` to enable cache with the default Redis URL.
    */
   public readonly redisUrl = getEnv('REDIS_URL');
+
+  /**
+   * Default grace period for private signing key rotation, in seconds.
+   * Cloud can configure a safe platform-wide default, while OSS/self-host deployments
+   * may opt in through environment configuration.
+   */
+  public readonly privateKeyRotationGracePeriod = parseNonNegativeIntegerEnv(
+    getEnv('PRIVATE_KEY_ROTATION_GRACE_PERIOD', '0')
+  );
 
   public get dbUrl(): string {
     return this.databaseUrl;
@@ -258,6 +279,14 @@ export default class GlobalValues {
           '- The Admin Console may display incorrect user endpoints on multiple pages, such as guide, config, etc.' +
           ' This issue is caused by the native URL constructor new URL(), which overrides the base pathname.\n\n' +
           '****** END LOGTO WARNING ******\n'
+      );
+    }
+
+    if (process.env.CASE_SENSITIVE_USERNAME !== undefined && !this.isCaseSensitiveUsername) {
+      console.warn(
+        '[deprecated] CASE_SENSITIVE_USERNAME=false overrides every tenant to case-insensitive' +
+          ' username matching, ignoring the per-tenant username policy. Configure case sensitivity' +
+          ' per-tenant via Sign-in experience > Username policy, then remove this env var.'
       );
     }
   }

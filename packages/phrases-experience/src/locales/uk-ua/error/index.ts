@@ -10,10 +10,19 @@ const error = {
   username_exists: "Таке ім'я користувача вже існує",
   username_should_not_start_with_number: "Ім'я користувача не повинно починатися з цифри",
   username_invalid_charset: "Ім'я користувача може містити лише літери, цифри та підкреслення.",
+  username_too_short: "Ім'я користувача повинно містити щонайменше {{min}} символів.",
+  username_too_long: "Ім'я користувача повинно містити не більше {{max}} символів.",
+  username_uppercase_not_allowed: 'Великі літери не дозволені в іменах користувачів.',
+  username_lowercase_not_allowed: 'Малі літери не дозволені в іменах користувачів.',
+  username_numbers_not_allowed: 'Цифри не дозволені в іменах користувачів.',
+  username_underscore_not_allowed: 'Підкреслення не дозволено в іменах користувачів.',
   invalid_email: 'Недійсна електронна пошта',
   invalid_phone: 'Недійсний номер телефону',
   passwords_do_not_match: 'Паролі не збігаються. Будь ласка, спробуйте ще раз.',
   invalid_passcode: 'Недійсний код підтвердження.',
+  device_code_required: 'Необхідно вказати код.',
+  invalid_device_code: 'Код пристрою недійсний.',
+  device_flow_aborted: 'Запит на вхід було перервано.',
   invalid_connector_auth: 'Недійсна авторизація',
   invalid_connector_request: 'Недійсні дані конектора',
   unknown: 'Невідома помилка. Будь ласка, спробуйте пізніше.',
@@ -28,6 +37,9 @@ const error = {
   terms_acceptance_required_description:
     'Ви повинні погодитися з умовами, щоб продовжити. Будь ласка, спробуйте ще раз.',
   something_went_wrong: 'Щось пішло не так',
+  access_denied: 'Доступ заборонено',
+  application_access_denied:
+    'Ви не маєте дозволу на доступ до цього застосунку.\nЗверніться до адміністратора за допомогою.',
   feature_not_enabled:
     'Ви не маєте дозволу на доступ до цієї функції. Зверніться до адміністратора за допомогою.',
 };

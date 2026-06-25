@@ -47,6 +47,8 @@ const description = {
   enter_username: 'Establecer nombre de usuario',
   enter_username_description:
     'El nombre de usuario es una alternativa para iniciar sesión. Debe contener solo letras, números y guiones bajos.',
+  enter_username_policy_description:
+    'El nombre de usuario es una alternativa para iniciar sesión. {{requirements}}',
   link_email: 'Vincular correo electrónico',
   link_phone: 'Vincular teléfono',
   link_email_or_phone: 'Vincular correo electrónico o teléfono',
@@ -61,6 +63,12 @@ const description = {
   use_work_email_hint:
     'Use your work email for the best experience and get {{credits}} additional credits',
   sign_in_to_your_account: 'Inicie sesión en su cuenta',
+  device_activation: 'Activación de dispositivo',
+  device_activation_description:
+    'Ingrese el código que se muestra en su dispositivo. Asegúrese de que coincida y luego continúe para iniciar sesión en este dispositivo.',
+  device_activation_error_description: 'Ingrese el código que se muestra en su dispositivo.',
+  device_activation_success: '¡Su dispositivo está conectado!',
+  device_activation_success_description: 'Regrese a su dispositivo para continuar.',
   no_region_code_found: 'No se encontró código de región',
   verify_email: 'Verificar su correo electrónico',
   verify_phone: 'Verificar su número de teléfono',
@@ -81,6 +89,17 @@ const description = {
       'debe contener al menos {{count}} tipos de letras mayúsculas, letras minúsculas, dígitos y símbolos',
     character_types_other:
       'debe contener al menos {{count}} tipos de letras mayúsculas, letras minúsculas, dígitos y símbolos',
+  },
+  username_requirements: 'Nombre de usuario {{items, list}}.',
+  username_requirement: {
+    length: 'debe tener entre {{min}} y {{max}} caracteres',
+    characters: 'solo puede contener {{characters, list}}',
+  },
+  username_character: {
+    uppercase: 'letras mayúsculas',
+    lowercase: 'letras minúsculas',
+    number: 'números',
+    underscore: 'guiones bajos',
   },
   use: 'Usar',
   single_sign_on_email_form: 'Ingrese su dirección de correo electrónico corporativo',
@@ -107,6 +126,9 @@ const description = {
   identifier_register_description:
     'Ingrese su {{types, list(type: disjunction;)}} para crear una nueva cuenta.',
   all_account_creation_options: 'Todas las opciones de creación de cuenta',
+  password_expired:
+    'Tu contraseña ha caducado y debe ser restablecida antes de que puedas iniciar sesión.',
+  password_expiration_reset: 'Restablecer contraseña',
   back_to_sign_in: 'Volver a iniciar sesión',
   support_email: 'Correo electrónico de soporte: <link></link>',
   support_website: 'Sitio web de soporte: <link></link>',

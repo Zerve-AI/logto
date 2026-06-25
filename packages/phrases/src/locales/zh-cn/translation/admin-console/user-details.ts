@@ -19,6 +19,13 @@ const user_details = {
     new_password: '新密码：',
     password: '密码：',
   },
+  expire_password: {
+    button: '过期',
+    title: '确定要使此密码过期吗？',
+    content: '用户将被要求在下次登录时重置密码。此操作无法撤销。',
+    success: '用户的密码已标记为过期。',
+    not_enabled_tooltip: '密码过期策略未启用。',
+  },
   tab_settings: '设置',
   tab_roles: '用户角色',
   tab_logs: '用户日志',
@@ -63,7 +70,6 @@ const user_details = {
     field_name: '多因素认证',
     field_description: '该用户已启用 2 步认证因素。',
     name_column: '多因素认证',
-
     field_description_empty: '此用户尚未启用两步身份验证因素。',
     deletion_confirmation: '你正在删除现有的两步验证中的 <name/>。你确定要继续吗？',
   },
@@ -140,7 +146,6 @@ const user_details = {
     name_column: '名称',
     session_id_column: '会话 ID',
     location_column: '位置',
-
     browser_on_os: '在 {{os}} 上的 {{browser}}',
     user: '用户',
     applications: '应用',
@@ -151,6 +156,19 @@ const user_details = {
     device_model: '设备型号',
     revoke_session: '撤销会话',
     revoke_session_confirmation: '如果移除此会话，用户将被迫重新进行身份验证。',
+  },
+  third_party_apps: {
+    title: '第三方应用',
+    description: '使用 Logto 作为身份提供商来授权第三方应用。查看并管理该用户已授权访问的应用。',
+    field_name: '已授权第三方应用',
+    multiple_authorized: '该用户已授权多个第三方应用和服务。',
+    not_authorized: '该用户尚未授权任何第三方应用或服务。',
+    name_column: '名称',
+    app_id_column: '应用 ID',
+    access_created_at_column: '授权时间',
+    revoke_access_title: '撤销访问权限？',
+    revoke_access_description:
+      '此操作将撤销该应用在所有设备上访问此用户账户的权限。用户必须重新授权才能恢复访问。',
   },
   connections: {
     title: '连接',

@@ -45,6 +45,7 @@ const description = {
   enter_username: 'تعيين اسم المستخدم',
   enter_username_description:
     'اسم المستخدم هو بديل لتسجيل الدخول. يجب أن يحتوي اسم المستخدم فقط على الأحرف والأرقام وشرطات السفل.',
+  enter_username_policy_description: 'اسم المستخدم هو بديل لتسجيل الدخول. {{requirements}}',
   link_email: 'ربط البريد الإلكتروني',
   link_phone: 'ربط الهاتف',
   link_email_or_phone: 'ربط البريد الإلكتروني أو الهاتف',
@@ -56,6 +57,12 @@ const description = {
   use_work_email_hint:
     'Use your work email for the best experience and get {{credits}} additional credits',
   sign_in_to_your_account: 'تسجيل الدخول إلى حسابك',
+  device_activation: 'تفعيل الجهاز',
+  device_activation_description:
+    'أدخل الرمز المعروض على جهازك. تأكد من تطابقه، ثم تابع لتسجيل الدخول إلى هذا الجهاز.',
+  device_activation_error_description: 'أدخل الرمز المعروض على جهازك.',
+  device_activation_success: 'تم توصيل جهازك!',
+  device_activation_success_description: 'عد إلى جهازك للمتابعة.',
   no_region_code_found: 'لم يتم العثور على رمز المنطقة',
   verify_email: 'تحقق من بريدك الإلكتروني',
   verify_phone: 'تحقق من رقم هاتفك',
@@ -76,6 +83,17 @@ const description = {
       'يجب أن يحتوي على {{count}} أنواع على الأقل من الأحرف الكبيرة والصغيرة والأرقام والرموز',
     character_types_other:
       'يجب أن يحتوي على {{count}} أنواع على الأقل من الأحرف الكبيرة والصغيرة والأرقام والرموز',
+  },
+  username_requirements: 'اسم المستخدم {{items, list}}.',
+  username_requirement: {
+    length: 'يجب أن يتكون من {{min}} إلى {{max}} حرفًا',
+    characters: 'لا يمكن أن يحتوي إلا على {{characters, list}}',
+  },
+  username_character: {
+    uppercase: 'الأحرف الكبيرة',
+    lowercase: 'الأحرف الصغيرة',
+    number: 'الأرقام',
+    underscore: 'الشرطات السفلية',
   },
   use: 'استخدام',
   single_sign_on_email_form: 'أدخل عنوان بريدك الإلكتروني الخاص بالشركة',
@@ -101,6 +119,8 @@ const description = {
   identifier_register_description:
     'أدخل {{types, list(type: disjunction;)}} الخاص بك لإنشاء حساب جديد.',
   all_account_creation_options: 'جميع خيارات إنشاء الحساب',
+  password_expired: 'انتهت صلاحية كلمة المرور الخاصة بك ويجب إعادة تعيينها قبل تسجيل الدخول.',
+  password_expiration_reset: 'إعادة تعيين كلمة المرور',
   back_to_sign_in: 'العودة إلى تسجيل الدخول',
   support_email: 'البريد الإلكتروني للدعم: <link></link>',
   support_website: 'موقع الدعم: <link></link>',

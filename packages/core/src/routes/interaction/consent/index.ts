@@ -1,5 +1,6 @@
 import { UserScope } from '@logto/core-kit';
 import {
+  ApplicationType,
   applicationSignInExperienceGuard,
   buildBuiltInApplicationDataForTenant,
   type ConsentInfoResponse,
@@ -15,7 +16,8 @@ import { type IRouterParamContext } from 'koa-router';
 import { errors } from 'oidc-provider';
 import { z } from 'zod';
 
-import { consent, getMissingScopes } from '#src/libraries/session.js';
+import { consent, getMissingScopes } from '#src/libraries/session/index.js';
+import koaAppAccessControl from '#src/middleware/koa-app-access-control.js';
 import koaGuard from '#src/middleware/koa-guard.js';
 import type { WithInteractionDetailsContext } from '#src/middleware/koa-interaction-details.js';
 import type TenantContext from '#src/tenants/TenantContext.js';
@@ -42,8 +44,9 @@ export default function consentRoutes<T extends IRouterParamContext>(
       body: z.object({
         organizationIds: z.string().array().optional(),
       }),
-      status: [200],
+      status: [200, 400],
     }),
+    koaAppAccessControl(libraries),
     async (ctx, next) => {
       const {
         interactionDetails,
@@ -184,6 +187,7 @@ export default function consentRoutes<T extends IRouterParamContext>(
         missingOIDCScopes: missingOIDCScope,
         resourceScopesToGrant,
         resourceScopesToReject,
+        markAppLevelAccessControlChecked: true,
       });
 
       ctx.body = { redirectTo };
@@ -198,9 +202,10 @@ export default function consentRoutes<T extends IRouterParamContext>(
   router.get(
     consentPath,
     koaGuard({
-      status: [200],
+      status: [200, 400],
       response: consentInfoResponseGuard,
     }),
+    koaAppAccessControl(libraries),
     async (ctx, next) => {
       const { interactionDetails } = ctx;
 
@@ -217,21 +222,27 @@ export default function consentRoutes<T extends IRouterParamContext>(
         new InvalidClient('client must be available')
       );
 
-      assertThat(
-        redirectUri && typeof redirectUri === 'string',
-        new InvalidRedirectUri('redirect_uri must be available')
-      );
-
       const { accountId } = session;
 
       const application = isBuiltInApplicationId(clientId)
         ? buildBuiltInApplicationDataForTenant('', clientId)
         : await queries.applications.findApplicationById(clientId);
 
+      const isDeviceFlowApplication =
+        application.type === ApplicationType.Native &&
+        Boolean(application.customClientMetadata.isDeviceFlow);
+
       const applicationSignInExperience =
         await queries.applicationSignInExperiences.safeFindSignInExperienceByApplicationId(
           clientId
         );
+
+      if (!isDeviceFlowApplication) {
+        assertThat(
+          redirectUri && typeof redirectUri === 'string',
+          new InvalidRedirectUri('redirect_uri must be available')
+        );
+      }
 
       const userInfo = await queries.users.findUserById(accountId);
 
@@ -286,7 +297,8 @@ export default function consentRoutes<T extends IRouterParamContext>(
           (scope) => scope !== 'openid' && scope !== 'offline_access'
         ),
         missingResourceScopes,
-        redirectUri,
+        // Device flow consent does not require a redirect_uri.
+        redirectUri: typeof redirectUri === 'string' ? redirectUri : undefined,
       } satisfies ConsentInfoResponse;
 
       return next();

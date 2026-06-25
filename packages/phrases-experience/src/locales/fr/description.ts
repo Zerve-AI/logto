@@ -47,6 +47,8 @@ const description = {
   enter_username: "Définir un nom d'utilisateur",
   enter_username_description:
     "Le nom d'utilisateur est une alternative pour la connexion. Le nom d'utilisateur doit contenir uniquement des lettres, des chiffres et des underscores.",
+  enter_username_policy_description:
+    "Le nom d'utilisateur est une alternative pour la connexion. {{requirements}}",
   link_email: "Lier l'adresse e-mail",
   link_phone: 'Lier le numéro de téléphone',
   link_email_or_phone: "Lier l'adresse e-mail ou le numéro de téléphone",
@@ -61,6 +63,12 @@ const description = {
   use_work_email_hint:
     'Use your work email for the best experience and get {{credits}} additional credits',
   sign_in_to_your_account: 'Connectez-vous à votre compte',
+  device_activation: "Activation de l'appareil",
+  device_activation_description:
+    "Entrez le code affiché sur votre appareil. Assurez-vous qu'il correspond, puis continuez pour vous connecter à cet appareil.",
+  device_activation_error_description: 'Entrez le code affiché sur votre appareil.',
+  device_activation_success: 'Votre appareil est maintenant connecté !',
+  device_activation_success_description: 'Retournez sur votre appareil pour continuer.',
   no_region_code_found: 'Aucun code de région trouvé',
   verify_email: 'Vérifiez votre e-mail',
   verify_phone: 'Vérifiez votre numéro de téléphone',
@@ -81,6 +89,17 @@ const description = {
       'doit contenir au moins {{count}} types de lettres majuscules, lettres minuscules, chiffres et symboles',
     character_types_other:
       'doit contenir au moins {{count}} types de lettres majuscules, lettres minuscules, chiffres et symboles',
+  },
+  username_requirements: "Nom d'utilisateur {{items, list}}.",
+  username_requirement: {
+    length: 'doit comporter entre {{min}} et {{max}} caractères',
+    characters: 'ne peut contenir que {{characters, list}}',
+  },
+  username_character: {
+    uppercase: 'lettres majuscules',
+    lowercase: 'lettres minuscules',
+    number: 'chiffres',
+    underscore: 'traits de soulignement',
   },
   use: 'Utiliser',
   single_sign_on_email_form: "Entrez votre adresse e-mail d'entreprise",
@@ -106,6 +125,9 @@ const description = {
   identifier_register_description:
     'Entrez votre {{types, list(type: disjunction;)}} pour créer un nouveau compte.',
   all_account_creation_options: 'Toutes les options de création de compte',
+  password_expired:
+    'Votre mot de passe a expiré et doit être réinitialisé avant de pouvoir vous connecter.',
+  password_expiration_reset: 'Réinitialiser le mot de passe',
   back_to_sign_in: 'Retour à la connexion',
   support_email: 'Email de support: <link></link>',
   support_website: 'Site web de support: <link></link>',

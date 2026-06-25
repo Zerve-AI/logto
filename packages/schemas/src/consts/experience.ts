@@ -3,6 +3,7 @@ const routes = Object.freeze({
   register: 'register',
   sso: 'single-sign-on',
   consent: 'consent',
+  device: 'device',
   resetPassword: 'reset-password',
   identifierSignIn: 'identifier-sign-in',
   identifierRegister: 'identifier-register',
@@ -13,3 +14,6 @@ const routes = Object.freeze({
 export const experience = Object.freeze({
   routes,
 } as const);
+
+/** `postMessage` sender tag from admin Console sign-in experience live preview. */
+export const signInExperiencePreviewMessageSender = 'ac_preview';

@@ -46,6 +46,8 @@ const description = {
   enter_username: 'Definir nome de usuário',
   enter_username_description:
     'O nome de usuário é uma alternativa para fazer login. O nome de usuário deve conter apenas letras, números e sublinhados.',
+  enter_username_policy_description:
+    'O nome de usuário é uma alternativa para fazer login. {{requirements}}',
   link_email: 'Linkar e-mail',
   link_phone: 'Linkar telefone',
   link_email_or_phone: 'Linkar e-mail ou telefone',
@@ -57,6 +59,12 @@ const description = {
   use_work_email_hint:
     'Use your work email for the best experience and get {{credits}} additional credits',
   sign_in_to_your_account: 'Faça login na sua conta',
+  device_activation: 'Ativação do dispositivo',
+  device_activation_description:
+    'Insira o código exibido no seu dispositivo. Certifique-se de que corresponde e continue para fazer login neste dispositivo.',
+  device_activation_error_description: 'Insira o código exibido no seu dispositivo.',
+  device_activation_success: 'Seu dispositivo está conectado!',
+  device_activation_success_description: 'Retorne ao seu dispositivo para continuar.',
   no_region_code_found: 'Não foi possível encontrar o código de região do seu telefone.',
   verify_email: 'Verificar e-mail',
   verify_phone: 'Verificar número de telefone',
@@ -77,6 +85,17 @@ const description = {
       'deve conter pelo menos {{count}} tipos de letras maiúsculas, letras minúsculas, dígitos e símbolos',
     character_types_other:
       'deve conter pelo menos {{count}} tipos de letra maiúscula, letra minúscula, dígito e símbolo.',
+  },
+  username_requirements: 'Nome de usuário {{items, list}}.',
+  username_requirement: {
+    length: 'deve ter de {{min}} a {{max}} caracteres',
+    characters: 'pode conter apenas {{characters, list}}',
+  },
+  username_character: {
+    uppercase: 'letras maiúsculas',
+    lowercase: 'letras minúsculas',
+    number: 'números',
+    underscore: 'sublinhados',
   },
   use: 'Usar',
   single_sign_on_email_form: 'Insira o endereço de e-mail corporativo',
@@ -101,6 +120,8 @@ const description = {
   identifier_register_description:
     'Digite seu {{types, list(type: disjunction;)}} para criar uma nova conta.',
   all_account_creation_options: 'Todas as opções de criação de conta',
+  password_expired: 'Sua senha expirou e deve ser redefinida antes que você possa fazer login.',
+  password_expiration_reset: 'Redefinir senha',
   back_to_sign_in: 'Voltar para o login',
   support_email: 'E-mail de suporte: <link></link>',
   support_website: 'Site de suporte: <link></link>',

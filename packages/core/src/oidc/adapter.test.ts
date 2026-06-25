@@ -26,6 +26,8 @@ const oidcModelInstances = {
   upsertInstance: jest.fn(),
   findPayloadById: jest.fn(),
   findPayloadByPayloadField: jest.fn(),
+  findPayloadByUid: jest.fn(),
+  findPayloadByUserCode: jest.fn(),
   consumeInstanceById: jest.fn(),
   destroyInstanceById: jest.fn(),
   revokeInstanceByGrantId: jest.fn(),
@@ -34,7 +36,8 @@ const {
   consumeInstanceById,
   destroyInstanceById,
   findPayloadById,
-  findPayloadByPayloadField,
+  findPayloadByUid,
+  findPayloadByUserCode,
   revokeInstanceByGrantId,
   upsertInstance,
 } = oidcModelInstances;
@@ -80,9 +83,31 @@ describe('postgres Adapter', () => {
       client_id,
       client_name,
       client_secret,
+      appLevelAccessControlEnabled: mockApplication.appLevelAccessControlEnabled,
       ...getConstantClientMetadata(mockEnvSet, type),
       ...snakecaseKeys(oidcClientMetadata),
       ...customClientMetadata,
+    });
+  });
+
+  it('includes app-level access-control gate in client metadata', async () => {
+    const adapter = postgresAdapter(
+      mockEnvSet,
+      new MockQueries({
+        applications: {
+          findApplicationById: jest.fn(
+            async (): Promise<Application> => ({
+              ...mockApplication,
+              appLevelAccessControlEnabled: true,
+            })
+          ),
+        },
+      }),
+      'Client'
+    );
+
+    await expect(adapter.find('foo')).resolves.toMatchObject({
+      appLevelAccessControlEnabled: true,
     });
   });
 
@@ -107,12 +132,12 @@ describe('postgres Adapter', () => {
     expect(findPayloadById).toBeCalledWith(modelName, id);
 
     await adapter.findByUserCode(userCode);
-    expect(findPayloadByPayloadField).toBeCalledWith(modelName, 'userCode', userCode);
+    expect(findPayloadByUserCode).toBeCalledWith(modelName, userCode);
 
     jest.clearAllMocks();
 
     await adapter.findByUid(uid);
-    expect(findPayloadByPayloadField).toBeCalledWith(modelName, 'uid', uid);
+    expect(findPayloadByUid).toBeCalledWith(modelName, uid);
 
     await adapter.consume(id);
     expect(consumeInstanceById).toBeCalledWith(modelName, id);

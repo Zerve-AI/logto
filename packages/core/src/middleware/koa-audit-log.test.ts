@@ -1,6 +1,5 @@
 import type { LogKey } from '@logto/schemas';
 import { LogResult, VerificationType } from '@logto/schemas';
-import { createMockUtils } from '@logto/shared/esm';
 import i18next from 'i18next';
 import type { Context } from 'koa';
 import Router, { type IRouterParamContext } from 'koa-router';
@@ -17,19 +16,6 @@ import type { WithLogContext, LogPayload } from './koa-audit-log.js';
 const { jest } = import.meta;
 
 await mockIdGenerators();
-
-const { mockEsm } = createMockUtils(jest);
-const getIsDevFeaturesEnabled = jest.fn(() => true);
-
-mockEsm('#src/env-set/index.js', () => ({
-  EnvSet: {
-    values: {
-      get isDevFeaturesEnabled() {
-        return getIsDevFeaturesEnabled();
-      },
-    },
-  },
-}));
 
 const insertLog = jest.fn();
 const queries = { logs: { insertLog } } as unknown as Queries;
@@ -68,10 +54,6 @@ describe('koaAuditLog middleware', () => {
 
   afterEach(() => {
     jest.clearAllMocks();
-  });
-
-  beforeEach(() => {
-    getIsDevFeaturesEnabled.mockReturnValue(true);
   });
 
   it('should insert a success log when next() does not throw an error', async () => {
@@ -133,8 +115,7 @@ describe('koaAuditLog middleware', () => {
     });
   });
 
-  it('should skip sign-in context and parsed user agent when dev features are disabled', async () => {
-    getIsDevFeaturesEnabled.mockReturnValue(false);
+  it('should include sign-in context and parsed user agent with partial sign-in context headers', async () => {
     const ctx: TestContext = createTestContext({
       'user-agent': userAgent,
       'x-logto-cf-country': 'US',
@@ -156,6 +137,10 @@ describe('koaAuditLog middleware', () => {
         result: LogResult.Success,
         ip,
         userAgent,
+        userAgentParsed,
+        signInContext: {
+          country: 'US',
+        },
       },
     });
   });
@@ -276,6 +261,37 @@ describe('koaAuditLog middleware', () => {
       payload: {
         ...mockPayload,
         verifications: [maskedMockVerificationData],
+        key: logKey,
+        result: LogResult.Success,
+        ip,
+        userAgent,
+        userAgentParsed,
+      },
+    });
+  });
+
+  it('should strip null characters so the payload is safe to store as jsonb', async () => {
+    const ctx: TestContext = createTestContext({ 'user-agent': userAgent });
+    ctx.request.ip = ip;
+
+    const next = async () => {
+      const log = ctx.createLog(logKey);
+      const nul = String.fromCodePoint(0);
+      log.append({
+        params: {
+          grant_type: `authorization_code${nul}`,
+          nested: [`a${nul}b`],
+          [`field${nul}name`]: 'value',
+        },
+      });
+    };
+    await koaLog(queries)(ctx, next);
+
+    expect(insertLog).toBeCalledWith({
+      id: mockId,
+      key: logKey,
+      payload: {
+        params: { grant_type: 'authorization_code', nested: ['ab'], fieldname: 'value' },
         key: logKey,
         result: LogResult.Success,
         ip,

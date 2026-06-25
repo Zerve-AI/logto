@@ -1,5 +1,13 @@
 const user = {
   username_already_in_use: 'اسم المستخدم هذا مستخدم بالفعل.',
+  username_starts_with_number: 'لا يمكن أن يبدأ اسم المستخدم برقم.',
+  username_invalid_charset_hard: 'اسم المستخدم يمكن أن يحتوي فقط على حروف وأرقام وشرطات سفلية.',
+  username_too_short: 'اسم المستخدم قصير جدًا.',
+  username_too_long: 'اسم المستخدم طويل جدًا.',
+  username_uppercase_not_allowed: 'لا يمكن أن يحتوي اسم المستخدم على حروف كبيرة.',
+  username_lowercase_not_allowed: 'لا يمكن أن يحتوي اسم المستخدم على حروف صغيرة.',
+  username_numbers_not_allowed: 'لا يمكن أن يحتوي اسم المستخدم على أرقام.',
+  username_underscore_not_allowed: 'لا يمكن أن يحتوي اسم المستخدم على شرطات سفلية.',
   email_already_in_use: 'هذا البريد الإلكتروني مرتبط بحساب موجود بالفعل.',
   phone_already_in_use: 'هذا الرقم الهاتفي مرتبط بحساب موجود بالفعل.',
   invalid_email: 'عنوان البريد الإلكتروني غير صالح.',
@@ -42,6 +50,7 @@ const user = {
   username_required: 'اسم المستخدم هو معرف مطلوب، لا يمكنك تعيينه ليكون null.',
   email_or_phone_required:
     'عنوان البريد الإلكتروني أو رقم الهاتف هو معرف مطلوب، يجب تحديد واحد على الأقل.',
+  last_sign_in_method_required: 'يجب أن تحتفظ بطريقة واحدة متاحة على الأقل لتسجيل الدخول في حسابك.',
   email_required: 'عنوان البريد الإلكتروني هو معرف مطلوب، لا يمكنك تعيينه ليكون null.',
   phone_required: 'رقم الهاتف هو معرف مطلوب، لا يمكنك تعيينه ليكون null.',
   enterprise_sso_identity_not_exists:

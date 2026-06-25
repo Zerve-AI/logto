@@ -73,6 +73,7 @@ export const customRoutes: Readonly<RouteDictionary> = Object.freeze({
   // Users
   'post /users/:userId/roles': 'AssignUserRoles',
   'post /users/:userId/password/verify': 'VerifyUserPassword',
+  'patch /users/:userId/password/expiration': 'UpdateUserPasswordExpiration',
   'post /users/:userId/personal-access-tokens/delete': 'DeletePersonalAccessTokenByName',
   'patch /users/:userId/personal-access-tokens': 'UpdatePersonalAccessTokenByName',
   // Dashboard
@@ -88,6 +89,9 @@ export const customRoutes: Readonly<RouteDictionary> = Object.freeze({
   'get /.well-known/sign-in-exp': 'GetSignInExperienceConfig',
   // Custom UI assets
   'post /sign-in-exp/default/custom-ui-assets': 'UploadCustomUiAssets',
+  // Username policy
+  'get /sign-in-exp/username-policy/case-sensitivity-conflicts':
+    'GetUsernameCaseSensitivityConflicts',
   // One-time tokens
   'post /one-time-tokens': 'AddOneTimeTokens',
   'post /one-time-tokens/verify': 'VerifyOneTimeToken',
@@ -99,9 +103,14 @@ export const customRoutes: Readonly<RouteDictionary> = Object.freeze({
   'delete /custom-profile-fields/:name': 'DeleteCustomProfileFieldByName',
   'post /custom-profile-fields/batch': 'CreateCustomProfileFieldsBatch',
   'post /custom-profile-fields/properties/sie-order': 'UpdateCustomProfileFieldsSieOrder',
+  // Domains
+  'post /domains/cleanup': 'CleanupDomains',
   // ID token config
   'get /configs/id-token': 'GetIdTokenConfig',
   'put /configs/id-token': 'UpsertIdTokenConfig',
+  // Session config
+  'get /configs/oidc/session': 'GetOidcSessionConfig',
+  'patch /configs/oidc/session': 'UpdateOidcSessionConfig',
   ...(EnvSet.values.isDevFeaturesEnabled ? devFeatureCustomRoutes : {}),
 } satisfies RouteDictionary); // Key assertion doesn't work without `satisfies`
 

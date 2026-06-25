@@ -1,5 +1,13 @@
 const user = {
   username_already_in_use: 'ชื่อผู้ใช้นี้ถูกใช้ไปแล้ว',
+  username_starts_with_number: 'ชื่อผู้ใช้ต้องไม่เริ่มต้นด้วยตัวเลข',
+  username_invalid_charset_hard: 'ชื่อผู้ใช้สามารถประกอบด้วยตัวอักษร ตัวเลข และขีดล่างเท่านั้น',
+  username_too_short: 'ชื่อผู้ใช้สั้นเกินไป',
+  username_too_long: 'ชื่อผู้ใช้ยาวเกินไป',
+  username_uppercase_not_allowed: 'ชื่อผู้ใช้ต้องไม่มีตัวอักษรตัวใหญ่',
+  username_lowercase_not_allowed: 'ชื่อผู้ใช้ต้องไม่มีตัวอักษรตัวเล็ก',
+  username_numbers_not_allowed: 'ชื่อผู้ใช้ต้องไม่มีตัวเลข',
+  username_underscore_not_allowed: 'ชื่อผู้ใช้ต้องไม่มีขีดล่าง',
   email_already_in_use: 'อีเมลนี้ถูกเชื่อมโยงกับบัญชีที่มีอยู่แล้ว',
   phone_already_in_use: 'เบอร์โทรศัพท์นี้ถูกเชื่อมโยงกับบัญชีที่มีอยู่แล้ว',
   invalid_email: 'ที่อยู่อีเมลไม่ถูกต้อง',
@@ -41,6 +49,8 @@ const user = {
   username_required: 'ชื่อผู้ใช้เป็นข้อมูลบังคับ ไม่สามารถตั้งค่าเป็นค่าว่างได้',
   email_or_phone_required:
     'ที่อยู่อีเมลหรือหมายเลขโทรศัพท์เป็นข้อมูลบังคับ ต้องมีอย่างน้อยหนึ่งอย่าง',
+  last_sign_in_method_required:
+    'คุณต้องมีวิธีลงชื่อเข้าใช้ที่ใช้งานได้อย่างน้อยหนึ่งวิธีในบัญชีของคุณ',
   email_required: 'ที่อยู่อีเมลเป็นข้อมูลบังคับ ไม่สามารถตั้งค่าเป็นค่าว่างได้',
   phone_required: 'หมายเลขโทรศัพท์เป็นข้อมูลบังคับ ไม่สามารถตั้งค่าเป็นค่าว่างได้',
   enterprise_sso_identity_not_exists:

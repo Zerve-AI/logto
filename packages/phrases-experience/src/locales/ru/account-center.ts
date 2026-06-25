@@ -3,6 +3,17 @@ const account_center = {
     title: 'Страница не найдена',
     description: 'Эта страница недоступна.',
   },
+  page: {
+    title: 'Аккаунт',
+    security_title: 'Безопасность',
+    security_description: 'Измените здесь настройки аккаунта, чтобы обеспечить его безопасность.',
+    profile_title: 'Личная информация',
+    profile_description: 'Измените здесь свою личную информацию.',
+    sidebar_personal_info: 'Личная информация',
+    sidebar_security: 'Безопасность',
+    sidebar_sessions: 'Сессии',
+    support: 'Поддержка',
+  },
   verification: {
     title: 'Проверка безопасности',
     description:
@@ -12,6 +23,9 @@ const account_center = {
     error_verify_failed: 'Не удалось подтвердить. Введите код ещё раз.',
     verification_required: 'Срок действия проверки истёк. Подтвердите личность ещё раз.',
     try_another_method: 'Попробовать другой способ подтверждения',
+    no_available_methods_title: 'Нет доступных способов подтверждения',
+    no_available_methods_description:
+      'У вас не настроены способы подтверждения. Сначала добавьте к аккаунту пароль, email или номер телефона.',
   },
   password_verification: {
     title: 'Подтвердите пароль',
@@ -51,7 +65,69 @@ const account_center = {
   username: {
     title: 'Установить имя пользователя',
     description: 'Имя пользователя может содержать только буквы, цифры и символы подчеркивания.',
+    policy_description: '{{requirements}}',
     success: 'Имя пользователя успешно обновлено.',
+  },
+  security: {
+    add: 'Добавить',
+    change: 'Изменить',
+    remove: 'Удалить',
+    not_set: 'Не задано',
+    social_sign_in: 'Социальный вход',
+    social_not_linked: 'Не привязано',
+    email_phone: 'Электронная почта / Телефон',
+    email: 'Электронная почта',
+    phone: 'Телефон',
+    password: 'Пароль',
+    configured: 'Настроено',
+    not_configured: 'Не настроено',
+    two_step_verification: 'Двухэтапная проверка',
+    authenticator_app: 'Приложение для аутентификации',
+    passkeys: 'Passkeys',
+    backup_codes: 'Резервные коды',
+    email_verification_code: 'Код подтверждения по электронной почте',
+    phone_verification_code: 'Код подтверждения по телефону',
+    passkeys_count_one: '{{count}} passkey',
+    passkeys_count_other: '{{count}} passkeys',
+    backup_codes_count_one: '{{count}} код остался',
+    backup_codes_count_other: '{{count}} кодов осталось',
+    view: 'Просмотр',
+    manage: 'Управление',
+    turn_on_2_step_verification_description:
+      'Добавьте дополнительный уровень безопасности. При входе вам будет предложен второй шаг верификации.',
+    turn_off_2_step_verification: 'Отключить двухэтапную верификацию',
+    turn_off_2_step_verification_description:
+      'Отключение двухэтапной верификации удалит дополнительный уровень защиты вашей учётной записи при входе. Вы уверены, что хотите продолжить?',
+    disable_2_step_verification: 'Отключить',
+    no_verification_method_warning:
+      'Вы не добавили второй способ верификации. Добавьте хотя бы один, чтобы включить двухэтапную верификацию при входе.',
+    passkey_sign_in_prompt: 'Предлагать настроить passkey',
+    passkey_sign_in_prompt_description:
+      'Когда включено, вам будет предложено настроить passkey для более быстрого и безопасного входа.',
+    account_removal: 'Удаление аккаунта',
+    delete_your_account: 'Удалите свой аккаунт',
+    delete_account: 'Удалить аккаунт',
+    remove_username_confirmation_title: 'Удалить имя пользователя',
+    remove_username_confirmation_description:
+      'После удаления вы больше не сможете входить с этим именем пользователя. Вы уверены, что хотите продолжить?',
+    remove_email_confirmation_title: 'Удалить адрес электронной почты',
+    remove_email_confirmation_description:
+      'После удаления вы больше не сможете входить с этим адресом электронной почты. Вы уверены, что хотите продолжить?',
+    remove_phone_confirmation_title: 'Удалить номер телефона',
+    remove_phone_confirmation_description:
+      'После удаления вы больше не сможете входить с этим номером телефона. Вы уверены, что хотите продолжить?',
+    email_removed: 'Адрес электронной почты успешно удалён.',
+    phone_removed: 'Номер телефона успешно удалён.',
+    username_removed: 'Имя пользователя успешно удалено.',
+  },
+  social: {
+    linked: '{{connector}} успешно привязан.',
+    not_enabled:
+      'Этот способ входа через социальную сеть не включён. Обратитесь к администратору за помощью.',
+    removed: '{{connector}} успешно удален.',
+    remove_confirmation_title: 'Удалить социальный аккаунт',
+    remove_confirmation_description:
+      'Если вы удалите {{connector}}, возможно, вы не сможете входить с его помощью, пока не добавите его снова.',
   },
   password: {
     title: 'Установить пароль',
@@ -131,6 +207,10 @@ const account_center = {
       title: 'Приложение для аутентификации добавлено!',
       description: 'Ваше приложение для аутентификации было успешно привязано к вашему аккаунту.',
     },
+    totp_replaced: {
+      title: 'Приложение для аутентификации заменено!',
+      description: 'Ваше приложение для аутентификации было успешно заменено.',
+    },
     backup_code: {
       title: 'Резервные коды созданы!',
       description: 'Ваши резервные коды сохранены. Храните их в надежном месте.',
@@ -173,6 +253,28 @@ const account_center = {
     name_passkey_description:
       'Вы успешно подтвердили это устройство для двухэтапной аутентификации. Настройте имя, чтобы различать ключи, если их несколько.',
     name_input_label: 'Имя',
+  },
+  sessions: {
+    page_title: 'Сессии',
+    page_description: 'Управляйте активными сессиями и авторизованными сторонними приложениями.',
+    title: 'Сессии',
+    current_session: 'Текущая сессия',
+    signed_in_at: 'Вход выполнен {{date}}',
+    revoke_session: 'Выйти',
+    revoke_session_title: 'Завершить сессию',
+    revoke_session_description:
+      'Это завершит сессию и отзовёт весь связанный доступ. Вы уверены, что хотите продолжить?',
+    no_other_sessions: 'Нет других активных сессий.',
+    loading: 'Загрузка...',
+    third_party_apps_title: 'Сторонние приложения',
+    no_third_party_apps: 'Нет авторизованных сторонних приложений.',
+    third_party_apps_load_failed: 'Не удалось загрузить сторонние приложения. Повторите попытку.',
+    granted_at: 'Авторизовано {{date}}',
+    revoke_grant: 'Удалить',
+    revoke_grant_title: 'Удалить доступ стороннего приложения',
+    revoke_grant_description:
+      'Это отзовёт весь доступ, предоставленный этому приложению. Вы уверены, что хотите продолжить?',
+    revoke_grant_failed: 'Не удалось отозвать некоторые разрешения. Пожалуйста, попробуйте снова.',
   },
 };
 

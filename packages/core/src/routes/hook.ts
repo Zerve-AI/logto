@@ -1,6 +1,5 @@
 import {
   Hooks,
-  InteractionHookEvent,
   Logs,
   ProductEvent,
   type WebhookLogPrefix,
@@ -10,7 +9,6 @@ import {
   hookEventsGuard,
   hookResponseGuard,
   type Hook,
-  type HookEvent,
   type HookResponse,
 } from '@logto/schemas';
 import { generateStandardId, generateStandardSecret } from '@logto/shared';
@@ -18,12 +16,12 @@ import { conditional, deduplicate, yes } from '@silverhand/essentials';
 import { subDays } from 'date-fns';
 import { z } from 'zod';
 
-import { EnvSet } from '#src/env-set/index.js';
 import RequestError from '#src/errors/RequestError/index.js';
 import koaGuard from '#src/middleware/koa-guard.js';
 import koaPagination from '#src/middleware/koa-pagination.js';
 import { koaReportSubscriptionUpdates, koaQuotaGuard } from '#src/middleware/koa-quota-guard.js';
 import assertThat from '#src/utils/assert-that.js';
+import { parseTimestampParam, validateTimeWindow } from '#src/utils/time-window.js';
 
 import { captureEvent } from '../utils/posthog.js';
 
@@ -32,27 +30,6 @@ import type { ManagementApiRouter, RouterInitArgs } from './types.js';
 const nonemptyUniqueHookEventsGuard = hookEventsGuard
   .nonempty()
   .transform((events) => deduplicate(events));
-
-const guardAdaptiveMfaHookEvent = (events?: HookEvent[], event?: HookEvent) => {
-  if (EnvSet.values.isDevFeaturesEnabled) {
-    return;
-  }
-
-  const hasAdaptiveMfaHookEvent =
-    event === InteractionHookEvent.PostSignInAdaptiveMfaTriggered ||
-    events?.includes(InteractionHookEvent.PostSignInAdaptiveMfaTriggered);
-
-  assertThat(
-    !hasAdaptiveMfaHookEvent,
-    new RequestError(
-      { code: 'guard.invalid_input', status: 400 },
-      {
-        reason: 'hook.event_not_supported_when_dev_features_disabled',
-        event: InteractionHookEvent.PostSignInAdaptiveMfaTriggered,
-      }
-    )
-  );
-};
 
 export default function hookRoutes<T extends ManagementApiRouter>(
   ...[router, { id: tenantId, queries, libraries }]: RouterInitArgs<T>
@@ -145,37 +122,57 @@ export default function hookRoutes<T extends ManagementApiRouter>(
     koaPagination(),
     koaGuard({
       params: z.object({ id: z.string() }),
-      query: z.object({ logKey: z.string().optional() }),
+      query: z.object({
+        logKey: z.string().optional(),
+        enableCap: z.string().optional(),
+        start_time: z.string().optional(),
+        end_time: z.string().optional(),
+      }),
       response: Logs.guard.omit({ tenantId: true }).array(),
-      status: 200,
+      status: [200, 400],
     }),
     async (ctx, next) => {
       const { limit, offset } = ctx.pagination;
 
       const {
         params: { id },
-        query: { logKey },
+        query: { logKey, enableCap, start_time, end_time },
       } = ctx.guard;
 
-      const includeKeyPrefix: WebhookLogPrefix[] = [hook.Type.TriggerHook];
-      const startTimeExclusive = subDays(new Date(), 1).getTime();
+      const userStart = parseTimestampParam(start_time, 'start_time');
+      const userEnd = parseTimestampParam(end_time, 'end_time');
+      validateTimeWindow(userStart, userEnd);
 
-      const [{ count }, logs] = await Promise.all([
-        countLogs({
-          logKey,
-          payload: { hookId: id },
-          startTimeExclusive,
-          includeKeyPrefix,
-        }),
+      const includeKeyPrefix: WebhookLogPrefix[] = [hook.Type.TriggerHook];
+      // Backward compat: when neither time param is supplied, fall back to the
+      // historical 24h lower bound. When the caller supplies either bound,
+      // honor their window as-is and skip the default.
+      const hasExplicitWindow = userStart !== undefined || userEnd !== undefined;
+      const startTime = hasExplicitWindow ? userStart : subDays(new Date(), 1).getTime();
+      const endTime = userEnd;
+
+      const [{ count, isCapped }, logs] = await Promise.all([
+        countLogs(
+          {
+            logKey,
+            payload: { hookId: id },
+            startTime,
+            endTime,
+            includeKeyPrefix,
+          },
+          { capped: yes(enableCap) }
+        ),
         findLogs(limit, offset, {
           logKey,
           payload: { hookId: id },
-          startTimeExclusive,
+          startTime,
+          endTime,
           includeKeyPrefix,
         }),
       ]);
 
       ctx.pagination.totalCount = count;
+      ctx.pagination.totalCountIsCapped = isCapped;
       ctx.body = logs;
 
       return next();
@@ -199,8 +196,6 @@ export default function hookRoutes<T extends ManagementApiRouter>(
     }),
     async (ctx, next) => {
       const { event, events, enabled, ...rest } = ctx.guard.body;
-
-      guardAdaptiveMfaHookEvent(events, event);
 
       assertThat(events ?? event, new RequestError({ code: 'hook.missing_events', status: 400 }));
 
@@ -233,8 +228,6 @@ export default function hookRoutes<T extends ManagementApiRouter>(
         body: { events, config },
       } = ctx.guard;
 
-      guardAdaptiveMfaHookEvent(events);
-
       await triggerTestHook(id, events, config);
 
       ctx.status = 204;
@@ -261,9 +254,6 @@ export default function hookRoutes<T extends ManagementApiRouter>(
         params: { id },
         body,
       } = ctx.guard;
-
-      // `body.event` could be `null`.
-      guardAdaptiveMfaHookEvent(body.events, body.event ?? undefined);
 
       ctx.body = await updateHookById(id, body, 'replace');
 

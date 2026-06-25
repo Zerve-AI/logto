@@ -1,5 +1,39 @@
 # Change Log
 
+## 2.10.0
+
+### Minor Changes
+
+- e4eaa5aef5: add custom CSP utility methods
+
+## 2.9.0
+
+### Minor Changes
+
+- 93523a1ae0: add subtle primary overlay color token for console themes
+
+  This adds the missing `--color-overlay-primary-subtle` token for both light and dark console themes.
+
+### Patch Changes
+
+- Updated dependencies [3350b13ec8]
+  - @logto/shared@3.4.0
+
+## 2.8.0
+
+### Minor Changes
+
+- 74c993a91e: introduce new `UserScope.Sessions` scope
+
+  This change introduces a new `urn:logto:scope:sessions` user scope to the Logto system.
+
+  This new scope does not issue any additional user claims, but serves as a permission marker for accessing session-related endpoints in the user account API. By including this scope in the user's permissions, applications can enable features such as session management and session revocation for that user.
+
+### Patch Changes
+
+- Updated dependencies [5ab931e7ac]
+  - @logto/language-kit@1.3.0
+
 ## 2.7.1
 
 ### Patch Changes
