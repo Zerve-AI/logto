@@ -3,7 +3,7 @@
 .main,
 .divider,
 .otherMethods {
-  margin-bottom: _.unit(4);
+  margin-bottom: _.unit(6);
 }
 
 .terms {
@@ -18,15 +18,13 @@
 }
 
 .createAccount,
-.useWorkEmailHint,
 .singleSignOn {
   text-align: center;
-  margin-bottom: _.unit(4);
+  color: var(--color-type-secondary);
+  font-size: 14px;
+  font-weight: 500;
 }
 
-.useWorkEmailHint {
-  padding: 0 _.unit(6);
-}
 
 .placeHolder {
   flex: 1;

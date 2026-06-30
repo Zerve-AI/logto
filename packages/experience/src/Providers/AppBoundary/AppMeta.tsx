@@ -46,8 +46,7 @@ const AppMeta = () => {
         className={classNames(
           conditionalString(isPreview && styles.preview),
           platform === 'mobile' ? 'mobile' : 'desktop',
-          styles.dark,
-          styles.zerve
+          conditionalString(styles[theme])
         )}
       />
     </Helmet>

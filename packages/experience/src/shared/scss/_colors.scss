@@ -227,13 +227,22 @@
   --color-overlay-brand-hover: rgba(202, 190, 255, 8%); // 8% --color-brand-40
   --color-overlay-brand-pressed: rgba(202, 190, 255, 12%); // 12% --color-brand-40
   --color-overlay-brand-focused: rgba(202, 190, 255, 16%); // 16% --color-brand-40
+
+
+  @include zerve-dark;
 }
 
-@mixin zerve {
-  --color-neutral-100: #18181b;
-  --color-surface-3: #27272b;
-  --color-shadow-2: 0 0 0 1px #333336;
+@mixin zerve-dark {
+  --color-neutral-10: #fbfbff;
+  --color-neutral-50: #aeaeb2;
+  --color-neutral-80: #333336;
+  --color-neutral-100: #05070f;
+  --color-surface-3: #0d0d11;
+  --color-shadow-2: 0 0 0 1px #1d1d20, 0 12px 40px 0 rgba(255, 212, 0, 10%);
   --color-danger-default: #f04438;
+
   --zerve-primary-button-text-color: #0d0d11;
   --zerve-input-focus-border-color: #fff;
+  --zerve-checkbox-icon-color: var(--color-neutral-80);
+  --zerve-footer-link-color: #878799;
 }

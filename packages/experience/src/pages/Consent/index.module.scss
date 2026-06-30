@@ -25,13 +25,6 @@
   gap: _.unit(2);
 }
 
-.footerLink {
-  align-items: center;
-  margin-top: _.unit(6);
-  @include _.flex_row;
-  justify-content: center;
-  gap: _.unit(1);
-}
 
 :global(body.mobile) {
   .scopesCard {

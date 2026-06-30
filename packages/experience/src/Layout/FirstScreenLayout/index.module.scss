@@ -11,10 +11,6 @@
 }
 
 :global(body.desktop) {
-  .wrapper {
-    padding: _.unit(6) 0;
-  }
-
   .placeholderTop {
     flex: 3;
   }

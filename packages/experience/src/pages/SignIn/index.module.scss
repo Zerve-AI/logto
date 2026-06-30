@@ -3,7 +3,7 @@
 .main,
 .otherMethods,
 .divider {
-  margin-bottom: _.unit(4);
+  margin-bottom: _.unit(6);
 }
 
 .terms {
@@ -21,11 +21,6 @@
   justify-content: center;
 }
 
-.createAccount,
-.singleSignOn {
-  text-align: center;
-  margin-bottom: _.unit(4);
-}
 
 .placeHolder {
   flex: 1;

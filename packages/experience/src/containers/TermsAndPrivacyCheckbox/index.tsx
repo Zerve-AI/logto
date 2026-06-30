@@ -1,6 +1,5 @@
 import classNames from 'classnames';
 import { useCallback } from 'react';
-import { useTranslation } from 'react-i18next';
 
 import Checkbox from '@/components/Checkbox';
 import TermsLinks from '@/components/TermsLinks';
@@ -16,9 +15,10 @@ type Props = {
 const TermsAndPrivacyCheckbox = ({ className }: Props) => {
   const { termsAgreement, setTermsAgreement, termsOfUseUrl, privacyPolicyUrl, isTermsDisabled } =
     useTerms();
-  const { t } = useTranslation();
 
-  const prefix = t('description.agree_with_terms');
+  // Const { t } = useTranslation();
+  // Const prefix = t('description.agree_with_terms');
+  const prefix = 'I agree to the ';
 
   const toggle = useCallback(() => {
     setTermsAgreement((termsAgreement) => !termsAgreement);

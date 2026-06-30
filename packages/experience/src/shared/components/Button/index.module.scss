@@ -4,11 +4,11 @@
   @include _.flex-row;
   justify-content: center;
   align-items: center;
-  height: 44px;
-  padding: 0 _.unit(4);
+  height: 50px;
+  padding: 0 _.unit(3);
   border-radius: var(--radius);
   cursor: pointer;
-  font: var(--font-label-1);
+  font: var(--zerve-font-button);
   -webkit-appearance: none;
   appearance: none;
   -webkit-tap-highlight-color: transparent;
@@ -106,10 +106,6 @@
 }
 
 :global(body.desktop) {
-  .button {
-    font: var(--font-label-2);
-  }
-
   .primary {
     &:focus-visible {
       outline: 3px solid var(--color-overlay-brand-focused);

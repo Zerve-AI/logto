@@ -1,12 +1,11 @@
 @use '@/shared/scss/underscore' as _;
 
 .button {
-  justify-content: normal;
-  padding: 0 _.unit(4);
+  column-gap: _.unit(3);
 
   .icon {
-    width: 24px;
-    height: 24px;
+    width: _.unit(6);
+    height: _.unit(6);
     color: var(--color-type-primary);
   }
 
@@ -20,9 +19,7 @@
   }
 
   .name {
-    flex: 1;
     overflow: hidden;
-    margin-inline-start: _.unit(-6);
     @include _.flex-row;
     height: 100%;
 
@@ -30,19 +27,5 @@
       @include _.multi-line-ellipsis(2);
       line-height: _.unit(5);
     }
-
-    .placeHolder {
-      flex: 1;
-
-      &:first-child {
-        min-width: _.unit(10);
-      }
-    }
-  }
-}
-
-:global(body.desktop) {
-  .name span {
-    line-height: _.unit(4);
   }
 }

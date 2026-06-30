@@ -1,6 +1,7 @@
 import type { Nullable } from '@silverhand/essentials';
 import classNames from 'classnames';
 import type { TFuncKey } from 'i18next';
+import { type ReactNode } from 'react';
 
 import ConnectIcon from '@/assets/icons/connect-icon.svg?react';
 import DynamicT from '@/shared/components/DynamicT';
@@ -13,6 +14,7 @@ export type Props = {
   readonly thirdPartyLogo?: Nullable<string>;
   readonly headline?: TFuncKey;
   readonly headlineInterpolation?: Record<string, unknown>;
+  readonly subHeadline?: ReactNode;
 };
 
 const BrandingHeader = ({
@@ -20,6 +22,7 @@ const BrandingHeader = ({
   thirdPartyLogo,
   headline,
   headlineInterpolation,
+  subHeadline,
   className,
 }: Props) => {
   const shouldShowLogo = Boolean(thirdPartyLogo ?? logo);
@@ -42,6 +45,8 @@ const BrandingHeader = ({
           <DynamicT forKey={headline} interpolation={headlineInterpolation} />
         </div>
       )}
+
+      {subHeadline && <div className={styles.subHeadline}>{subHeadline}</div>}
     </div>
   );
 };

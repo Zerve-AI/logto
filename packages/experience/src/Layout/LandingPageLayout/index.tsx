@@ -1,8 +1,7 @@
 import { type ConsentInfoResponse } from '@logto/schemas';
 import classNames from 'classnames';
 import type { TFuncKey } from 'i18next';
-import type { ReactNode } from 'react';
-import { useContext } from 'react';
+import { useContext, type ReactNode } from 'react';
 
 import PageContext from '@/Providers/PageContextProvider/PageContext';
 import BrandingHeader from '@/components/BrandingHeader';
@@ -20,9 +19,16 @@ type Props = {
   readonly title: TFuncKey;
   readonly titleInterpolation?: Record<string, unknown>;
   readonly thirdPartyBranding?: ThirdPartyBranding;
+  readonly subTitle?: ReactNode;
 };
 
-const LandingPageLayout = ({ children, title, titleInterpolation, thirdPartyBranding }: Props) => {
+const LandingPageLayout = ({
+  children,
+  title,
+  titleInterpolation,
+  thirdPartyBranding,
+  subTitle,
+}: Props) => {
   const { experienceSettings, theme } = useContext(PageContext);
 
   if (!experienceSettings) {
@@ -40,6 +46,7 @@ const LandingPageLayout = ({ children, title, titleInterpolation, thirdPartyBran
         className={classNames(styles.header, layoutClassNames.brandingHeader)}
         headline={title}
         headlineInterpolation={titleInterpolation}
+        subHeadline={subTitle}
         logo={getBrandingLogoUrl({ theme, branding, isDarkModeEnabled })}
         thirdPartyLogo={
           thirdPartyBranding &&

@@ -5,7 +5,7 @@ body {
   @include colors.static;
   @include fonts.fonts;
 
-  --radius: 8px;
+  --radius: 12px;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: auto;
   margin: 0;

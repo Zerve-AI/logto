@@ -3,6 +3,7 @@ import { type ConsentInfoResponse } from '@logto/schemas';
 import { useCallback, useEffect, useMemo, useState } from 'react';
 import { Trans, useTranslation } from 'react-i18next';
 
+import LayoutAsidePortal from '@/Layout/AppLayout/LayoutAsidePortal';
 import LandingPageLayout from '@/Layout/LandingPageLayout';
 import { consent, getConsentInfo } from '@/apis/consent';
 import TermsLinks from '@/components/TermsLinks';
@@ -215,10 +216,13 @@ const Consent = () => {
           </Trans>
         </div>
       )}
-      <div className={styles.footerLink}>
-        {t('description.not_you')}{' '}
-        <TextLink replace to="/sign-in" text="action.use_another_account" />
-      </div>
+
+      <LayoutAsidePortal>
+        <div>
+          {t('description.not_you')}{' '}
+          <TextLink replace to="/sign-in" text="action.use_another_account" />
+        </div>
+      </LayoutAsidePortal>
     </LandingPageLayout>
   );
 };

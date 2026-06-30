@@ -19,7 +19,7 @@
       display: none;
 
       &:nth-child(1) {
-        color: var(--color-type-secondary);
+        color: var(--zerve-checkbox-icon-color);
       }
 
       &:nth-child(2) {
@@ -42,6 +42,10 @@
   input:checked:not(:disabled) ~ .icon > *:nth-child(2),
   input:checked:not(:disabled) ~ .icon > *:nth-child(3) {
     display: block;
+  }
+
+  input:checked:not(:disabled) ~ .icon > *:nth-child(3) {
+    fill: var(--zerve-primary-button-text-color);
   }
 }
 

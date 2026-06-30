@@ -177,7 +177,8 @@ const IdentifierRegisterForm = ({ className, autoFocus, signUpMethods }: Props) 
       <CaptchaBox />
       <Button
         name="submit"
-        title={showSingleSignOnForm ? 'action.single_sign_on' : 'action.create_account'}
+        title={showSingleSignOnForm ? 'action.single_sign_on' : 'action.sign_in_with'}
+        i18nProps={{ name: 'Email' }}
         icon={showSingleSignOnForm ? <LockIcon /> : undefined}
         htmlType="submit"
         isLoading={isSubmitting}
