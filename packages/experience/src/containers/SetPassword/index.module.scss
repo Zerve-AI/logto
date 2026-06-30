@@ -31,3 +31,13 @@
     cursor: pointer;
   }
 }
+
+:global(body.mobile) {
+  .form {
+    .inputField,
+    .formErrors,
+    .passwordSwitch {
+      margin-bottom: _.unit(4);
+    }
+  }
+}

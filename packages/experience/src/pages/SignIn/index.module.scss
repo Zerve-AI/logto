@@ -6,6 +6,11 @@
   margin-bottom: _.unit(6);
 }
 
+.singleSignOn,
+.createAccount {
+  text-align: center;
+}
+
 .terms {
   margin-top: _.unit(4);
   @include _.text-hint;
@@ -29,5 +34,13 @@
 :global(body.desktop) {
   .placeHolder {
     flex: 0;
+  }
+}
+
+:global(body.mobile) {
+  .main,
+  .otherMethods,
+  .divider {
+    margin-bottom: _.unit(4);
   }
 }

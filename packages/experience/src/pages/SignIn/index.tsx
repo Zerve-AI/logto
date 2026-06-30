@@ -1,5 +1,6 @@
 import { AgreeToTermsPolicy, experience, ExtraParamsKey, SignInMode } from '@logto/schemas';
 import { useCallback, useContext } from 'react';
+import { isMobile } from 'react-device-detect';
 import { useTranslation } from 'react-i18next';
 import { Navigate, useSearchParams } from 'react-router-dom';
 
@@ -56,8 +57,44 @@ const SignInFooters = () => {
 
   const showSocialSignIn = signInMethods.length > 0 && socialConnectors.length > 0;
   const showPasskeySignIn = passkeySignIn?.enabled && passkeySignIn.showPasskeyButton;
-  const showSingleSignOn = singleSignOnEnabled;
+  const showSingleSignOn = !!singleSignOnEnabled;
   const showCreateAccount = signInMode === SignInMode.SignInAndRegister && signUpMethods.length > 0;
+
+  const asideContent =
+    showSingleSignOn || showCreateAccount ? (
+      <>
+        {
+          // Single Sign On footer
+          showSingleSignOn && (
+            <>
+              <div className={styles.singleSignOn}>
+                {t('description.use')}{' '}
+                <TextLink text="action.single_sign_on" onClick={handleSsoNavigation} />
+              </div>
+              {
+                /**
+                 * If only SSO sign-in methods are available, display the agreement checkbox when the agreement policy is `Manual`.
+                 */
+                signInMethods.length === 0 &&
+                  socialConnectors.length === 0 &&
+                  agreeToTermsPolicy === AgreeToTermsPolicy.Manual && (
+                    <TermsAndPrivacyCheckbox className={styles.checkboxForSsoOnly} />
+                  )
+              }
+            </>
+          )
+        }
+        {
+          // Create Account footer
+          showCreateAccount && (
+            <div className={styles.createAccount}>
+              {t('description.no_account')}{' '}
+              <TextLink replace to="/register" text="action.create_account" />
+            </div>
+          )
+        }
+      </>
+    ) : null;
 
   return (
     <>
@@ -71,40 +108,8 @@ const SignInFooters = () => {
       {/* Passkey Sign In */}
       {showPasskeySignIn && <PasskeySignInButton />}
 
-      {(showSingleSignOn ?? showCreateAccount) && (
-        <LayoutAsidePortal>
-          {
-            // Single Sign On footer
-            showSingleSignOn && (
-              <>
-                <div>
-                  {t('description.use')}{' '}
-                  <TextLink text="action.single_sign_on" onClick={handleSsoNavigation} />
-                </div>
-                {
-                  /**
-                   * If only SSO sign-in methods are available, display the agreement checkbox when the agreement policy is `Manual`.
-                   */
-                  signInMethods.length === 0 &&
-                    socialConnectors.length === 0 &&
-                    agreeToTermsPolicy === AgreeToTermsPolicy.Manual && (
-                      <TermsAndPrivacyCheckbox className={styles.checkboxForSsoOnly} />
-                    )
-                }
-              </>
-            )
-          }
-          {
-            // Create Account footer
-            showCreateAccount && (
-              <div>
-                {t('description.no_account')}{' '}
-                <TextLink replace to="/register" text="action.create_account" />
-              </div>
-            )
-          }
-        </LayoutAsidePortal>
-      )}
+      {!!asideContent && isMobile && asideContent}
+      {!!asideContent && !isMobile && <LayoutAsidePortal>{asideContent}</LayoutAsidePortal>}
     </>
   );
 };

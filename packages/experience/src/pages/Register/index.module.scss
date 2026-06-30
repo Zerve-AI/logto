@@ -35,3 +35,11 @@
     flex: 0;
   }
 }
+
+:global(body.mobile) {
+  .main,
+  .divider,
+  .otherMethods {
+    margin-bottom: _.unit(4);
+  }
+}

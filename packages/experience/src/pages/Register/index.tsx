@@ -1,5 +1,6 @@
 import { AgreeToTermsPolicy, experience, ExtraParamsKey, SignInMode } from '@logto/schemas';
 import { useCallback, useContext } from 'react';
+import { isMobile } from 'react-device-detect';
 import { useTranslation } from 'react-i18next';
 import { Navigate, useSearchParams } from 'react-router-dom';
 
@@ -58,8 +59,44 @@ const RegisterFooter = () => {
   }
 
   const showSocialSignIn = signUpMethods.length > 0 && socialConnectors.length > 0;
-  const showUseSingleSignOn = singleSignOnEnabled;
+  const showUseSingleSignOn = !!singleSignOnEnabled;
   const showSignIn = signInMode === SignInMode.SignInAndRegister && signInMethods.length > 0;
+
+  const asideContent =
+    showUseSingleSignOn || showSignIn ? (
+      <>
+        {
+          // Single Sign On footer
+          showUseSingleSignOn && (
+            <>
+              <div className={styles.singleSignOn}>
+                {t('description.use')}{' '}
+                <TextLink text="action.single_sign_on" onClick={handleSsoNavigation} />
+              </div>
+              {
+                /**
+                 * If only SSO sign-in methods are available, display the agreement checkbox when the agreement policy is `Manual`.
+                 */
+                signInMethods.length === 0 &&
+                  socialConnectors.length === 0 &&
+                  agreeToTermsPolicy === AgreeToTermsPolicy.Manual && (
+                    <TermsAndPrivacyCheckbox className={styles.checkbox} />
+                  )
+              }
+            </>
+          )
+        }
+        {
+          // SignIn footer
+          showSignIn && (
+            <div className={styles.createAccount}>
+              {t('description.have_account')}{' '}
+              <TextLink replace to="/sign-in" text="action.sign_in" />
+            </div>
+          )
+        }
+      </>
+    ) : null;
 
   return (
     <>
@@ -70,40 +107,8 @@ const RegisterFooter = () => {
         )
       }
 
-      {(showUseSingleSignOn ?? showSignIn) && (
-        <LayoutAsidePortal>
-          {
-            // Single Sign On footer
-            showUseSingleSignOn && (
-              <>
-                <div className={styles.singleSignOn}>
-                  {t('description.use')}{' '}
-                  <TextLink text="action.single_sign_on" onClick={handleSsoNavigation} />
-                </div>
-                {
-                  /**
-                   * If only SSO sign-in methods are available, display the agreement checkbox when the agreement policy is `Manual`.
-                   */
-                  signInMethods.length === 0 &&
-                    socialConnectors.length === 0 &&
-                    agreeToTermsPolicy === AgreeToTermsPolicy.Manual && (
-                      <TermsAndPrivacyCheckbox className={styles.checkbox} />
-                    )
-                }
-              </>
-            )
-          }
-          {
-            // SignIn footer
-            showSignIn && (
-              <div className={styles.createAccount}>
-                {t('description.have_account')}{' '}
-                <TextLink replace to="/sign-in" text="action.sign_in" />
-              </div>
-            )
-          }
-        </LayoutAsidePortal>
-      )}
+      {!!asideContent && isMobile && asideContent}
+      {!!asideContent && !isMobile && <LayoutAsidePortal>{asideContent}</LayoutAsidePortal>}
     </>
   );
 };

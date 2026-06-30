@@ -23,9 +23,6 @@ html[data-theme='dark'] body {
   @include colors.dark;
 }
 
-html[data-theme] body:not(.desktop) {
-  background: var(--color-bg-body);
-}
 
 * {
   box-sizing: border-box;

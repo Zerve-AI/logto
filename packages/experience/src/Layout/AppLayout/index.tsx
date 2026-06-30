@@ -52,7 +52,7 @@ const AppLayout = () => {
             </span>
           </header>
 
-          <div>
+          <div className={styles.mainAsideWrapper}>
             <main className={classNames(styles.main, layoutClassNames.mainContent)}>
               <Outlet />
             </main>

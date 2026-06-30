@@ -27,3 +27,14 @@
     display: none;
   }
 }
+
+:global(body.mobile) {
+  .form {
+    .inputField,
+    .terms,
+    .formErrors,
+    .message {
+      margin-bottom: _.unit(4);
+    }
+  }
+}
