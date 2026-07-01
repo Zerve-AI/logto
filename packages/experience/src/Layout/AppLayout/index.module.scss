@@ -1,8 +1,5 @@
 @use '@/shared/scss/underscore' as _;
 
-@mixin blue-glow-gradient-bg($top: 50%, $bottom: 0%, $opacity: 20%) {
-  background: radial-gradient(400px 400px at $top $bottom, rgba(50, 98, 255, $opacity) 0%, rgba(50, 98, 255, 0%) 100%);
-}
 
 /* Main Layout */
 .viewBox {
@@ -12,12 +9,14 @@
 }
 
 .container {
+  position: relative;
   min-height: 100%;
   @include _.flex_column(center, space-between);
-  @include blue-glow-gradient-bg($top: 50%, $bottom: 20%, $opacity: 15%);
 }
 
 .header {
+  position: relative;
+  z-index: 1;
   width: 100%;
   padding: _.unit(2) _.unit(10);
   display: flex;
@@ -36,6 +35,8 @@
 }
 
 .mainAsideWrapper {
+  position: relative;
+  z-index: 1;
   width: 100%;
   display: flex;
   flex-direction: column;
@@ -59,6 +60,8 @@
 }
 
 .footer {
+  position: relative;
+  z-index: 1;
   display: flex;
   flex-direction: row;
   text-align: center;
@@ -75,7 +78,6 @@
 :global(body.mobile) {
   .container {
     padding-bottom: env(safe-area-inset-bottom);
-    @include blue-glow-gradient-bg($top: 50%, $bottom: -15%, $opacity: 20%);
   }
 
   .header {
@@ -109,11 +111,19 @@
     padding: _.unit(5);
   }
 
+  .header {
+    margin-bottom: _.unit(10);
+  }
+
   .main {
     width: 440px;
     padding: _.unit(12);
     border-radius: _.unit(4);
     box-shadow: var(--color-shadow-2);
+  }
+
+  .footer {
+    margin-top: _.unit(10);
   }
 
   .signature {

@@ -9,6 +9,7 @@ import useTerms from '@/hooks/use-terms';
 import { layoutClassNames } from '@/utils/consts';
 
 import CustomContent from './CustomContent';
+import DotPattern from './DotPattern';
 import { LayoutAsidePortalContext } from './LayoutAsidePortal';
 import styles from './index.module.scss';
 
@@ -35,6 +36,8 @@ const AppLayout = () => {
     <LayoutAsidePortalContext.Provider value={asidePortalContext}>
       <div className={styles.viewBox}>
         <div className={classNames(styles.container, layoutClassNames.pageContainer)}>
+          <DotPattern />
+
           {!isMobile && <CustomContent className={layoutClassNames.customContent} />}
 
           <header className={styles.header}>
