@@ -19,6 +19,10 @@
   color: var(--color-type-secondary);
 }
 
+.notYouHint {
+  text-align: center;
+}
+
 .footerButton {
   margin-top: _.unit(7);
   @include _.flex_row;
@@ -29,6 +33,10 @@
 :global(body.mobile) {
   .scopesCard {
     margin-top: _.unit(4);
+  }
+
+  .notYouHint {
+    margin-top: _.unit(5);
   }
 }
 

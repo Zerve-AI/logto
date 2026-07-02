@@ -84,6 +84,7 @@
     padding: _.unit(4);
     align-items: center;
     justify-content: center;
+    margin-bottom: _.unit(4);
   }
 
   .main {
@@ -98,6 +99,7 @@
   }
 
   .footer {
+    margin-top: _.unit(4);
     padding: 0 _.unit(6) _.unit(4);
   }
 

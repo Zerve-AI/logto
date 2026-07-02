@@ -134,7 +134,7 @@ const Consent = () => {
     : undefined;
 
   const asideContent = (
-    <div>
+    <div className={styles.notYouHint}>
       {t('description.not_you')}{' '}
       <TextLink replace to="/sign-in" text="action.use_another_account" />
     </div>
