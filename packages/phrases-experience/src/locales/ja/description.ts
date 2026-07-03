@@ -60,7 +60,7 @@ const description = {
     '以下にアカウントの詳細を入力して、セキュリティを高めてください。',
   create_your_account: 'アカウントを作成する',
   use_work_email_hint:
-    'Use your work email for the best experience and get {{credits}} additional credits',
+    'Get {{start_credits}} credits to start — plus an extra {{work_email_credits}} when you use your work email',
   sign_in_to_your_account: 'アカウントにサインインする',
   device_activation: 'デバイスの有効化',
   device_activation_description:

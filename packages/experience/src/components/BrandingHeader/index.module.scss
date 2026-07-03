@@ -1,6 +1,5 @@
 @use '@/shared/scss/underscore' as _;
 
-$logo-height: 40px;
 
 .container {
   width: 100%;
@@ -17,7 +16,7 @@ $logo-height: 40px;
 }
 
 .logo {
-  height: $logo-height;
+  height: 36px;
   width: auto;
   @include _.image-align-center;
 }
@@ -29,11 +28,19 @@ $logo-height: 40px;
   @include _.multi-line-ellipsis(2);
 }
 
+.subHeadline {
+  margin-top: _.unit(3);
+  color: var(--color-type-secondary);
+  text-align: center;
+}
+
 :global(body.mobile) {
   .container {
-    height: 15vh;
     min-height: 92px;
-    max-height: 148px;
+  }
+
+  .logo {
+    height: 30px;
   }
 
   .logoWrapper:not(:last-child) {
@@ -41,16 +48,28 @@ $logo-height: 40px;
   }
 
   .headline {
-    font: var(--font-title-1);
+    font: var(--zerve-font-login-title-mobile);
+    letter-spacing: -1.5%;
+  }
+
+  .subHeadline {
+    font: var(--zerve-font-login-subtitle-mobile);
+    padding: 0 _.unit(16);
   }
 }
 
 :global(body.desktop) {
   .logoWrapper:not(:last-child) {
-    margin-bottom: _.unit(3);
+    margin-bottom: _.unit(10);
   }
 
   .headline {
-    font: var(--font-title-2);
+    font: var(--zerve-font-login-title-desktop);
+    letter-spacing: -1.5%;
+  }
+
+  .subHeadline {
+    font: var(--zerve-font-login-subtitle-desktop);
+    padding: 0 _.unit(6);
   }
 }

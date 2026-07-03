@@ -1,8 +1,10 @@
 import { ReservedResource } from '@logto/core-kit';
 import { type ConsentInfoResponse } from '@logto/schemas';
 import { useCallback, useEffect, useMemo, useState } from 'react';
+import { isMobile } from 'react-device-detect';
 import { Trans, useTranslation } from 'react-i18next';
 
+import LayoutAsidePortal from '@/Layout/AppLayout/LayoutAsidePortal';
 import LandingPageLayout from '@/Layout/LandingPageLayout';
 import { consent, getConsentInfo } from '@/apis/consent';
 import TermsLinks from '@/components/TermsLinks';
@@ -131,6 +133,13 @@ const Consent = () => {
     ? getRedirectUriOrigin(consentData.redirectUri)
     : undefined;
 
+  const asideContent = (
+    <div className={styles.notYouHint}>
+      {t('description.not_you')}{' '}
+      <TextLink replace to="/sign-in" text="action.use_another_account" />
+    </div>
+  );
+
   return (
     <LandingPageLayout
       title="description.authorize_title"
@@ -215,10 +224,8 @@ const Consent = () => {
           </Trans>
         </div>
       )}
-      <div className={styles.footerLink}>
-        {t('description.not_you')}{' '}
-        <TextLink replace to="/sign-in" text="action.use_another_account" />
-      </div>
+
+      {isMobile ? asideContent : <LayoutAsidePortal>{asideContent}</LayoutAsidePortal>}
     </LandingPageLayout>
   );
 };

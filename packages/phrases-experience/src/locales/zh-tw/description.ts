@@ -51,7 +51,7 @@ const description = {
   continue_with_more_information: '為保障你的帳號安全，需要你補充以下信息。',
   create_your_account: '註冊你的帳號',
   use_work_email_hint:
-    'Use your work email for the best experience and get {{credits}} additional credits',
+    'Get {{start_credits}} credits to start — plus an extra {{work_email_credits}} when you use your work email',
   sign_in_to_your_account: '登錄你的帳號',
   device_activation: '裝置啟用',
   device_activation_description: '輸入你裝置上顯示的代碼。確認代碼匹配後，繼續在此裝置上登入。',

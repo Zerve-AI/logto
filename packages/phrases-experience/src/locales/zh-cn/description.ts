@@ -51,7 +51,7 @@ const description = {
   continue_with_more_information: '为保障你的账号安全，需要你补充以下信息。',
   create_your_account: '注册你的账号',
   use_work_email_hint:
-    'Use your work email for the best experience and get {{credits}} additional credits',
+    'Get {{start_credits}} credits to start — plus an extra {{work_email_credits}} when you use your work email',
   sign_in_to_your_account: '登录你的账号',
   device_activation: '设备激活',
   device_activation_description: '输入你设备上显示的代码。确认代码匹配后，继续在此设备上登录。',

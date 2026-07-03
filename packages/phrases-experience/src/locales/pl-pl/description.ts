@@ -60,7 +60,7 @@ const description = {
     'Dla zwiększenia bezpieczeństwa, proszę uzupełnić poniższe informacje o koncie.',
   create_your_account: 'Utwórz konto',
   use_work_email_hint:
-    'Use your work email for the best experience and get {{credits}} additional credits',
+    'Get {{start_credits}} credits to start — plus an extra {{work_email_credits}} when you use your work email',
   sign_in_to_your_account: 'Zaloguj się do swojego konta',
   device_activation: 'Aktywacja urządzenia',
   device_activation_description:

@@ -17,7 +17,7 @@
     // Keep this blocking script in the HTML so the theme, platform class, and brand color
     // are applied before React loads and the browser has a chance to paint the wrong UI.
     (function () {
-      var theme = 'light';
+      var theme = 'dark';
       document.documentElement.setAttribute('data-theme', theme);
       var isMobile = navigator.userAgentData
         ? navigator.userAgentData.mobile
@@ -32,14 +32,18 @@
           && ssr.signInExperience.data.color.isDarkModeEnabled;
         var prefersDark = typeof window.matchMedia === 'function'
           && window.matchMedia('(prefers-color-scheme: dark)').matches;
-        theme = (darkOk && prefersDark) ? 'dark' : 'light';
+
+        // Zerve: Hardcode theme to dark
+        // theme = (darkOk && prefersDark) ? 'dark' : 'light';
         document.documentElement.setAttribute('data-theme', theme);
         if (typeof ssr === 'object' && ssr !== null && ssr.signInExperience
           && ssr.signInExperience.data && ssr.signInExperience.data.color) {
-          var color = ssr.signInExperience.data.color;
-          var primaryColor = theme === 'dark' && color.darkPrimaryColor
-            ? color.darkPrimaryColor
-            : color.primaryColor;
+          // var color = ssr.signInExperience.data.color;
+          // var primaryColor = theme === 'dark' && color.darkPrimaryColor
+          //   ? color.darkPrimaryColor
+          //   : color.primaryColor;
+          var primaryColor = '#ffd400';
+          console.log('primaryColor', primaryColor);
           if (primaryColor) {
             document.body.style.setProperty('--color-brand-default', primaryColor);
           }

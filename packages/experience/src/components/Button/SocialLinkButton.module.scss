@@ -1,8 +1,7 @@
 @use '@/shared/scss/underscore' as _;
 
 .socialButton {
-  justify-content: normal;
-  padding: 0 _.unit(4);
+  column-gap: _.unit(3);
 }
 
 .icon {
@@ -22,28 +21,12 @@
 }
 
 .name {
-  flex: 1;
   overflow: hidden;
-  margin-inline-start: _.unit(-6);
   @include _.flex-row;
   height: 100%;
 
   span {
     @include _.multi-line-ellipsis(2);
     line-height: _.unit(5);
-  }
-
-  .placeHolder {
-    flex: 1;
-
-    &:first-child {
-      min-width: _.unit(10);
-    }
-  }
-}
-
-:global(body.desktop) {
-  .name span {
-    line-height: _.unit(4);
   }
 }

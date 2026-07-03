@@ -61,7 +61,7 @@ const description = {
     'Для дополнительной безопасности, пожалуйста, заполните приведенные ниже данные учетной записи.',
   create_your_account: 'Создайте свой аккаунт',
   use_work_email_hint:
-    'Use your work email for the best experience and get {{credits}} additional credits',
+    'Get {{start_credits}} credits to start — plus an extra {{work_email_credits}} when you use your work email',
   sign_in_to_your_account: 'Войди в свой аккаунт',
   device_activation: 'Активация устройства',
   device_activation_description:

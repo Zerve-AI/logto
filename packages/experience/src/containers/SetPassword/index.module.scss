@@ -10,7 +10,7 @@
   .inputField,
   .formErrors,
   .passwordSwitch {
-    margin-bottom: _.unit(4);
+    margin-bottom: _.unit(6);
   }
 
   .formErrors {
@@ -29,5 +29,15 @@
     margin-inline-end: _.unit(2);
     fill: var(--color-type-secondary);
     cursor: pointer;
+  }
+}
+
+:global(body.mobile) {
+  .form {
+    .inputField,
+    .formErrors,
+    .passwordSwitch {
+      margin-bottom: _.unit(4);
+    }
   }
 }

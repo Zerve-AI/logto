@@ -58,9 +58,7 @@ const SocialLinkButton = ({
         </span>
       )}
       <div className={socialLinkButtonStyles.name}>
-        <div className={socialLinkButtonStyles.placeHolder} />
         <span>{t('action.sign_in_with', { name: localName })}</span>
-        <div className={socialLinkButtonStyles.placeHolder} />
       </div>
     </button>
   );

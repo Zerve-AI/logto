@@ -85,9 +85,7 @@ const PasskeySignInButton = () => {
         </span>
       )}
       <div className={styles.name}>
-        <div className={styles.placeHolder} />
         <span>{t('action.sign_in_with', { name: t('mfa.webauthn').toLowerCase() })}</span>
-        <div className={styles.placeHolder} />
       </div>
     </button>
   );

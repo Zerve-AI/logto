@@ -1,5 +1,6 @@
 @use '@/shared/scss/underscore' as _;
 
+
 /* Main Layout */
 .viewBox {
   position: absolute;
@@ -8,12 +9,70 @@
 }
 
 .container {
+  position: relative;
   min-height: 100%;
-  @include _.flex_column(center, center);
+  @include _.flex_column(center, space-between);
+}
+
+.header {
+  position: relative;
+  z-index: 1;
+  width: 100%;
+  padding: _.unit(2) _.unit(10);
+  display: flex;
+  flex-flow: row wrap;
+  align-items: center;
+  font-size: 11px;
+  column-gap: _.unit(4);
+
+  .poweredByZerve {
+    display: flex;
+    flex-flow: row nowrap;
+    align-items: normal;
+    column-gap: _.unit(2);
+    white-space: nowrap;
+  }
+}
+
+.mainAsideWrapper {
+  position: relative;
+  z-index: 1;
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  padding: 0 _.unit(6);
 }
 
 .main {
   @include _.flex_column;
+  background: var(--color-bg-float);
+  position: relative;
+}
+
+.aside {
+  width: 100%;
+  text-align: center;
+  margin-top: _.unit(8);
+  row-gap: _.unit(2);
+  @include _.flex_column;
+}
+
+.footer {
+  position: relative;
+  z-index: 1;
+  display: flex;
+  flex-direction: row;
+  text-align: center;
+  column-gap: _.unit(4);
+  font-size: 12px;
+  color: var(--color-text-secondary);
+
+  .link {
+    font: var(--zerve-font-footer-link);
+    color: var(--zerve-footer-link-color);
+  }
 }
 
 :global(body.mobile) {
@@ -21,12 +80,27 @@
     padding-bottom: env(safe-area-inset-bottom);
   }
 
+  .header {
+    padding: _.unit(4);
+    align-items: center;
+    justify-content: center;
+    margin-bottom: _.unit(4);
+  }
+
   .main {
-    flex: 1;
-    align-self: stretch;
-    padding: _.unit(4) _.unit(5);
-    position: relative;
-    background: var(--color-bg-body);
+    padding: _.unit(4);
+    border-radius: _.unit(3);
+    box-shadow: var(--color-shadow-3);
+    width: 330px;
+  }
+
+  .aside {
+    margin-top: _.unit(2);
+  }
+
+  .footer {
+    margin-top: _.unit(4);
+    padding: 0 _.unit(6) _.unit(4);
   }
 
   .signature {
@@ -39,14 +113,19 @@
     padding: _.unit(5);
   }
 
+  .header {
+    margin-bottom: _.unit(10);
+  }
+
   .main {
-    width: 540px;
-    min-height: 540px;
-    position: relative;
-    padding: _.unit(6);
-    border-radius: 6px;
-    background: var(--color-bg-float);
+    width: 440px;
+    padding: _.unit(12);
+    border-radius: _.unit(4);
     box-shadow: var(--color-shadow-2);
+  }
+
+  .footer {
+    margin-top: _.unit(10);
   }
 
   .signature {

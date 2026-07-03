@@ -1,19 +1,19 @@
 import { AgreeToTermsPolicy, experience, ExtraParamsKey, SignInMode } from '@logto/schemas';
 import { useCallback, useContext } from 'react';
+import { isMobile } from 'react-device-detect';
 import { useTranslation } from 'react-i18next';
 import { Navigate, useSearchParams } from 'react-router-dom';
 
+import LayoutAsidePortal from '@/Layout/AppLayout/LayoutAsidePortal';
 import LandingPageLayout from '@/Layout/LandingPageLayout';
 import SingleSignOnFormModeContextProvider from '@/Providers/SingleSignOnFormModeContextProvider';
 import SingleSignOnFormModeContext from '@/Providers/SingleSignOnFormModeContextProvider/SingleSignOnFormModeContext';
 import WebAuthnContextProvider from '@/Providers/WebAuthnContextProvider';
 import PasskeySignInButton from '@/components/Button/PasskeySignInButton';
-import Divider from '@/components/Divider';
 import GoogleOneTap from '@/components/GoogleOneTap';
 import TextLink from '@/components/TextLink';
 import SocialSignInList from '@/containers/SocialSignInList';
 import TermsAndPrivacyCheckbox from '@/containers/TermsAndPrivacyCheckbox';
-import TermsAndPrivacyLinks from '@/containers/TermsAndPrivacyLinks';
 import useNavigateWithPreservedSearchParams from '@/hooks/use-navigate-with-preserved-search-params';
 import { useSieMethods } from '@/hooks/use-sie';
 import useTerms from '@/hooks/use-terms';
@@ -55,48 +55,61 @@ const SignInFooters = () => {
     return null;
   }
 
+  const showSocialSignIn = signInMethods.length > 0 && socialConnectors.length > 0;
+  const showPasskeySignIn = passkeySignIn?.enabled && passkeySignIn.showPasskeyButton;
+  const showSingleSignOn = !!singleSignOnEnabled;
+  const showCreateAccount = signInMode === SignInMode.SignInAndRegister && signUpMethods.length > 0;
+
+  const asideContent =
+    showSingleSignOn || showCreateAccount ? (
+      <>
+        {
+          // Single Sign On footer
+          showSingleSignOn && (
+            <>
+              <div className={styles.singleSignOn}>
+                {t('description.use')}{' '}
+                <TextLink text="action.single_sign_on" onClick={handleSsoNavigation} />
+              </div>
+              {
+                /**
+                 * If only SSO sign-in methods are available, display the agreement checkbox when the agreement policy is `Manual`.
+                 */
+                signInMethods.length === 0 &&
+                  socialConnectors.length === 0 &&
+                  agreeToTermsPolicy === AgreeToTermsPolicy.Manual && (
+                    <TermsAndPrivacyCheckbox className={styles.checkboxForSsoOnly} />
+                  )
+              }
+            </>
+          )
+        }
+        {
+          // Create Account footer
+          showCreateAccount && (
+            <div className={styles.createAccount}>
+              {t('description.no_account')}{' '}
+              <TextLink replace to="/register" text="action.create_account" />
+            </div>
+          )
+        }
+      </>
+    ) : null;
+
   return (
     <>
       {
-        // Single Sign On footer
-        singleSignOnEnabled && (
-          <>
-            <div className={styles.singleSignOn}>
-              {t('description.use')}{' '}
-              <TextLink text="action.single_sign_on" onClick={handleSsoNavigation} />
-            </div>
-            {
-              /**
-               * If only SSO sign-in methods are available, display the agreement checkbox when the agreement policy is `Manual`.
-               */
-              signInMethods.length === 0 &&
-                socialConnectors.length === 0 &&
-                agreeToTermsPolicy === AgreeToTermsPolicy.Manual && (
-                  <TermsAndPrivacyCheckbox className={styles.checkboxForSsoOnly} />
-                )
-            }
-          </>
-        )
-      }
-      {
-        // Create Account footer
-        signInMode === SignInMode.SignInAndRegister && signUpMethods.length > 0 && (
-          <div className={styles.createAccount}>
-            {t('description.no_account')}{' '}
-            <TextLink replace to="/register" text="action.create_account" />
-          </div>
-        )
-      }
-      {
         // Social sign-in methods
-        signInMethods.length > 0 && socialConnectors.length > 0 && (
-          <>
-            <Divider label="description.or" className={styles.divider} />
-            <SocialSignInList socialConnectors={socialConnectors} className={styles.main} />
-          </>
+        showSocialSignIn && (
+          <SocialSignInList socialConnectors={socialConnectors} className={styles.main} />
         )
       }
-      {passkeySignIn?.enabled && passkeySignIn.showPasskeyButton && <PasskeySignInButton />}
+
+      {/* Passkey Sign In */}
+      {showPasskeySignIn && <PasskeySignInButton />}
+
+      {!!asideContent && isMobile && asideContent}
+      {!!asideContent && !isMobile && <LayoutAsidePortal>{asideContent}</LayoutAsidePortal>}
     </>
   );
 };
@@ -132,12 +145,12 @@ const SignIn = () => {
           <SignInFooters />
         </SingleSignOnFormModeContextProvider>
       </WebAuthnContextProvider>
-      {
+      {/* {
         // Only show terms and privacy links for sign in page if the agree to terms policy is `Automatic` or `ManualRegistrationOnly`
         agreeToTermsPolicy !== AgreeToTermsPolicy.Manual && (
           <TermsAndPrivacyLinks className={styles.terms} />
         )
-      }
+      } */}
     </LandingPageLayout>
   );
 };

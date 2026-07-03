@@ -19,23 +19,24 @@
   color: var(--color-type-secondary);
 }
 
+.notYouHint {
+  text-align: center;
+}
+
 .footerButton {
   margin-top: _.unit(7);
   @include _.flex_row;
   gap: _.unit(2);
 }
 
-.footerLink {
-  align-items: center;
-  margin-top: _.unit(6);
-  @include _.flex_row;
-  justify-content: center;
-  gap: _.unit(1);
-}
 
 :global(body.mobile) {
   .scopesCard {
     margin-top: _.unit(4);
+  }
+
+  .notYouHint {
+    margin-top: _.unit(5);
   }
 }
 

@@ -2,17 +2,14 @@
 @use '@/shared/scss/underscore' as _;
 
 body {
+  background: var(--color-bg-float-base);
+
   &.light {
     @include colors.light;
   }
 
   &.dark {
     @include colors.dark;
-  }
-
-  // overrides other themes
-  &.zerve {
-    @include colors.zerve;
   }
 }
 
@@ -33,10 +30,8 @@ body {
 
 :global(body.mobile) {
   --max-width: 360px;
-  background: var(--color-bg-body);
 }
 
 :global(body.desktop) {
   --max-width: 400px;
-  background: var(--color-bg-float-base);
 }

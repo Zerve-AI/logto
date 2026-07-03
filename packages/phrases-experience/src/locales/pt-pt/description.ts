@@ -58,7 +58,7 @@ const description = {
     'Para maior segurança, por favor complete os detalhes da conta abaixo.',
   create_your_account: 'Crie a sua conta',
   use_work_email_hint:
-    'Use your work email for the best experience and get {{credits}} additional credits',
+    'Get {{start_credits}} credits to start — plus an extra {{work_email_credits}} when you use your work email',
   sign_in_to_your_account: 'Inicie sessão na sua conta',
   device_activation: 'Ativação do dispositivo',
   device_activation_description:
