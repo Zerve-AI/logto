@@ -137,8 +137,8 @@ const Register = () => {
           Uncomment this after the backend is properly deployed.
           Use hardcoded string below as a fallback in the meantime.
         */}
-          {/* {t('description.use_work_email_hint', { start_credits: 300, work_email_credits: 100 })} */}
-          Get 300 credits to start, plus an extra 100 when you use your work email
+          {/* {t('description.use_work_email_hint', { start_credits: 150, work_email_credits: 100 })} */}
+          Get 150 credits to start, plus an extra 100 when you use your work email
         </>
       }
     >
