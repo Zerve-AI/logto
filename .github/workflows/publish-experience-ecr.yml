@@ -1,0 +1,81 @@
+name: Publish Experience to ECR
+
+on:
+  push:
+    branches: [master]
+  pull_request:
+    types: [opened, synchronize, reopened]
+
+concurrency:
+  group: publish-experience-ecr-${{ github.event.pull_request.number || github.ref }}
+  cancel-in-progress: true
+
+env:
+  AWS_REGION: eu-west-1
+  AWS_ACCOUNT_ID_DEV: "780139020131"
+  AWS_ACCOUNT_ID_PROD: "161805679122"
+  ECR_REPO: logto
+
+jobs:
+  publish:
+    # Skip PRs from forks (no OIDC access to our accounts)
+    if: github.event_name == 'push' || github.event.pull_request.head.repo.full_name == github.repository
+    runs-on: ubuntu-latest
+    permissions:
+      contents: read
+      id-token: write
+
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Setup Node and pnpm
+        uses: silverhand-io/actions-node-pnpm-run-steps@v5
+        with:
+          pnpm-version: 10
+          node-version: ^22.14.0
+
+      - name: Build experience
+        run: pnpm --filter @logto/experience... build
+
+      - name: Resolve target account
+        id: target
+        run: |
+          if [ "${{ github.event_name }}" = "push" ]; then
+            echo "account-id=${{ env.AWS_ACCOUNT_ID_PROD }}" >> "$GITHUB_OUTPUT"
+          else
+            echo "account-id=${{ env.AWS_ACCOUNT_ID_DEV }}" >> "$GITHUB_OUTPUT"
+          fi
+
+      - name: Configure AWS credentials
+        uses: aws-actions/configure-aws-credentials@v4
+        with:
+          role-to-assume: arn:aws:iam::${{ steps.target.outputs.account-id }}:role/gh-actions-iam-role
+          aws-region: ${{ env.AWS_REGION }}
+          role-session-name: logto-experience-ecr
+          role-duration-seconds: 900
+
+      - name: Login to Amazon ECR
+        id: login-ecr
+        uses: aws-actions/amazon-ecr-login@v2
+
+      - name: Set up Docker Buildx
+        uses: docker/setup-buildx-action@v3
+
+      - name: Compute image tags
+        id: tags
+        run: |
+          registry="${{ steps.login-ecr.outputs.registry }}"
+          repo="${{ env.ECR_REPO }}"
+          if [ "${{ github.event_name }}" = "push" ]; then
+            echo "tags=${registry}/${repo}:${GITHUB_SHA},${registry}/${repo}:latest" >> "$GITHUB_OUTPUT"
+          else
+            echo "tags=${registry}/${repo}:${{ github.event.pull_request.head.sha }}" >> "$GITHUB_OUTPUT"
+          fi
+
+      - name: Build and push
+        uses: docker/build-push-action@v6
+        with:
+          context: packages/experience
+          platforms: linux/amd64,linux/arm64
+          push: true
+          tags: ${{ steps.tags.outputs.tags }}
