@@ -7,6 +7,7 @@ import { useTranslation } from 'react-i18next';
 
 import CaptchaContext from '@/Providers/CaptchaContextProvider/CaptchaContext';
 import UserInteractionContext from '@/Providers/UserInteractionContextProvider/UserInteractionContext';
+import { isEmailAllowedForSignUp } from '@/apis/user-service';
 import { sendVerificationCodeApi } from '@/apis/utils';
 import useApi from '@/hooks/use-api';
 import useErrorHandler, { type ErrorHandlers } from '@/hooks/use-error-handler';
@@ -45,6 +46,16 @@ const useSendVerificationCode = (flow: UserFlow, replaceCurrentPage?: boolean) =
       interactionEvent?: ContinueFlowInteractionEvent,
       errorHandlers?: ErrorHandlers
     ) => {
+      // Check the email quality with the user service
+      if (identifier === SignInIdentifier.Email) {
+        const isAllowed = await isEmailAllowedForSignUp(value);
+
+        if (!isAllowed) {
+          setErrorMessage(t('error.invalid_email'));
+          return;
+        }
+      }
+
       const captchaToken = await executeCaptcha();
 
       const [error, result] = await asyncSendVerificationCode(
