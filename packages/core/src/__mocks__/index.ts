@@ -3,6 +3,7 @@ import type {
   AdminConsoleData,
   Application,
   ApplicationsRole,
+  LogtoAction,
   LogtoConfig,
   OidcConfigKey,
   Passcode,
@@ -14,6 +15,7 @@ import type {
 import {
   ApplicationType,
   DomainStatus,
+  LogtoActionKey,
   internalPrefix,
   LogtoJwtTokenKey,
   LogtoOidcConfigKey,
@@ -250,4 +252,33 @@ export const mockJwtCustomizerConfigForClientCredentials = {
       API_KEY: '<api-key>',
     },
   },
+};
+
+export const mockActionConfigForPostSignIn = {
+  tenantId: 'fake_tenant',
+  key: LogtoActionKey.PostSignIn,
+  value: {
+    script: 'const runAction = ({ event }) => ({ action: "updateUser", user: event.user });',
+    environmentVariables: {
+      API_KEY: '<api-key>',
+    },
+    contextSample: {
+      user: {
+        username: 'user',
+      },
+    },
+    enabled: true,
+    onExecutionError: 'block',
+  } satisfies LogtoAction,
+};
+
+export const mockActionConfigForPostFirstFactorVerification = {
+  tenantId: 'fake_tenant',
+  key: LogtoActionKey.PostFirstFactorVerification,
+  value: {
+    script:
+      'const runAction = ({ event }) => ({ action: "updateUser", user: {}, passwordVerified: true });',
+    enabled: false,
+    onExecutionError: 'allow',
+  } satisfies LogtoAction,
 };

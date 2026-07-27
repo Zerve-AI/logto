@@ -1,4 +1,5 @@
 import account_center from './account-center.js';
+import action from './action.js';
 import application from './application.js';
 import auth from './auth.js';
 import connector from './connector.js';
@@ -41,6 +42,7 @@ const errors = {
   connector,
   verification_code,
   sign_in_experiences,
+  action,
   jwt_customizer,
   localization,
   swagger,

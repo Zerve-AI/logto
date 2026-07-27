@@ -1,3 +1,4 @@
+import { ActionLibrary } from '#src/libraries/action.js';
 import { createApplicationAccessControlLibrary } from '#src/libraries/application-access-control.js';
 import { createApplicationLibrary } from '#src/libraries/application.js';
 import { type CloudConnectionLibrary } from '#src/libraries/cloud-connection.js';
@@ -16,6 +17,7 @@ import { createProtectedAppLibrary } from '#src/libraries/protected-app.js';
 import { QuotaLibrary } from '#src/libraries/quota.js';
 import { createRoleScopeLibrary } from '#src/libraries/role-scope.js';
 import { createSamlApplicationsLibrary } from '#src/libraries/saml-application/saml-applications.js';
+import { createSamlSsoConnectorSigningKeyLibrary } from '#src/libraries/saml-sso-connector-signing-key.js';
 import { createScopeLibrary } from '#src/libraries/scope.js';
 import { createSessionLibrary } from '#src/libraries/session/index.js';
 import { createSignInExperienceLibrary } from '#src/libraries/sign-in-experience/index.js';
@@ -31,6 +33,7 @@ export default class Libraries {
   users = createUserLibrary(this.tenantId, this.queries);
   phrases = createPhraseLibrary(this.queries);
   hooks = createHookLibrary(this.queries);
+  actions = new ActionLibrary(this.tenantId, this.logtoConfigs, this.subscription);
   scopes = createScopeLibrary(this.queries);
   socials = createSocialLibrary(this.queries, this.connectors);
   jwtCustomizers = new JwtCustomizerLibrary(
@@ -46,6 +49,7 @@ export default class Libraries {
   applications = createApplicationLibrary(this.queries);
   verificationStatuses = createVerificationStatusLibrary(this.queries);
   samlApplications = createSamlApplicationsLibrary(this.queries);
+  samlSsoConnectorSigningKeys = createSamlSsoConnectorSigningKeyLibrary(this.queries);
   roleScopes = createRoleScopeLibrary(this.queries);
   domains = createDomainLibrary(this.queries);
   protectedApps = createProtectedAppLibrary(this.queries);

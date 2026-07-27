@@ -2,10 +2,15 @@ import { type TFuncKey } from 'i18next';
 
 import { type LogtoSkuQuota } from '@/types/skus';
 
-type SkuQuotaItemPhraseKey = Exclude<keyof LogtoSkuQuota, 'inlineHooksEnabled'>;
+type SkuQuotaItemPhraseKey = Exclude<
+  keyof LogtoSkuQuota,
+  // Actions availability and hosted-email caps are surfaced in their feature-specific pages,
+  // not the plan quota table.
+  'actionsEnabled' | 'hostedEmailLimit' | 'hostedEmailDailyLimit'
+>;
 
 export const isSkuQuotaItemPhraseKey = (key: keyof LogtoSkuQuota): key is SkuQuotaItemPhraseKey =>
-  key !== 'inlineHooksEnabled';
+  key !== 'actionsEnabled' && key !== 'hostedEmailLimit' && key !== 'hostedEmailDailyLimit';
 
 /* === for new pricing model === */
 export const skuQuotaItemPhrasesMap: Record<

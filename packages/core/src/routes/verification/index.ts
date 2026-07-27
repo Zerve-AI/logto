@@ -12,7 +12,6 @@ import {
 } from '@logto/schemas';
 import { z } from 'zod';
 
-import { EnvSet } from '#src/env-set/index.js';
 import koaGuard from '#src/middleware/koa-guard.js';
 import { buildMessageRateGuard, withMessageRateGuard } from '#src/sentinel/message-rate-guard.js';
 
@@ -27,6 +26,8 @@ import { PasswordVerification } from '../experience/classes/verifications/passwo
 import { SocialVerification } from '../experience/classes/verifications/social-verification.js';
 import { WebAuthnVerification } from '../experience/classes/verifications/web-authn-verification.js';
 import type { UserRouter, RouterInitArgs } from '../types.js';
+
+import { guardNewIdentifierEmailBlocklist } from './utils.js';
 
 export const verificationApiPrefix = '/verifications';
 
@@ -83,7 +84,6 @@ export default function verificationRoutes<T extends UserRouter>(
     koaGuard({
       body: z.object({
         identifier: verificationCodeIdentifierGuard,
-        // Optional: explicitly specify the template type to use (limited set)
         templateType: z
           .union([
             z.literal(TemplateType.BindMfa),
@@ -92,7 +92,7 @@ export default function verificationRoutes<T extends UserRouter>(
           .optional(),
       }),
       response: z.object({ verificationRecordId: z.string(), expiresAt: z.string() }),
-      status: [201, 429, 501],
+      status: [201, 422, 429, 501],
     }),
     async (ctx, next) => {
       const { id: userId, clientId: applicationId } = ctx.auth;
@@ -106,6 +106,8 @@ export default function verificationRoutes<T extends UserRouter>(
       const templateType = isNewIdentifier
         ? TemplateType.BindNewIdentifier
         : (inputTemplateType ?? TemplateType.UserPermissionValidation);
+
+      await guardNewIdentifierEmailBlocklist(queries, identifier, isNewIdentifier);
 
       const codeVerification = createNewCodeVerificationRecord(
         libraries,
@@ -131,18 +133,16 @@ export default function verificationRoutes<T extends UserRouter>(
         recipient: identifier.value,
       };
 
-      await (EnvSet.values.isDevFeaturesEnabled
-        ? withMessageRateGuard(
-            await buildMessageRateGuard(queries),
-            {
-              ...messageRateLimit,
-              onRateLimited: () => {
-                ctx.appendExceptionHookContext('Message.RateLimited', messageRateLimit);
-              },
-            },
-            send
-          )
-        : send());
+      await withMessageRateGuard(
+        await buildMessageRateGuard(queries),
+        {
+          ...messageRateLimit,
+          onRateLimited: () => {
+            ctx.appendExceptionHookContext('Message.RateLimited', messageRateLimit);
+          },
+        },
+        send
+      );
 
       const { expiresAt } = await insertVerificationRecord(
         codeVerification,

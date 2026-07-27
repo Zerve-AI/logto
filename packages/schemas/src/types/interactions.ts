@@ -11,6 +11,7 @@ import {
 } from '../foundations/index.js';
 import { type ToZodObject } from '../utils/zod.js';
 
+import { InteractionEvent } from './interaction-event.js';
 import type {
   EmailVerificationCodePayload,
   PhoneVerificationCodePayload,
@@ -20,15 +21,7 @@ import {
   phoneVerificationCodePayloadGuard,
 } from './verification-code.js';
 
-/**
- * User interaction events defined in Logto RFC 0004.
- * @see {@link https://github.com/logto-io/rfcs | Logto RFCs} for more information.
- */
-export enum InteractionEvent {
-  SignIn = 'SignIn',
-  Register = 'Register',
-  ForgotPassword = 'ForgotPassword',
-}
+export { eventGuard, InteractionEvent } from './interaction-event.js';
 
 export type VerificationIdentifier = {
   type: SignInIdentifier | AdditionalIdentifier;
@@ -65,7 +58,9 @@ export type VerificationCodeIdentifier<
 export const verificationCodeIdentifierGuard = z.discriminatedUnion('type', [
   z.object({
     type: z.literal(SignInIdentifier.Email),
-    value: z.string().regex(emailRegEx),
+    // `.max(256)` caps the input length as defense-in-depth for downstream email processing
+    // (a valid address is at most 254 chars per RFC 5321).
+    value: z.string().max(256).regex(emailRegEx),
   }),
   z.object({
     type: z.literal(SignInIdentifier.Phone),
@@ -268,8 +263,6 @@ export const socialPhonePayloadGuard = z.object({
 });
 
 export type SocialPhonePayload = z.infer<typeof socialPhonePayloadGuard>;
-
-export const eventGuard = z.nativeEnum(InteractionEvent);
 
 export const identifierPayloadGuard = z.union([
   usernamePasswordPayloadGuard,

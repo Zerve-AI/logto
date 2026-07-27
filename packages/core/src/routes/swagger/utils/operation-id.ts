@@ -28,8 +28,12 @@ const methodToVerb = Object.freeze({
 type RouteDictionary = Record<`${OpenAPIV3.HttpMethods} ${string}`, string>;
 
 const devFeatureCustomRoutes: Readonly<RouteDictionary> = Object.freeze({
-  'get /configs/oidc/session': 'GetOidcSessionConfig',
-  'patch /configs/oidc/session': 'UpdateOidcSessionConfig',
+  'get /configs/actions': 'ListActions',
+  'put /configs/actions/:actionType': 'UpsertAction',
+  'patch /configs/actions/:actionType': 'UpdateAction',
+  'get /configs/actions/:actionType': 'GetAction',
+  'delete /configs/actions/:actionType': 'DeleteAction',
+  'post /configs/actions/test': 'TestAction',
 });
 
 export const customRoutes: Readonly<RouteDictionary> = Object.freeze({
@@ -111,6 +115,7 @@ export const customRoutes: Readonly<RouteDictionary> = Object.freeze({
   // Session config
   'get /configs/oidc/session': 'GetOidcSessionConfig',
   'patch /configs/oidc/session': 'UpdateOidcSessionConfig',
+  // Actions
   ...(EnvSet.values.isDevFeaturesEnabled ? devFeatureCustomRoutes : {}),
 } satisfies RouteDictionary); // Key assertion doesn't work without `satisfies`
 
@@ -124,10 +129,12 @@ export const throwByDifference = (builtCustomRoutes: Set<string>) => {
     return;
   }
 
-  if (shouldThrow() && builtCustomRoutes.size !== Object.keys(customRoutes).length) {
-    const missingRoutes = Object.entries(customRoutes).filter(
-      ([path]) => !builtCustomRoutes.has(path)
-    );
+  const expectedRoutes = Object.entries(customRoutes).filter(
+    ([path]) => EnvSet.values.isDevFeaturesEnabled || !(path in devFeatureCustomRoutes)
+  );
+
+  if (shouldThrow() && builtCustomRoutes.size !== expectedRoutes.length) {
+    const missingRoutes = expectedRoutes.filter(([path]) => !builtCustomRoutes.has(path));
 
     if (missingRoutes.length > 0) {
       throw new Error(
@@ -137,7 +144,7 @@ export const throwByDifference = (builtCustomRoutes: Set<string>) => {
     }
 
     const extraRoutes = [...builtCustomRoutes].filter(
-      (path) => !Object.keys(customRoutes).includes(path)
+      (path) => !expectedRoutes.some(([expectedPath]) => expectedPath === path)
     );
 
     if (extraRoutes.length > 0) {
