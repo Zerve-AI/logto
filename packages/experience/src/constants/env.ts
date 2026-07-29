@@ -12,4 +12,4 @@ export const userServiceEndpoint =
     ? window.origin.includes('zerve-dev')
       ? 'https://user.api.zerve-dev.io' // Dev build (app.zerve-dev.io)
       : 'https://user.api.zerve.ai' // Prod build (app.zerve.ai)
-    : 'http://localhost:8080'); // Local development (localhost:8080)
+    : 'http://localhost:3000'); // Local development (localhost:8080)
