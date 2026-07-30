@@ -34,17 +34,21 @@ jobs:
           pnpm-version: 10
           node-version: ^22.14.0
 
-      - name: Build experience
-        run: pnpm --filter @logto/experience... build
-
       - name: Resolve target account
         id: target
         run: |
           if [ "${{ github.event_name }}" = "push" ]; then
             echo "account-id=${{ env.AWS_ACCOUNT_ID_PROD }}" >> "$GITHUB_OUTPUT"
+            echo "user-service-endpoint=https://user.api.zerve.ai" >> "$GITHUB_OUTPUT"
           else
             echo "account-id=${{ env.AWS_ACCOUNT_ID_DEV }}" >> "$GITHUB_OUTPUT"
+            echo "user-service-endpoint=https://user.api.zerve-dev.io" >> "$GITHUB_OUTPUT"
           fi
+
+      - name: Build experience
+        env:
+          USER_SERVICE_ENDPOINT: ${{ steps.target.outputs.user-service-endpoint }}
+        run: pnpm --filter @logto/experience... build
 
       - name: Configure AWS credentials
         uses: aws-actions/configure-aws-credentials@v4
