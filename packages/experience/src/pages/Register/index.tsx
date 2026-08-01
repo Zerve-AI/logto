@@ -78,10 +78,10 @@ const RegisterFooter = () => {
                  * If only SSO sign-in methods are available, display the agreement checkbox when the agreement policy is `Manual`.
                  */
                 signInMethods.length === 0 &&
-                  socialConnectors.length === 0 &&
-                  agreeToTermsPolicy === AgreeToTermsPolicy.Manual && (
-                    <TermsAndPrivacyCheckbox className={styles.checkbox} />
-                  )
+                socialConnectors.length === 0 &&
+                agreeToTermsPolicy === AgreeToTermsPolicy.Manual && (
+                  <TermsAndPrivacyCheckbox className={styles.checkbox} />
+                )
               }
             </>
           )
@@ -129,18 +129,7 @@ const Register = () => {
   return (
     <LandingPageLayout
       title="description.create_your_account"
-      subTitle={
-        <>
-          {/* 
-          The backend (Logto core) needs to be rebuilt and redeployed after a key 
-          was added to packages/phrases-experience.
-          Uncomment this after the backend is properly deployed.
-          Use hardcoded string below as a fallback in the meantime.
-        */}
-          {/* {t('description.use_work_email_hint', { start_credits: 150, work_email_credits: 100 })} */}
-          Get 150 credits to start, plus an extra 100 when you use your work email
-        </>
-      }
+      subTitle="Get 150 credits to start"
     >
       <GoogleOneTap context="signup" />
       <SingleSignOnFormModeContextProvider>
