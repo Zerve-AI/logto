@@ -59,8 +59,7 @@ const description = {
   continue_with_more_information:
     'Daha fazla güvenlik için lütfen aşağıdaki hesap ayrıntılarını tamamlayın.',
   create_your_account: 'Hesabını oluştur',
-  use_work_email_hint:
-    'Get {{start_credits}} credits to start — plus an extra {{work_email_credits}} when you use your work email',
+  signup_bonus: 'Get {{start_credits}} credits to start',
   sign_in_to_your_account: 'Hesabına giriş yap',
   device_activation: 'Cihaz etkinleştirme',
   device_activation_description:

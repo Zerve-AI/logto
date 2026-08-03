@@ -61,7 +61,7 @@ const description = {
   continue_with_more_information:
     'Для додаткової безпеки, будь ласка, заповніть наведені нижче дані облікового запису.',
   create_your_account: 'Створіть свій обліковий запис',
-  use_work_email_hint:
+  signup_bonus:
     'Використовуйте свою робочу електронну пошту для найкращого досвіду та отримайте {{credits}} додаткових кредитів',
   sign_in_to_your_account: 'Увійдіть до свого облікового запису',
   device_activation: 'Активація пристрою',
