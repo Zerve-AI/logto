@@ -13,3 +13,11 @@ export const userServiceEndpoint =
       ? 'https://user.api.zerve-dev.io' // Dev build (app.zerve-dev.io)
       : 'https://user.api.zerve.ai' // Prod build (app.zerve.ai)
     : 'http://localhost:3000'); // Local development (localhost:8080)
+
+/**
+ * Email address of the synthetic automation user.
+ *
+ * The Turnstile pre-flight check skips widget initialization for this identifier so that automated
+ * (bot) synthetic tests are not blocked by the captcha.
+ */
+export const automationUserEmail = 'automation-user@zerve.io';

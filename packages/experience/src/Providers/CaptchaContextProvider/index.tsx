@@ -2,6 +2,7 @@ import { CaptchaType, RecaptchaEnterpriseMode, Theme } from '@logto/schemas';
 import { useMemo, useContext, useCallback, useEffect, useRef } from 'react';
 import { useTranslation } from 'react-i18next';
 
+import { automationUserEmail } from '@/constants/env';
 import useToast from '@/hooks/use-toast';
 
 import PageContext from '../PageContextProvider/PageContext';
@@ -44,72 +45,81 @@ const CaptchaContextProvider = ({ children }: Props) => {
     document.body.append(script);
   }, [isCaptchaRequired, captchaConfig]);
 
-  const executeCaptcha = useCallback(async () => {
-    if (!isCaptchaRequired || !captchaConfig) {
-      return;
-    }
+  const executeCaptcha = useCallback(
+    async (identifier?: string) => {
+      if (!isCaptchaRequired || !captchaConfig) {
+        return;
+      }
 
-    if (captchaConfig.type === CaptchaType.Turnstile) {
-      return new Promise<string | undefined>((resolve, reject) => {
-        if (!window.turnstile || !widgetRef.current) {
-          resolve(undefined);
-          return;
-        }
+      // Pre-flight check: skip the captcha for the synthetic automation user so that bot-driven
+      // synthetic tests are not blocked by the widget.
+      if (identifier === automationUserEmail) {
+        return;
+      }
 
-        // Clear the dom element first
-        // eslint-disable-next-line @silverhand/fp/no-mutation
-        widgetRef.current.innerHTML = '';
+      if (captchaConfig.type === CaptchaType.Turnstile) {
+        return new Promise<string | undefined>((resolve, reject) => {
+          if (!window.turnstile || !widgetRef.current) {
+            resolve(undefined);
+            return;
+          }
 
-        window.turnstile.render(widgetRef.current, {
-          sitekey: captchaConfig.siteKey,
-          theme: theme === Theme.Light ? 'light' : 'dark',
-          callback: (token: string) => {
-            resolve(token);
-          },
-          'error-callback': (errorCode) => {
-            setToast(t('error.captcha_verification_failed'));
-            reject(new Error(`Turnstile error: ${errorCode}`));
-          },
-          size: 'flexible',
+          // Clear the dom element first
+          // eslint-disable-next-line @silverhand/fp/no-mutation
+          widgetRef.current.innerHTML = '';
+
+          window.turnstile.render(widgetRef.current, {
+            sitekey: captchaConfig.siteKey,
+            theme: theme === Theme.Light ? 'light' : 'dark',
+            callback: (token: string) => {
+              resolve(token);
+            },
+            'error-callback': (errorCode) => {
+              setToast(t('error.captcha_verification_failed'));
+              reject(new Error(`Turnstile error: ${errorCode}`));
+            },
+            size: 'flexible',
+          });
         });
-      });
-    }
+      }
 
-    if (!window.grecaptcha?.enterprise) {
-      return;
-    }
+      if (!window.grecaptcha?.enterprise) {
+        return;
+      }
 
-    // Handle checkbox mode for reCAPTCHA Enterprise
-    if (captchaConfig.mode === RecaptchaEnterpriseMode.Checkbox) {
-      return new Promise<string | undefined>((resolve, reject) => {
-        if (!window.grecaptcha || !widgetRef.current) {
-          resolve(undefined);
-          return;
-        }
+      // Handle checkbox mode for reCAPTCHA Enterprise
+      if (captchaConfig.mode === RecaptchaEnterpriseMode.Checkbox) {
+        return new Promise<string | undefined>((resolve, reject) => {
+          if (!window.grecaptcha || !widgetRef.current) {
+            resolve(undefined);
+            return;
+          }
 
-        // Clear the dom element first
-        // eslint-disable-next-line @silverhand/fp/no-mutation
-        widgetRef.current.innerHTML = '';
+          // Clear the dom element first
+          // eslint-disable-next-line @silverhand/fp/no-mutation
+          widgetRef.current.innerHTML = '';
 
-        window.grecaptcha.enterprise.render(widgetRef.current, {
-          sitekey: captchaConfig.siteKey,
-          theme: theme === Theme.Light ? 'light' : 'dark',
-          callback: (token: string) => {
-            resolve(token);
-          },
-          'error-callback': (errorCode) => {
-            setToast(t('error.captcha_verification_failed'));
-            reject(new Error(`reCAPTCHA error: ${errorCode}`));
-          },
+          window.grecaptcha.enterprise.render(widgetRef.current, {
+            sitekey: captchaConfig.siteKey,
+            theme: theme === Theme.Light ? 'light' : 'dark',
+            callback: (token: string) => {
+              resolve(token);
+            },
+            'error-callback': (errorCode) => {
+              setToast(t('error.captcha_verification_failed'));
+              reject(new Error(`reCAPTCHA error: ${errorCode}`));
+            },
+          });
         });
-      });
-    }
+      }
 
-    // Default invisible mode
-    return window.grecaptcha.enterprise.execute(captchaConfig.siteKey, {
-      action: 'interaction',
-    });
-  }, [isCaptchaRequired, captchaConfig, theme, setToast, t]);
+      // Default invisible mode
+      return window.grecaptcha.enterprise.execute(captchaConfig.siteKey, {
+        action: 'interaction',
+      });
+    },
+    [isCaptchaRequired, captchaConfig, theme, setToast, t]
+  );
 
   useEffect(() => {
     initCaptcha();

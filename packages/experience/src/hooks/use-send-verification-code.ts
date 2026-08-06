@@ -56,7 +56,7 @@ const useSendVerificationCode = (flow: UserFlow, replaceCurrentPage?: boolean) =
         }
       }
 
-      const captchaToken = await executeCaptcha();
+      const captchaToken = await executeCaptcha(value);
 
       const [error, result] = await asyncSendVerificationCode(
         flow,

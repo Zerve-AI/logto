@@ -56,7 +56,7 @@ const useRegisterWithUsername = () => {
 
   const onSubmit = useCallback(
     async (username: string) => {
-      const captchaToken = await executeCaptcha();
+      const captchaToken = await executeCaptcha(username);
       const [error] = await asyncRegister(username, captchaToken);
 
       if (error) {
