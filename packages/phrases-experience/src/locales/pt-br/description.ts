@@ -58,8 +58,7 @@ const description = {
   link_email_or_phone_description: 'Para maior segurança, vincule seu e-mail ou telefone à conta.',
   continue_with_more_information: 'Para maior segurança, preencha os detalhes da conta abaixo.',
   create_your_account: 'Crie sua conta',
-  use_work_email_hint:
-    'Get {{start_credits}} credits to start — plus an extra {{work_email_credits}} when you use your work email',
+  signup_bonus: 'Get {{start_credits}} credits to start',
   sign_in_to_your_account: 'Faça login na sua conta',
   device_activation: 'Ativação do dispositivo',
   device_activation_description:
