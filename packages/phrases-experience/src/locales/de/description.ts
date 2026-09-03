@@ -62,8 +62,7 @@ const description = {
   continue_with_more_information:
     'Für zusätzliche Sicherheit, vervollständige bitte deine Informationen.',
   create_your_account: 'Erstelle dein Konto',
-  use_work_email_hint:
-    'Get {{start_credits}} credits to start — plus an extra {{work_email_credits}} when you use your work email',
+  signup_bonus: 'Get {{start_credits}} credits to start',
   sign_in_to_your_account: 'Melde dich in deinem Konto an',
   device_activation: 'Geräteaktivierung',
   device_activation_description:

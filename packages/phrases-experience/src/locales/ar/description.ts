@@ -56,8 +56,7 @@ const description = {
   link_email_or_phone_description: 'لزيادة الأمان، يرجى ربط بريدك الإلكتروني أو هاتفك بالحساب.',
   continue_with_more_information: 'لزيادة الأمان، يرجى استكمال تفاصيل الحساب أدناه.',
   create_your_account: 'إنشاء حسابك',
-  use_work_email_hint:
-    'Get {{start_credits}} credits to start — plus an extra {{work_email_credits}} when you use your work email',
+  signup_bonus: 'Get {{start_credits}} credits to start',
   sign_in_to_your_account: 'تسجيل الدخول إلى حسابك',
   device_activation: 'تفعيل الجهاز',
   device_activation_description:

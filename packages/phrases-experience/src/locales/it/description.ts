@@ -59,8 +59,7 @@ const description = {
   continue_with_more_information:
     "Per maggiore sicurezza, completa i dettagli dell'account qui sotto.",
   create_your_account: 'Crea il tuo account',
-  use_work_email_hint:
-    'Get {{start_credits}} credits to start — plus an extra {{work_email_credits}} when you use your work email',
+  signup_bonus: 'Get {{start_credits}} credits to start',
   sign_in_to_your_account: 'Accedi al tuo account',
   device_activation: 'Attivazione dispositivo',
   device_activation_description:
