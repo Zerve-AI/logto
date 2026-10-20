@@ -175,6 +175,10 @@
       border-color: var(--zerve-input-focus-border-color);
     }
   }
+
+  .container.plain.danger .inputField {
+    border-color: var(--color-danger-default);
+  }
 }
 
 

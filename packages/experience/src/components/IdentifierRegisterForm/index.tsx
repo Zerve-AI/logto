@@ -150,8 +150,7 @@ const IdentifierRegisterForm = ({ className, autoFocus, signUpMethods }: Props) 
             className={styles.inputField}
             {...field}
             appearance={isEmailOnly ? 'plain' : undefined}
-            label={isEmailOnly ? 'Email address' : undefined}
-            placeholder={isEmailOnly ? 'Enter your email' : undefined}
+            {...(isEmailOnly ? { label: 'Email address', placeholder: 'Enter your email' } : {})}
             defaultValue={defaultValues?.identifier?.value}
             isDanger={!!errors.identifier || !!errorMessage}
             errorMessage={errors.identifier?.message}
