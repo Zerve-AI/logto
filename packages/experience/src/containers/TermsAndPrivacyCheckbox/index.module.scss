@@ -22,8 +22,6 @@
 
 .link {
   font: inherit;
-  text-decoration: underline;
-  text-underline-offset: 2px;
 }
 
 .errorMessage {
@@ -47,6 +45,19 @@
   .content .link,
   .content .link:active {
     color: var(--color-neutral-50);
+  }
+}
+
+/* The marketing panel is hidden here, so the agreement links must read as links without hover. */
+:global(body.mobile .zerveAuthShell) .content .link,
+:global(body.mobile .zerveAuthShell) .content .link:active {
+  color: var(--color-static-white);
+}
+
+@media (max-width: 900px) {
+  :global(body.desktop .zerveAuthShell) .content .link,
+  :global(body.desktop .zerveAuthShell) .content .link:active {
+    color: var(--color-static-white);
   }
 }
 
