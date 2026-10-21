@@ -1,8 +1,7 @@
-import { Theme } from '@logto/schemas';
 import { useContext } from 'react';
 
 import PageContext from '@/Providers/PageContextProvider/PageContext';
-import { getBrandingLogoUrl } from '@/shared/utils/logo';
+import { getAuthShellLogoUrl } from '@/shared/utils/logo';
 
 import styles from './index.module.scss';
 
@@ -13,12 +12,7 @@ const ZerveLogo = () => {
     return null;
   }
 
-  // The auth shell is always dark, so use the dark-background logo.
-  const logoUrl = getBrandingLogoUrl({
-    theme: Theme.Dark,
-    branding: experienceSettings.branding,
-    isDarkModeEnabled: true,
-  });
+  const logoUrl = getAuthShellLogoUrl(experienceSettings.branding);
 
   if (!logoUrl) {
     return null;
