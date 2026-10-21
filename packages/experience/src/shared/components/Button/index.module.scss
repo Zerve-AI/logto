@@ -114,7 +114,9 @@
   }
 
   .secondary {
-    height: 40px;
+    /* Verification cards share this class and must grow with their description. */
+    height: auto;
+    min-height: 40px;
     border-radius: 14px;
     border-color: rgba(255, 255, 255, 22%);
     background: transparent;
