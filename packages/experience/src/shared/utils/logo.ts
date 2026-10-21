@@ -52,7 +52,8 @@ const omitBuiltInLogtoLogo = (url?: Nullable<string>): string | undefined =>
 /**
  * Logo for the sign-in and sign-up shell. The shell is always dark, but a tenant
  * often replaces only `logoUrl` and leaves the seeded Logto `darkLogoUrl` in place.
- * Those built-in URLs are ignored so the configured logo is used.
+ * Those built-in URLs are ignored so the configured logo is used. When neither URL
+ * is custom, the original branding is used so the seeded logo still renders.
  */
 export const getAuthShellLogoUrl = (branding: Branding) =>
   getBrandingLogoUrl({
@@ -63,4 +64,9 @@ export const getAuthShellLogoUrl = (branding: Branding) =>
       logoUrl: omitBuiltInLogtoLogo(branding.logoUrl),
       darkLogoUrl: omitBuiltInLogtoLogo(branding.darkLogoUrl),
     },
+  }) ??
+  getBrandingLogoUrl({
+    theme: Theme.Dark,
+    isDarkModeEnabled: true,
+    branding,
   });
