@@ -150,7 +150,9 @@ const IdentifierRegisterForm = ({ className, autoFocus, signUpMethods }: Props) 
             className={styles.inputField}
             {...field}
             appearance={isEmailOnly ? 'plain' : undefined}
-            {...(isEmailOnly ? { label: 'Email address', placeholder: 'Enter your email' } : {})}
+            {...(isEmailOnly
+              ? { label: t('input.email_address'), placeholder: t('input.email_placeholder') }
+              : {})}
             defaultValue={defaultValues?.identifier?.value}
             isDanger={!!errors.identifier || !!errorMessage}
             errorMessage={errors.identifier?.message}
@@ -182,7 +184,7 @@ const IdentifierRegisterForm = ({ className, autoFocus, signUpMethods }: Props) 
       <Button
         name="submit"
         title={showSingleSignOnForm ? 'action.single_sign_on' : 'action.sign_in_with'}
-        i18nProps={{ name: 'email' }}
+        i18nProps={{ name: t('description.email') }}
         icon={showSingleSignOnForm ? <LockIcon /> : <SubmitArrowButtonIcon />}
         iconPlacement={showSingleSignOnForm ? 'inline' : 'edge'}
         htmlType="submit"

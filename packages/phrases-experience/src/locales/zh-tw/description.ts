@@ -127,6 +127,18 @@ const description = {
     phone_verification_code: '簡訊驗證碼',
     verification_code_description: '發送至 {{target}}',
   },
+  create_an_account: '建立帳戶',
+  agree_to_terms_prefix: '我同意',
+  terms_and_conditions: '條款與條件',
+  terms_of_service: '服務條款',
+  back_to_website: '返回網站',
+  copyright: '© {{year}} Zerve 著作權所有。保留所有權利。',
+  marketing_sign_in_headline: '一整隊智慧代理',
+  marketing_sign_in_body:
+    'Superagent 會依目標需要配置同樣多的平行工作者。原本只能一條一條推進的工作，會在你的算力上、在你的防護規則內、使用你自己的模型金鑰同時執行。',
+  marketing_sign_up_headline: '機構級研究',
+  marketing_sign_up_body:
+    'Zerve Superagents 把一個目標拆成數十個工作者，在你的算力上平行執行，並且可以一直檢查到程式碼。量化研究員、分析師、產品經理和風險團隊在你的邊界內使用它。',
 };
 
 export default Object.freeze(description);

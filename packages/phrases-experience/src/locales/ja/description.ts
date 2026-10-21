@@ -140,6 +140,18 @@ const description = {
     phone_verification_code: '電話認証コード',
     verification_code_description: '{{target}}に送信',
   },
+  create_an_account: 'アカウントを作成',
+  agree_to_terms_prefix: '次の内容に同意します: ',
+  terms_and_conditions: '利用規約',
+  terms_of_service: 'サービス利用規約',
+  back_to_website: 'ウェブサイトに戻る',
+  copyright: '© {{year}} Zerve. 無断転載を禁じます。',
+  marketing_sign_in_headline: 'エージェントのチーム全体',
+  marketing_sign_in_body:
+    'Superagent は、目的に必要なだけ並列ワーカーを配置します。一本ずつ進んでいた作業が、あなたの計算資源の上で、あなたのガードレールの範囲で、あなた自身のモデルキーを使って、同時に実行されます。',
+  marketing_sign_up_headline: '機関規模のリサーチ',
+  marketing_sign_up_body:
+    'Zerve Superagents は、目的を数十のワーカーに分け、あなたの計算資源の上で並列に実行し、コードまで検査できます。クオンツリサーチャー、アナリスト、プロダクトマネージャー、リスクチームが、あなたの境界の内側で利用しています。',
 };
 
 export default Object.freeze(description);

@@ -13,6 +13,7 @@ const initI18n = async (initialLanguage?: string) => {
   const options: InitOptions = {
     resources,
     lng,
+    fallbackLng: 'en',
     interpolation: {
       escapeValue: false,
     },

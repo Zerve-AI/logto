@@ -8,6 +8,8 @@ const input = {
   backup_code: 'Yedek kod',
   code: 'Kod',
   label_with_optional: '{{label}} (İsteğe bağlı)',
+  email_address: 'E-posta adresi',
+  email_placeholder: 'E-postanızı girin',
 };
 
 export default Object.freeze(input);

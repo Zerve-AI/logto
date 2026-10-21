@@ -148,6 +148,18 @@ const description = {
     phone_verification_code: 'Code de vérification par téléphone',
     verification_code_description: 'Envoyer à {{target}}',
   },
+  create_an_account: 'Créer un compte',
+  agree_to_terms_prefix: 'J’accepte les ',
+  terms_and_conditions: 'conditions générales',
+  terms_of_service: 'Conditions de service',
+  back_to_website: 'Retour au site',
+  copyright: '© Copyright {{year}} Zerve. Tous droits réservés.',
+  marketing_sign_in_headline: 'Toute une équipe d’agents',
+  marketing_sign_in_body:
+    'Un Superagent mobilise autant de travailleurs en parallèle que l’objectif l’exige. Le travail qui avancerait un fil à la fois s’exécute en même temps, sur votre calcul, dans vos garde-fous, avec vos propres clés de modèle.',
+  marketing_sign_up_headline: 'La recherche à l’échelle institutionnelle',
+  marketing_sign_up_body:
+    'Zerve Superagents transforment un objectif en dizaines de travailleurs exécutés en parallèle sur votre calcul, inspectables jusqu’au code. Utilisés par les chercheurs quantitatifs, les analystes, les chefs de produit et les équipes risque, à l’intérieur de votre périmètre.',
 };
 
 export default Object.freeze(description);

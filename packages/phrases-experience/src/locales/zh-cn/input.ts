@@ -8,6 +8,8 @@ const input = {
   backup_code: '备用码',
   code: '代码',
   label_with_optional: '{{label}}（可选）',
+  email_address: '电子邮箱',
+  email_placeholder: '输入你的电子邮箱',
 };
 
 export default Object.freeze(input);

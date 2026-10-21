@@ -77,7 +77,7 @@ const Register = () => {
   }
 
   return (
-    <LandingPageLayout headlineText="Create an account" title="description.create_your_account">
+    <LandingPageLayout title="description.create_an_account">
       <GoogleOneTap context="signup" />
       <SingleSignOnFormModeContextProvider>
         {signUpMethods.length > 0 && (

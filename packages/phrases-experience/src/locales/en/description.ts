@@ -143,6 +143,18 @@ const description = {
     phone_verification_code: 'Phone verification code',
     verification_code_description: 'Send to {{target}}',
   },
+  create_an_account: 'Create an account',
+  agree_to_terms_prefix: 'I agree to the ',
+  terms_and_conditions: 'Terms and Conditions',
+  terms_of_service: 'Terms of Service',
+  back_to_website: 'Back to website',
+  copyright: '© Copyright {{year}} Zerve. All rights reserved.',
+  marketing_sign_in_headline: 'A whole team of agents',
+  marketing_sign_in_body:
+    'A Superagent staffs as many parallel workers as the objective demands. Work that would run one thread at a time runs all at once, on your compute, bound by your guardrails, on your own model keys.',
+  marketing_sign_up_headline: 'Research at institutional scale',
+  marketing_sign_up_body:
+    'Zerve Superagents turn an objective into dozens of workers running in parallel on your compute, fully inspectable down to the code. Used by quant researchers, analysts, PMs, and risk teams, inside your perimeter.',
 };
 
 export default Object.freeze(description);

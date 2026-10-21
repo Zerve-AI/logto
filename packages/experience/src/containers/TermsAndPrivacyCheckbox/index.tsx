@@ -1,5 +1,6 @@
 import classNames from 'classnames';
 import { useCallback } from 'react';
+import { useTranslation } from 'react-i18next';
 
 import Checkbox from '@/components/Checkbox';
 import TextLink from '@/components/TextLink';
@@ -13,6 +14,7 @@ type Props = {
 };
 
 const TermsAndPrivacyCheckbox = ({ className }: Props) => {
+  const { t } = useTranslation();
   const { termsAgreement, setTermsAgreement, termsOfUseUrl, privacyPolicyUrl, isTermsDisabled } =
     useTerms();
 
@@ -46,33 +48,31 @@ const TermsAndPrivacyCheckbox = ({ className }: Props) => {
         size="small"
       />
       <div className={styles.content}>
-        <span>I agree to the </span>
+        <span>{t('description.agree_to_terms_prefix')}</span>
         {termsOfUseUrl && (
           <TextLink
             className={styles.link}
             href={termsOfUseUrl}
+            text="description.terms_and_conditions"
             type="secondary"
             target="_blank"
             onClick={(event) => {
               event.stopPropagation();
             }}
-          >
-            Terms and Conditions
-          </TextLink>
+          />
         )}
-        {termsOfUseUrl && privacyPolicyUrl && ' and '}
+        {termsOfUseUrl && privacyPolicyUrl && ` ${t('description.and')} `}
         {privacyPolicyUrl && (
           <TextLink
             className={styles.link}
             href={privacyPolicyUrl}
+            text="description.privacy_policy"
             type="secondary"
             target="_blank"
             onClick={(event) => {
               event.stopPropagation();
             }}
-          >
-            Privacy Policy
-          </TextLink>
+          />
         )}
       </div>
     </div>

@@ -141,6 +141,18 @@ const description = {
     phone_verification_code: 'รหัสยืนยันทางโทรศัพท์',
     verification_code_description: 'ส่งไปที่ {{target}}',
   },
+  create_an_account: 'สร้างบัญชี',
+  agree_to_terms_prefix: 'ฉันยอมรับ',
+  terms_and_conditions: 'ข้อกำหนดและเงื่อนไข',
+  terms_of_service: 'เงื่อนไขการให้บริการ',
+  back_to_website: 'กลับไปที่เว็บไซต์',
+  copyright: '© ลิขสิทธิ์ {{year}} Zerve. สงวนลิขสิทธิ์.',
+  marketing_sign_in_headline: 'ทีมเอเจนต์ทั้งทีม',
+  marketing_sign_in_body:
+    'Superagent จัดคนทำงานขนานให้มากเท่าที่เป้าหมายต้องการ งานที่เคยเดินทีละสายจะรันพร้อมกันทั้งหมด บนคอมพิวเตอร์ของคุณ ภายใต้กฎของคุณ และด้วยคีย์โมเดลของคุณเอง',
+  marketing_sign_up_headline: 'งานวิจัยในระดับสถาบัน',
+  marketing_sign_up_body:
+    'Zerve Superagents เปลี่ยนเป้าหมายให้เป็นคนทำงานหลายสิบคนที่รันขนานกันบนคอมพิวเตอร์ของคุณ และตรวจสอบได้ถึงระดับโค้ด นักวิจัยเชิงปริมาณ นักวิเคราะห์ ผู้จัดการผลิตภัณฑ์ และทีมความเสี่ยงใช้ภายในขอบเขตของคุณ',
 };
 
 export default Object.freeze(description);

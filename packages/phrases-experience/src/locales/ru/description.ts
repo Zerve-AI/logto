@@ -146,6 +146,18 @@ const description = {
     phone_verification_code: 'Код подтверждения по телефону',
     verification_code_description: 'Отправить на {{target}}',
   },
+  create_an_account: 'Создать аккаунт',
+  agree_to_terms_prefix: 'Я соглашаюсь с ',
+  terms_and_conditions: 'Условиями и положениями',
+  terms_of_service: 'Условия обслуживания',
+  back_to_website: 'Назад на сайт',
+  copyright: '© Copyright {{year}} Zerve. Все права защищены.',
+  marketing_sign_in_headline: 'Целая команда агентов',
+  marketing_sign_in_body:
+    'Superagent запускает столько параллельных исполнителей, сколько требует цель. Работа, которая шла бы по одной нити, выполняется сразу, на ваших вычислениях, в рамках ваших ограничений и с вашими ключами моделей.',
+  marketing_sign_up_headline: 'Исследования институционального масштаба',
+  marketing_sign_up_body:
+    'Zerve Superagents превращают цель в десятки исполнителей, которые работают параллельно на ваших вычислениях и проверяются вплоть до кода. Ими пользуются квант-исследователи, аналитики, продакт-менеджеры и команды по рискам внутри вашего периметра.',
 };
 
 export default Object.freeze(description);

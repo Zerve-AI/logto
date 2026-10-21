@@ -139,7 +139,9 @@ const IdentifierSignInForm = ({ className, autoFocus, signInMethods }: Props) =>
             className={styles.inputField}
             {...field}
             appearance={isEmailOnly ? 'plain' : undefined}
-            {...(isEmailOnly ? { label: 'Email address', placeholder: 'Enter your email' } : {})}
+            {...(isEmailOnly
+              ? { label: t('input.email_address'), placeholder: t('input.email_placeholder') }
+              : {})}
             isDanger={!!errors.identifier || !!errorMessage}
             errorMessage={errors.identifier?.message}
             enabledTypes={enabledSignInMethods}

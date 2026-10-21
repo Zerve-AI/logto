@@ -13,7 +13,6 @@ export type Props = {
   readonly logo?: Nullable<string>;
   readonly thirdPartyLogo?: Nullable<string>;
   readonly headline?: TFuncKey;
-  readonly headlineText?: string;
   readonly headlineInterpolation?: Record<string, unknown>;
   readonly subHeadline?: ReactNode;
 };
@@ -22,7 +21,6 @@ const BrandingHeader = ({
   logo,
   thirdPartyLogo,
   headline,
-  headlineText,
   headlineInterpolation,
   subHeadline,
   className,
@@ -42,9 +40,9 @@ const BrandingHeader = ({
         </div>
       )}
 
-      {(headlineText ?? headline) && (
+      {headline && (
         <div className={styles.headline}>
-          {headlineText ?? <DynamicT forKey={headline} interpolation={headlineInterpolation} />}
+          <DynamicT forKey={headline} interpolation={headlineInterpolation} />
         </div>
       )}
 

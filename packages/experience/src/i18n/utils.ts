@@ -1,5 +1,8 @@
-import type { LocalePhrase } from '@logto/phrases-experience';
-import resource from '@logto/phrases-experience';
+import resource, {
+  getDefaultLanguageTag,
+  isBuiltInLanguageTag,
+  type LocalePhrase,
+} from '@logto/phrases-experience';
 import type { LanguageInfo } from '@logto/schemas';
 import { isObject } from '@silverhand/essentials';
 import type { Resource } from 'i18next';
@@ -8,6 +11,62 @@ import LanguageDetector from 'i18next-browser-languagedetector';
 
 import { getPhrases as getPhrasesApi } from '@/apis/settings';
 import { searchKeys } from '@/shared/utils/search-parameters';
+
+type PhraseNode = string | { readonly [key: string]: PhraseNode };
+
+const isPlainRecord = (value: unknown): value is Record<string, unknown> =>
+  isObject(value) && !Array.isArray(value);
+
+const isPhraseRecord = (value: unknown): value is Record<string, PhraseNode> =>
+  isPlainRecord(value);
+
+const mergePhraseRecord = (
+  base: Record<string, PhraseNode>,
+  override: Record<string, PhraseNode>
+): Record<string, PhraseNode> =>
+  Object.fromEntries(
+    [...new Set([...Object.keys(base), ...Object.keys(override)])].flatMap((key) => {
+      const baseValue = base[key];
+      const overrideValue = override[key];
+
+      if (overrideValue === undefined) {
+        return baseValue === undefined ? [] : [[key, baseValue]];
+      }
+
+      if (isPhraseRecord(baseValue) && isPhraseRecord(overrideValue)) {
+        return [[key, mergePhraseRecord(baseValue, overrideValue)]];
+      }
+
+      return [[key, overrideValue]];
+    })
+  );
+
+/**
+ * Remote phrases win. Built-in phrases fill keys the auth server does not have yet,
+ * and English remains the fallback language for any key still missing.
+ */
+export const mergePhraseValue = (base: unknown, override: unknown): unknown => {
+  if (!isPhraseRecord(base) || !isPhraseRecord(override)) {
+    return override === undefined ? base : override;
+  }
+
+  return mergePhraseRecord(base, override);
+};
+
+const withBuiltInFallback = (lng: string, phrases: LocalePhrase): Resource => {
+  const languageTag = getDefaultLanguageTag(lng);
+  const builtIn = isBuiltInLanguageTag(languageTag) ? resource[languageTag] : resource.en;
+  const merged = mergePhraseValue(builtIn, phrases);
+
+  if (!isPhraseRecord(merged) || lng === 'en') {
+    return { en: isPhraseRecord(merged) ? merged : resource.en };
+  }
+
+  return {
+    en: resource.en,
+    [lng]: merged,
+  };
+};
 
 const getPhrases = async (language?: string) => {
   const uiLocales = sessionStorage.getItem(searchKeys.uiLocales) ?? undefined;
@@ -44,7 +103,7 @@ export const getI18nResource = async (
     const { phrases, lng } = await getPhrases(language);
 
     return {
-      resources: { [lng]: phrases },
+      resources: withBuiltInFallback(lng, phrases),
       lng,
     };
   } catch {
@@ -80,8 +139,10 @@ export const detectLanguage = (languageSettings?: LanguageInfo) => {
 export const changeLanguage = async (language: string) => {
   const { resources, lng } = await getI18nResource(language);
 
-  for (const [namespace, resource] of Object.entries(resources[lng] ?? {})) {
-    i18next.addResourceBundle(lng, namespace, resource);
+  for (const [bundleLanguage, bundle] of Object.entries(resources)) {
+    for (const [namespace, namespaceResource] of Object.entries(bundle)) {
+      i18next.addResourceBundle(bundleLanguage, namespace, namespaceResource, true, true);
+    }
   }
 
   await i18next.changeLanguage(lng);

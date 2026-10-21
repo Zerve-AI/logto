@@ -1,3 +1,5 @@
+import { useTranslation } from 'react-i18next';
+
 import TextLink from '@/components/TextLink';
 
 import ZerveLogo from './ZerveLogo';
@@ -13,20 +15,17 @@ type Props = {
 
 const websiteUrl = 'https://zerve.ai';
 
-const copy = {
-  'sign-in': {
-    headline: 'A whole team of agents',
-    body: 'A Superagent staffs as many parallel workers as the objective demands. Work that would run one thread at a time runs all at once, on your compute, bound by your guardrails, on your own model keys.',
-  },
-  'sign-up': {
-    headline: 'Research at institutional scale',
-    body: 'Zerve Superagents turn an objective into dozens of workers running in parallel on your compute, fully inspectable down to the code. Used by quant researchers, analysts, PMs, and risk teams, inside your perimeter.',
-  },
-} as const;
-
 const MarketingPanel = ({ variant, termsOfUseUrl, privacyPolicyUrl }: Props) => {
-  const content = copy[variant];
+  const { t } = useTranslation();
   const year = new Date().getFullYear();
+  const headline =
+    variant === 'sign-in'
+      ? t('description.marketing_sign_in_headline')
+      : t('description.marketing_sign_up_headline');
+  const body =
+    variant === 'sign-in'
+      ? t('description.marketing_sign_in_body')
+      : t('description.marketing_sign_up_body');
 
   return (
     <aside className={styles.panel}>
@@ -36,26 +35,32 @@ const MarketingPanel = ({ variant, termsOfUseUrl, privacyPolicyUrl }: Props) => 
           {(privacyPolicyUrl ?? termsOfUseUrl) && (
             <div className={styles.legalRow}>
               {privacyPolicyUrl && (
-                <TextLink href={privacyPolicyUrl} target="_blank" type="secondary">
-                  Privacy Policy
-                </TextLink>
+                <TextLink
+                  href={privacyPolicyUrl}
+                  target="_blank"
+                  text="description.privacy_policy"
+                  type="secondary"
+                />
               )}
               {termsOfUseUrl && (
-                <TextLink href={termsOfUseUrl} target="_blank" type="secondary">
-                  Terms of Service
-                </TextLink>
+                <TextLink
+                  href={termsOfUseUrl}
+                  target="_blank"
+                  text="description.terms_of_service"
+                  type="secondary"
+                />
               )}
             </div>
           )}
-          <h1 className={styles.headline}>{content.headline}</h1>
-          <p className={styles.body}>{content.body}</p>
+          <h1 className={styles.headline}>{headline}</h1>
+          <p className={styles.body}>{body}</p>
         </div>
       </div>
       <div className={styles.bottom}>
         <a className={styles.backLink} href={websiteUrl} rel="noopener noreferrer">
-          Back to website
+          {t('description.back_to_website')}
         </a>
-        <p className={styles.copyright}>© Copyright {year} Zerve. All rights reserved.</p>
+        <p className={styles.copyright}>{t('description.copyright', { year })}</p>
       </div>
     </aside>
   );

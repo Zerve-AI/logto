@@ -8,6 +8,8 @@ const input = {
   backup_code: 'Резервний код',
   code: 'Код',
   label_with_optional: "{{label}} (Необов'язково)",
+  email_address: 'Адреса електронної пошти',
+  email_placeholder: 'Введіть електронну пошту',
 };
 
 export default Object.freeze(input);
