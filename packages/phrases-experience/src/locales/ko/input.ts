@@ -8,6 +8,8 @@ const input = {
   backup_code: '백업 코드',
   code: '코드',
   label_with_optional: '{{label}} (선택사항)',
+  email_address: '이메일 주소',
+  email_placeholder: '이메일을 입력하세요',
 };
 
 export default Object.freeze(input);

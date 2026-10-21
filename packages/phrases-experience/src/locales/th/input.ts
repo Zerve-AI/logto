@@ -8,6 +8,8 @@ const input = {
   backup_code: 'รหัสสำรอง',
   code: 'รหัส',
   label_with_optional: '{{label}} (ไม่บังคับ)',
+  email_address: 'ที่อยู่อีเมล',
+  email_placeholder: 'ป้อนอีเมลของคุณ',
 };
 
 export default Object.freeze(input);

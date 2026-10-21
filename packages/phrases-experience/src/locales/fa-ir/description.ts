@@ -142,6 +142,18 @@ const description = {
     phone_verification_code: 'کد تأیید تلفن',
     verification_code_description: 'ارسال به {{target}}',
   },
+  create_an_account: 'ایجاد حساب',
+  agree_to_terms_prefix: 'موافقم با ',
+  terms_and_conditions: 'شرایط و ضوابط',
+  terms_of_service: 'شرایط خدمات',
+  back_to_website: 'بازگشت به وب‌سایت',
+  copyright: '© حق نشر {{year}} Zerve. کلیه حقوق محفوظ است.',
+  marketing_sign_in_headline: 'یک تیم کامل از عامل‌ها',
+  marketing_sign_in_body:
+    'یک Superagent به تعداد مورد نیاز هدف، کارگران موازی به‌کار می‌گیرد. کاری که در یک رشته انجام می‌شد، هم‌زمان روی رایانش شما، در چارچوب محدودیت‌های شما و با کلیدهای مدل خودتان اجرا می‌شود.',
+  marketing_sign_up_headline: 'پژوهش در مقیاس سازمانی',
+  marketing_sign_up_body:
+    'Zerve Superagents یک هدف را به ده‌ها کارگر تبدیل می‌کنند که به‌صورت موازی روی رایانش شما اجرا می‌شوند و تا سطح کد قابل بررسی‌اند. پژوهشگران کمی، تحلیلگران، مدیران محصول و تیم‌های ریسک، درون محدوده شما از آن استفاده می‌کنند.',
 };
 
 export default Object.freeze(description);

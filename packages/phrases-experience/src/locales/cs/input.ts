@@ -8,6 +8,8 @@ const input = {
   backup_code: 'Záložní kód',
   code: 'Kód',
   label_with_optional: '{{label}} (Volitelné)',
+  email_address: 'E-mailová adresa',
+  email_placeholder: 'Zadejte svůj e-mail',
 };
 
 export default Object.freeze(input);

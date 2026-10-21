@@ -141,6 +141,18 @@ const description = {
     phone_verification_code: 'رمز التحقق عبر الهاتف',
     verification_code_description: 'إرسال إلى {{target}}',
   },
+  create_an_account: 'إنشاء حساب',
+  agree_to_terms_prefix: 'أوافق على ',
+  terms_and_conditions: 'الشروط والأحكام',
+  terms_of_service: 'شروط الخدمة',
+  back_to_website: 'العودة إلى الموقع',
+  copyright: '© حقوق النشر {{year}} Zerve. جميع الحقوق محفوظة.',
+  marketing_sign_in_headline: 'فريق كامل من الوكلاء',
+  marketing_sign_in_body:
+    'يوظّف Superagent عدد العاملين المتوازيين الذي يتطلبه الهدف. العمل الذي كان يسير في مسار واحد يجري كله في الوقت نفسه، على حوسبتك، ضمن ضوابطك، وبمفاتيح نماذجك.',
+  marketing_sign_up_headline: 'بحث على نطاق مؤسسي',
+  marketing_sign_up_body:
+    'تحوّل Zerve Superagents الهدف إلى عشرات العاملين الذين يعملون بالتوازي على حوسبتك، مع إمكانية فحصهم حتى مستوى الشيفرة. يستخدمها باحثو التحليل الكمي والمحللون ومديرو المنتجات وفرق المخاطر، داخل محيطك.',
 };
 
 export default Object.freeze(description);

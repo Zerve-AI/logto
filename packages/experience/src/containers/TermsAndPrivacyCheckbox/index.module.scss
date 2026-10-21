@@ -14,8 +14,14 @@
 }
 
 .content {
-  @include _.text-hint;
+  color: var(--color-type-secondary);
   font: var(--font-body-3);
+  font-size: 13px;
+  line-height: 1.4;
+}
+
+.link {
+  font: inherit;
 }
 
 .errorMessage {
@@ -27,4 +33,35 @@
   .terms {
     padding: _.unit(1) 0;
   }
+}
+
+:global(body.mobile .zerveAuthShell),
+:global(body.desktop .zerveAuthShell) {
+  .terms {
+    padding: 0;
+  }
+
+  .content,
+  .content .link,
+  .content .link:active {
+    color: var(--color-neutral-50);
+  }
+}
+
+/* The marketing panel is hidden here, so the agreement links must read as links without hover. */
+:global(body.mobile .zerveAuthShell) .content .link,
+:global(body.mobile .zerveAuthShell) .content .link:active {
+  color: var(--color-static-white);
+}
+
+@media (max-width: 900px) {
+  :global(body.desktop .zerveAuthShell) .content .link,
+  :global(body.desktop .zerveAuthShell) .content .link:active {
+    color: var(--color-static-white);
+  }
+}
+
+:global(body.desktop .zerveAuthShell) .content .link:hover,
+:global(body.mobile .zerveAuthShell) .content .link:hover {
+  color: var(--color-static-white);
 }

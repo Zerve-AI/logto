@@ -140,6 +140,18 @@ const description = {
     phone_verification_code: 'Telefon doğrulama kodu',
     verification_code_description: '{{target}} adresine gönder',
   },
+  create_an_account: 'Hesap oluştur',
+  agree_to_terms_prefix: 'Şunları kabul ediyorum: ',
+  terms_and_conditions: 'Şartlar ve Koşullar',
+  terms_of_service: 'Hizmet Şartları',
+  back_to_website: 'Web sitesine dön',
+  copyright: '© {{year}} Zerve. Tüm hakları saklıdır.',
+  marketing_sign_in_headline: 'Bir ajan ekibinin tamamı',
+  marketing_sign_in_body:
+    'Bir Superagent, hedefin gerektirdiği kadar paralel çalışan görevlendirir. Tek tek ilerleyecek iş, sizin işlem gücünüzde, sizin sınırlarınız içinde ve kendi model anahtarlarınızla aynı anda çalışır.',
+  marketing_sign_up_headline: 'Kurumsal ölçekte araştırma',
+  marketing_sign_up_body:
+    'Zerve Superagents bir hedefi, sizin işlem gücünüzde paralel çalışan ve koda kadar incelenebilen düzinelerce çalışana dönüştürür. Kantitatif araştırmacılar, analistler, ürün yöneticileri ve risk ekipleri bunu kendi çevrenizin içinde kullanır.',
 };
 
 export default Object.freeze(description);

@@ -8,6 +8,8 @@ const input = {
   backup_code: 'Backup-Code',
   code: 'Code',
   label_with_optional: '{{label}} (Optional)',
+  email_address: 'E-Mail-Adresse',
+  email_placeholder: 'E-Mail-Adresse eingeben',
 };
 
 export default Object.freeze(input);

@@ -33,14 +33,13 @@ describe('<Register />', () => {
   }));
 
   test.each(signUpTestCases)('renders with %o sign up settings', async (...signUp) => {
-    const { queryByText, queryAllByText, container } = renderRegisterPage();
+    const { queryAllByText, container } = renderRegisterPage();
 
     expect(container.querySelector('input[name=identifier]')).not.toBeNull();
-    expect(queryByText('action.create_account')).not.toBeNull();
 
-    // Social
+    // Social buttons plus the email submit button share this phrase.
     expect(queryAllByText('action.sign_in_with')).toHaveLength(
-      mockSignInExperienceSettings.socialConnectors.length
+      mockSignInExperienceSettings.socialConnectors.length + 1
     );
   });
 
@@ -74,22 +73,24 @@ describe('<Register />', () => {
     expect(queryByText('sign-in')).not.toBeNull();
   });
 
-  test('render single sign on link', () => {
+  test('offers sign in instead of a single sign on link on create account', () => {
     const { queryByText } = renderRegisterPage({
       ssoConnectors: mockSsoConnectors,
       singleSignOnEnabled: true,
     });
 
-    expect(queryByText('action.single_sign_on')).not.toBeNull();
+    expect(queryByText('action.single_sign_on')).toBeNull();
+    expect(queryByText('action.sign_in')).not.toBeNull();
   });
 
-  test('should render single sign on link with single sign on enabled but empty list', () => {
+  test('offers sign in when single sign on is enabled but the connector list is empty', () => {
     const { queryByText } = renderRegisterPage({
       ssoConnectors: [],
       singleSignOnEnabled: true,
     });
 
-    expect(queryByText('action.single_sign_on')).not.toBeNull();
+    expect(queryByText('action.single_sign_on')).toBeNull();
+    expect(queryByText('action.sign_in')).not.toBeNull();
   });
 
   test('should not render single sign on link with single sign on disabled', () => {

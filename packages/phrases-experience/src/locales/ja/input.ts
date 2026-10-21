@@ -8,6 +8,8 @@ const input = {
   backup_code: 'バックアップコード',
   code: 'コード',
   label_with_optional: '{{label}}（任意）',
+  email_address: 'メールアドレス',
+  email_placeholder: 'メールアドレスを入力',
 };
 
 export default Object.freeze(input);

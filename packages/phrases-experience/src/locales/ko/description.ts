@@ -135,6 +135,18 @@ const description = {
     phone_verification_code: '전화 인증 코드',
     verification_code_description: '{{target}}로 전송',
   },
+  create_an_account: '계정 만들기',
+  agree_to_terms_prefix: '다음에 동의합니다: ',
+  terms_and_conditions: '이용 약관',
+  terms_of_service: '서비스 약관',
+  back_to_website: '웹사이트로 돌아가기',
+  copyright: '© {{year}} Zerve. 모든 권리 보유.',
+  marketing_sign_in_headline: '에이전트 팀 전체',
+  marketing_sign_in_body:
+    'Superagent는 목표에 필요한 만큼 병렬 작업자를 배치합니다. 한 줄씩 진행되던 작업이 여러분의 컴퓨팅에서, 여러분의 가드레일 안에서, 여러분 자신의 모델 키로 한꺼번에 실행됩니다.',
+  marketing_sign_up_headline: '기관 규모의 리서치',
+  marketing_sign_up_body:
+    'Zerve Superagents는 목표를 수십 개의 작업자로 나누어 여러분의 컴퓨팅에서 병렬로 실행하며, 코드까지 검사할 수 있습니다. 퀀트 리서처, 애널리스트, 제품 관리자, 리스크 팀이 여러분의 경계 안에서 사용합니다.',
 };
 
 export default Object.freeze(description);

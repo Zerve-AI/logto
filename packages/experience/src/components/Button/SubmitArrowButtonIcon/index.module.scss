@@ -1,0 +1,20 @@
+.badge {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 32px;
+  height: 32px;
+  border-radius: 8px;
+  /* Same dark surface on light identifier routes and the dark auth shell. */
+  background: #0d0d11;
+  color: var(--color-static-white);
+
+  svg {
+    width: 11px;
+    height: 10px;
+    fill: var(--color-neutral-10);
+    stroke-width: 2px;
+    stroke: var(--color-static-white);
+    flex-shrink: 0;
+  }
+}

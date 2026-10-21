@@ -143,6 +143,18 @@ const description = {
     phone_verification_code: 'Ověřovací kód SMS',
     verification_code_description: 'Odeslat na {{target}}',
   },
+  create_an_account: 'Vytvořit účet',
+  agree_to_terms_prefix: 'Souhlasím s ',
+  terms_and_conditions: 'obchodními podmínkami',
+  terms_of_service: 'Podmínky služby',
+  back_to_website: 'Zpět na web',
+  copyright: '© Copyright {{year}} Zerve. Všechna práva vyhrazena.',
+  marketing_sign_in_headline: 'Celý tým agentů',
+  marketing_sign_in_body:
+    'Superagent nasadí tolik paralelních pracovníků, kolik cíl vyžaduje. Práce, která by běžela po jednom vlákně, běží najednou na vašem výpočetním prostředí, v mezích vašich pravidel a s vašimi klíči k modelům.',
+  marketing_sign_up_headline: 'Výzkum v institucionálním měřítku',
+  marketing_sign_up_body:
+    'Zerve Superagents promění cíl v desítky pracovníků běžících paralelně na vašem výpočetním prostředí, plně kontrolovatelných až po kód. Používají je kvantitativní výzkumníci, analytici, produktoví manažeři a týmy řízení rizik, uvnitř vašeho perimetru.',
 };
 
 export default Object.freeze(description);

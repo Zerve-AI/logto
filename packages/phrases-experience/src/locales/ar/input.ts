@@ -8,6 +8,8 @@ const input = {
   backup_code: 'رمز النسخ الاحتياطي',
   code: 'الرمز',
   label_with_optional: '(اختياري) {{label}}',
+  email_address: 'عنوان البريد الإلكتروني',
+  email_placeholder: 'أدخل بريدك الإلكتروني',
 };
 
 export default Object.freeze(input);

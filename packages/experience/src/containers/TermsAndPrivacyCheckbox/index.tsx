@@ -1,8 +1,9 @@
 import classNames from 'classnames';
 import { useCallback } from 'react';
+import { useTranslation } from 'react-i18next';
 
 import Checkbox from '@/components/Checkbox';
-import TermsLinks from '@/components/TermsLinks';
+import TextLink from '@/components/TextLink';
 import useTerms from '@/hooks/use-terms';
 import { onKeyDownHandler } from '@/shared/utils/a11y';
 
@@ -13,12 +14,9 @@ type Props = {
 };
 
 const TermsAndPrivacyCheckbox = ({ className }: Props) => {
+  const { t } = useTranslation();
   const { termsAgreement, setTermsAgreement, termsOfUseUrl, privacyPolicyUrl, isTermsDisabled } =
     useTerms();
-
-  // Const { t } = useTranslation();
-  // Const prefix = t('description.agree_with_terms');
-  const prefix = 'I agree to the ';
 
   const toggle = useCallback(() => {
     setTermsAgreement((termsAgreement) => !termsAgreement);
@@ -50,8 +48,32 @@ const TermsAndPrivacyCheckbox = ({ className }: Props) => {
         size="small"
       />
       <div className={styles.content}>
-        <span>{prefix}</span>
-        <TermsLinks inline termsOfUseUrl={termsOfUseUrl} privacyPolicyUrl={privacyPolicyUrl} />
+        <span>{t('description.agree_to_terms_prefix')}</span>
+        {termsOfUseUrl && (
+          <TextLink
+            className={styles.link}
+            href={termsOfUseUrl}
+            text="description.terms_and_conditions"
+            type="secondary"
+            target="_blank"
+            onClick={(event) => {
+              event.stopPropagation();
+            }}
+          />
+        )}
+        {termsOfUseUrl && privacyPolicyUrl && ` ${t('description.and')} `}
+        {privacyPolicyUrl && (
+          <TextLink
+            className={styles.link}
+            href={privacyPolicyUrl}
+            text="description.privacy_policy"
+            type="secondary"
+            target="_blank"
+            onClick={(event) => {
+              event.stopPropagation();
+            }}
+          />
+        )}
       </div>
     </div>
   );

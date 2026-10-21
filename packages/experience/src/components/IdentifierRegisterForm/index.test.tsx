@@ -91,13 +91,13 @@ describe('<IdentifierRegisterForm />', () => {
     test('default render', () => {
       const { queryByText, container } = renderForm(signUpMethods);
       expect(container.querySelector('input[name=identifier]')).not.toBeNull();
-      expect(queryByText('action.create_account')).not.toBeNull();
-      expect(queryByText('description.terms_of_use')).not.toBeNull();
+      expect(queryByText('action.sign_in_with')).not.toBeNull();
+      expect(queryByText('description.terms_and_conditions')).not.toBeNull();
     });
 
     test('identifier are required', async () => {
       const { queryByText, getByText } = renderForm(signUpMethods);
-      const submitButton = getByText('action.create_account');
+      const submitButton = getByText('action.sign_in_with');
 
       act(() => {
         fireEvent.submit(submitButton);
@@ -114,7 +114,7 @@ describe('<IdentifierRegisterForm />', () => {
   describe('username register form', () => {
     test('username with initial numeric char should throw', async () => {
       const { queryByText, getByText, container } = renderForm();
-      const submitButton = getByText('action.create_account');
+      const submitButton = getByText('action.sign_in_with');
       const usernameInput = container.querySelector('input[name=identifier]');
 
       assert(usernameInput, new Error('username input not found'));
@@ -141,7 +141,7 @@ describe('<IdentifierRegisterForm />', () => {
 
     test('username with special character should throw', async () => {
       const { queryByText, getByText, container } = renderForm();
-      const submitButton = getByText('action.create_account');
+      const submitButton = getByText('action.sign_in_with');
       const usernameInput = container.querySelector('input[name=identifier]');
 
       assert(usernameInput, new Error('username input not found'));
@@ -168,8 +168,8 @@ describe('<IdentifierRegisterForm />', () => {
 
     test('submit properly', async () => {
       const { getByText, queryByText, container } = renderForm();
-      const submitButton = getByText('action.create_account');
-      const termsButton = getByText('description.agree_with_terms');
+      const submitButton = getByText('action.sign_in_with');
+      const termsButton = getByText('description.agree_to_terms_prefix');
       const usernameInput = container.querySelector('input[name=identifier]');
 
       assert(usernameInput, new Error('username input not found'));
@@ -214,7 +214,7 @@ describe('<IdentifierRegisterForm />', () => {
         [],
         restrictivePolicy
       );
-      const submitButton = getByText('action.create_account');
+      const submitButton = getByText('action.sign_in_with');
       const usernameInput = container.querySelector('input[name=identifier]');
 
       assert(usernameInput, new Error('username input not found'));
@@ -246,7 +246,7 @@ describe('<IdentifierRegisterForm />', () => {
         [],
         restrictivePolicy
       );
-      const submitButton = getByText('action.create_account');
+      const submitButton = getByText('action.sign_in_with');
       const usernameInput = container.querySelector('input[name=identifier]');
 
       assert(usernameInput, new Error('username input not found'));
@@ -267,7 +267,7 @@ describe('<IdentifierRegisterForm />', () => {
       // The permissive default produces no requirements sentence, yet its max length (128) can
       // still be violated — the specific error must remain.
       const { queryByText, getByText, container } = renderForm([SignInIdentifier.Username]);
-      const submitButton = getByText('action.create_account');
+      const submitButton = getByText('action.sign_in_with');
       const usernameInput = container.querySelector('input[name=identifier]');
 
       assert(usernameInput, new Error('username input not found'));
@@ -290,7 +290,7 @@ describe('<IdentifierRegisterForm />', () => {
       test('email with invalid format should throw', async () => {
         const { queryByText, getByText, container } = renderForm(signUpMethods);
 
-        const submitButton = getByText('action.create_account');
+        const submitButton = getByText('action.sign_in_with');
         const emailInput = container.querySelector('input[name=identifier]');
 
         assert(emailInput, new Error('email input not found'));
@@ -319,8 +319,8 @@ describe('<IdentifierRegisterForm />', () => {
       test('submit properly', async () => {
         const { getByText, container } = renderForm(signUpMethods);
 
-        const submitButton = getByText('action.create_account');
-        const termsButton = getByText('description.agree_with_terms');
+        const submitButton = getByText('action.sign_in_with');
+        const termsButton = getByText('description.agree_to_terms_prefix');
         const emailInput = container.querySelector('input[name=identifier]');
 
         assert(emailInput, new Error('email input not found'));
@@ -356,7 +356,7 @@ describe('<IdentifierRegisterForm />', () => {
       test('phone with invalid format should throw', async () => {
         const { queryByText, getByText, container } = renderForm(signUpMethods);
 
-        const submitButton = getByText('action.create_account');
+        const submitButton = getByText('action.sign_in_with');
         const phoneInput = container.querySelector('input[name=identifier]');
 
         assert(phoneInput, new Error('phone input not found'));
@@ -384,8 +384,8 @@ describe('<IdentifierRegisterForm />', () => {
       test('submit properly', async () => {
         const { getByText, container } = renderForm(signUpMethods);
 
-        const submitButton = getByText('action.create_account');
-        const termsButton = getByText('description.agree_with_terms');
+        const submitButton = getByText('action.sign_in_with');
+        const termsButton = getByText('description.agree_to_terms_prefix');
         const phoneInput = container.querySelector('input[name=identifier]');
 
         assert(phoneInput, new Error('phone input not found'));
@@ -428,9 +428,9 @@ describe('<IdentifierRegisterForm />', () => {
 
     it('should not call check single sign-on connector when no single sign-on connector is enabled', async () => {
       const { getByText, container, queryByText } = renderForm([SignInIdentifier.Email]);
-      const submitButton = getByText('action.create_account');
+      const submitButton = getByText('action.sign_in_with');
       const emailInput = container.querySelector('input[name=identifier]');
-      const termsButton = getByText('description.agree_with_terms');
+      const termsButton = getByText('description.agree_to_terms_prefix');
 
       assert(emailInput, new Error('username input not found'));
 
@@ -466,9 +466,9 @@ describe('<IdentifierRegisterForm />', () => {
         [SignInIdentifier.Email],
         mockSsoConnectors
       );
-      const submitButton = getByText('action.create_account');
+      const submitButton = getByText('action.sign_in_with');
       const emailInput = container.querySelector('input[name=identifier]');
-      const termsButton = getByText('description.agree_with_terms');
+      const termsButton = getByText('description.agree_to_terms_prefix');
 
       assert(emailInput, new Error('username input not found'));
 
@@ -511,7 +511,7 @@ describe('<IdentifierRegisterForm />', () => {
         mockSsoConnectors
       );
       const emailInput = container.querySelector('input[name=identifier]');
-      const termsButton = getByText('description.agree_with_terms');
+      const termsButton = getByText('description.agree_to_terms_prefix');
 
       assert(emailInput, new Error('username input not found'));
 
@@ -527,7 +527,7 @@ describe('<IdentifierRegisterForm />', () => {
       await waitFor(() => {
         // Should switch to the single sign-on mode
         expect(queryByText('action.single_sign_on')).not.toBeNull();
-        expect(queryByText('action.create_account')).toBeNull();
+        expect(queryByText('action.sign_in_with')).toBeNull();
       });
 
       act(() => {

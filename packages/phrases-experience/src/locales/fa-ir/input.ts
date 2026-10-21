@@ -8,6 +8,8 @@ const input = {
   backup_code: 'کد پشتیبان',
   code: 'کد',
   label_with_optional: '{{label}} (اختیاری)',
+  email_address: 'نشانی ایمیل',
+  email_placeholder: 'ایمیل خود را وارد کنید',
 };
 
 export default Object.freeze(input);
