@@ -160,15 +160,18 @@
 :global(body.desktop .zerveAuthShell),
 :global(body.mobile .zerveAuthShell) {
   .plainLabel {
-    color: rgba(255, 255, 255, 78%);
+    color: #f4f4f7;
   }
 
   .container.plain .inputField {
-    border-color: rgba(255, 255, 255, 16%);
-    background: var(--color-bg-float);
+    border-color: #2e2e33;
+
+    input {
+      font-size: 13px;
+    }
 
     input::placeholder {
-      color: var(--color-neutral-50);
+      color: #71717a;
     }
 
     &:focus-within {

@@ -1,3 +1,4 @@
+@use '@/shared/scss/colors' as colors;
 @use '@/shared/scss/underscore' as _;
 
 
@@ -76,7 +77,10 @@
 }
 
 .brandedView {
+  /* Sign-in and sign-up stay on the dark palette when the system theme is light. */
+  @include colors.dark;
   background: var(--color-bg-float);
+  color-scheme: dark;
 }
 
 .split {
