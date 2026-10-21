@@ -9,6 +9,7 @@ import useTerms from '@/hooks/use-terms';
 import { layoutClassNames } from '@/utils/consts';
 
 import { AICoResearcherLogo } from './AICoResearcherLogo';
+import AuthRouteTheme from './AuthRouteTheme';
 import CustomContent from './CustomContent';
 import DotPattern from './DotPattern';
 import { LayoutAsidePortalContext } from './LayoutAsidePortal';
@@ -72,26 +73,28 @@ const AppLayout = () => {
   return (
     <LayoutAsidePortalContext.Provider value={asidePortalContext}>
       {authVariant ? (
-        <div className={classNames(styles.viewBox, styles.brandedView)}>
-          <div className={classNames(styles.split, 'zerveAuthShell')}>
-            <MarketingPanel
-              variant={authVariant}
-              termsOfUseUrl={termsOfUseUrl}
-              privacyPolicyUrl={privacyPolicyUrl}
-            />
-            <div
-              className={classNames(
-                styles.stage,
-                authVariant === 'sign-up' ? styles.signUpStage : styles.signInStage
-              )}
-            >
-              <div className={styles.stageLogo}>
-                <ZerveLogo />
+        <AuthRouteTheme>
+          <div className={classNames(styles.viewBox, styles.brandedView)}>
+            <div className={classNames(styles.split, 'zerveAuthShell')}>
+              <MarketingPanel
+                variant={authVariant}
+                termsOfUseUrl={termsOfUseUrl}
+                privacyPolicyUrl={privacyPolicyUrl}
+              />
+              <div
+                className={classNames(
+                  styles.stage,
+                  authVariant === 'sign-up' ? styles.signUpStage : styles.signInStage
+                )}
+              >
+                <div className={styles.stageLogo}>
+                  <ZerveLogo />
+                </div>
+                <div className={styles.stageBody}>{mainContent}</div>
               </div>
-              <div className={styles.stageBody}>{mainContent}</div>
             </div>
           </div>
-        </div>
+        </AuthRouteTheme>
       ) : (
         <div className={styles.viewBox}>
           <div className={classNames(styles.container, layoutClassNames.pageContainer)}>

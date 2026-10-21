@@ -5,7 +5,8 @@
   width: 32px;
   height: 32px;
   border-radius: 8px;
-  background: var(--color-bg-float);
+  /* Same dark surface on light identifier routes and the dark auth shell. */
+  background: #0d0d11;
   color: var(--color-static-white);
 
   svg {
