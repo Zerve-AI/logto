@@ -163,7 +163,12 @@
     color: #f4f4f7;
   }
 
+  .errorMessage {
+    font-size: 12px;
+  }
+
   .container.plain .inputField {
+    height: 40px;
     border-color: #2e2e33;
 
     input {

@@ -107,14 +107,14 @@
 
 :global(.zerveAuthShell) {
   .primary {
-    height: 48px;
+    height: 40px;
     border-radius: 14px;
     background: var(--color-static-white);
     color: var(--zerve-primary-button-text-color);
   }
 
   .secondary {
-    height: 48px;
+    height: 40px;
     border-radius: 14px;
     border-color: rgba(255, 255, 255, 22%);
     background: transparent;
