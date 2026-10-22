@@ -6,6 +6,7 @@ import { Outlet, useLocation } from 'react-router-dom';
 import noiseVideoUrl from '@/assets/auth/noise-video.mp4';
 import TextLink from '@/components/TextLink';
 import usePlatform from '@/hooks/use-platform';
+import usePrefersReducedMotion from '@/hooks/use-prefers-reduced-motion';
 import useTerms from '@/hooks/use-terms';
 import { layoutClassNames } from '@/utils/consts';
 
@@ -38,6 +39,7 @@ const handleNoiseLoaded = (event: SyntheticEvent<HTMLVideoElement>) => {
 const AppLayout = () => {
   const { termsOfUseUrl, privacyPolicyUrl } = useTerms();
   const { isMobile } = usePlatform();
+  const prefersReducedMotion = usePrefersReducedMotion();
 
   const [asidePortalContainer, setAsidePortalContainer] = useState<Nullable<HTMLElement>>(null);
   const [activeAsidePortalCount, setActiveAsidePortalCount] = useState(0);
@@ -95,17 +97,19 @@ const AppLayout = () => {
                   authVariant === 'sign-up' ? styles.signUpStage : styles.signInStage
                 )}
               >
-                <video
-                  autoPlay
-                  loop
-                  muted
-                  playsInline
-                  aria-hidden
-                  className={styles.noise}
-                  onLoadedMetadata={handleNoiseLoaded}
-                >
-                  <source src={noiseVideoUrl} type="video/mp4" />
-                </video>
+                {!prefersReducedMotion && (
+                  <video
+                    autoPlay
+                    loop
+                    muted
+                    playsInline
+                    aria-hidden
+                    className={styles.noise}
+                    onLoadedMetadata={handleNoiseLoaded}
+                  >
+                    <source src={noiseVideoUrl} type="video/mp4" />
+                  </video>
+                )}
                 <div className={styles.stageLogo}>
                   <ZerveLogo />
                 </div>
