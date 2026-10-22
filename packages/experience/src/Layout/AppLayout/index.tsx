@@ -1,8 +1,9 @@
 import { type Nullable } from '@silverhand/essentials';
 import classNames from 'classnames';
-import { useCallback, useMemo, useState } from 'react';
+import { type SyntheticEvent, useCallback, useMemo, useState } from 'react';
 import { Outlet, useLocation } from 'react-router-dom';
 
+import noiseVideoUrl from '@/assets/auth/noise-video.mp4';
 import TextLink from '@/components/TextLink';
 import usePlatform from '@/hooks/use-platform';
 import useTerms from '@/hooks/use-terms';
@@ -25,6 +26,13 @@ const getAuthVariant = (pathname: string): AuthMarketingVariant | undefined => {
   if (pathname === '/sign-in' || pathname.startsWith('/sign-in/')) {
     return 'sign-in';
   }
+};
+
+const noisePlaybackRate = 0.75;
+
+const handleNoiseLoaded = (event: SyntheticEvent<HTMLVideoElement>) => {
+  // eslint-disable-next-line @silverhand/fp/no-mutation -- playback rate is only settable on the element
+  event.currentTarget.playbackRate = noisePlaybackRate;
 };
 
 const AppLayout = () => {
@@ -87,6 +95,17 @@ const AppLayout = () => {
                   authVariant === 'sign-up' ? styles.signUpStage : styles.signInStage
                 )}
               >
+                <video
+                  autoPlay
+                  loop
+                  muted
+                  playsInline
+                  aria-hidden
+                  className={styles.noise}
+                  onLoadedMetadata={handleNoiseLoaded}
+                >
+                  <source src={noiseVideoUrl} type="video/mp4" />
+                </video>
                 <div className={styles.stageLogo}>
                   <ZerveLogo />
                 </div>
