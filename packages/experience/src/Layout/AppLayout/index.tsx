@@ -1,10 +1,12 @@
 import { type Nullable } from '@silverhand/essentials';
 import classNames from 'classnames';
-import { useCallback, useMemo, useState } from 'react';
+import { type SyntheticEvent, useCallback, useMemo, useState } from 'react';
 import { Outlet, useLocation } from 'react-router-dom';
 
+import noiseVideoUrl from '@/assets/auth/noise-video.mp4';
 import TextLink from '@/components/TextLink';
 import usePlatform from '@/hooks/use-platform';
+import usePrefersReducedMotion from '@/hooks/use-prefers-reduced-motion';
 import useTerms from '@/hooks/use-terms';
 import { layoutClassNames } from '@/utils/consts';
 
@@ -27,9 +29,17 @@ const getAuthVariant = (pathname: string): AuthMarketingVariant | undefined => {
   }
 };
 
+const noisePlaybackRate = 0.75;
+
+const handleNoiseLoaded = (event: SyntheticEvent<HTMLVideoElement>) => {
+  // eslint-disable-next-line @silverhand/fp/no-mutation -- playback rate is only settable on the element
+  event.currentTarget.playbackRate = noisePlaybackRate;
+};
+
 const AppLayout = () => {
   const { termsOfUseUrl, privacyPolicyUrl } = useTerms();
   const { isMobile } = usePlatform();
+  const prefersReducedMotion = usePrefersReducedMotion();
 
   const [asidePortalContainer, setAsidePortalContainer] = useState<Nullable<HTMLElement>>(null);
   const [activeAsidePortalCount, setActiveAsidePortalCount] = useState(0);
@@ -87,6 +97,19 @@ const AppLayout = () => {
                   authVariant === 'sign-up' ? styles.signUpStage : styles.signInStage
                 )}
               >
+                {!prefersReducedMotion && (
+                  <video
+                    autoPlay
+                    loop
+                    muted
+                    playsInline
+                    aria-hidden
+                    className={styles.noise}
+                    onLoadedMetadata={handleNoiseLoaded}
+                  >
+                    <source src={noiseVideoUrl} type="video/mp4" />
+                  </video>
+                )}
                 <div className={styles.stageLogo}>
                   <ZerveLogo />
                 </div>
