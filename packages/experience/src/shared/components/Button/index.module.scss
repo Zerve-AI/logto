@@ -158,15 +158,25 @@
 
 .button.edgeIcon {
   position: relative;
+  height: auto;
+  min-height: 40px;
+  padding-block: 4px;
   padding-inline: 8px;
 
   .content {
     display: flex;
     justify-content: center;
+    align-items: center;
     width: 100%;
+    min-width: 0;
+    text-align: center;
+    white-space: normal;
+    overflow-wrap: break-word;
+    line-height: 1.2;
 
     &.iconVisible {
-      padding-inline-start: 0;
+      /* 32px badge plus an 8px gap, mirrored so the label stays centered. */
+      padding-inline: 40px;
 
       .icon {
         position: absolute;
