@@ -10,6 +10,7 @@ const input = {
   label_with_optional: '{{label}} (Необязательно)',
   email_address: 'Адрес электронной почты',
   email_placeholder: 'Введите электронную почту',
+  enter_email: 'Введите электронную почту',
 };
 
 export default Object.freeze(input);

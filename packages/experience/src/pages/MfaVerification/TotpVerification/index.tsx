@@ -1,5 +1,4 @@
 import SecondaryPageLayout from '@/Layout/SecondaryPageLayout';
-import SectionLayout from '@/Layout/SectionLayout';
 import SwitchMfaFactorsLink from '@/components/SwitchMfaFactorsLink';
 import TotpCodeVerification from '@/containers/TotpCodeVerification';
 import useMfaFlowState from '@/hooks/use-mfa-factors-state';
@@ -16,18 +15,19 @@ const TotpVerification = () => {
   }
 
   return (
-    <SecondaryPageLayout title="mfa.verify_mfa_factors">
-      <SectionLayout
-        title="mfa.enter_one_time_code"
-        description="mfa.enter_one_time_code_description"
-      >
+    <SecondaryPageLayout
+      isHeaderCentered
+      title="mfa.enter_one_time_code"
+      description="mfa.enter_one_time_code_description"
+    >
+      <div className={styles.content}>
         <TotpCodeVerification flow={UserMfaFlow.MfaVerification} />
-      </SectionLayout>
-      <SwitchMfaFactorsLink
-        flow={UserMfaFlow.MfaVerification}
-        flowState={flowState}
-        className={styles.switchFactorLink}
-      />
+        <SwitchMfaFactorsLink
+          flow={UserMfaFlow.MfaVerification}
+          flowState={flowState}
+          className={styles.switchFactorLink}
+        />
+      </div>
     </SecondaryPageLayout>
   );
 };

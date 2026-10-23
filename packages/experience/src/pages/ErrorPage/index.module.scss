@@ -47,3 +47,65 @@
     margin-bottom: _.unit(12);
   }
 }
+
+:global(body.desktop .zerveAuthShell),
+:global(body.mobile .zerveAuthShell) {
+  .page {
+    justify-content: flex-start;
+    align-items: stretch;
+  }
+
+  .container {
+    flex: none;
+    align-items: stretch;
+    justify-content: flex-start;
+  }
+
+  .container > svg {
+    align-self: center;
+    margin-bottom: 20px;
+  }
+
+  .title {
+    margin: 0;
+    color: var(--color-neutral-10);
+    font-weight: 600;
+    letter-spacing: -0.02em;
+    line-height: 1.2;
+    text-align: center;
+  }
+
+  .container > .message,
+  .support {
+    margin-top: 20px;
+    color: #a1a1aa;
+    font-size: 14px;
+    font-weight: 500;
+    line-height: 20px;
+    text-align: start;
+  }
+
+  .support .message {
+    margin-top: 0;
+  }
+
+  .support .message + .message {
+    margin-top: 8px;
+  }
+
+  .actionButton {
+    margin: 20px 0 0;
+  }
+}
+
+:global(body.mobile .zerveAuthShell) {
+  .title {
+    font-size: 24px;
+  }
+}
+
+:global(body.desktop .zerveAuthShell) {
+  .title {
+    font-size: 28px;
+  }
+}

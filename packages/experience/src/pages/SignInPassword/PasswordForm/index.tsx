@@ -6,6 +6,7 @@ import { Controller, useForm } from 'react-hook-form';
 import { useTranslation } from 'react-i18next';
 
 import UserInteractionContext from '@/Providers/UserInteractionContextProvider/UserInteractionContext';
+import SubmitArrowButtonIcon from '@/components/Button/SubmitArrowButtonIcon';
 import { PasswordInputField } from '@/components/InputFields';
 import SwitchToVerificationMethodsLink from '@/components/SwitchToVerificationMethodsLink';
 import CaptchaBox from '@/containers/CaptchaBox';
@@ -99,24 +100,36 @@ const PasswordForm = ({
         }) => <input readOnly hidden name={name} value={value} autoComplete={type} />}
       />
 
-      <PasswordInputField
-        autoFocus={autoFocus}
-        className={styles.inputField}
-        autoComplete="current-password"
-        label={t('input.password')}
-        isDanger={!!errors.password}
-        errorMessage={errors.password?.message}
-        {...register('password', { required: t('error.password_required') })}
-      />
+      <div className={styles.passwordField}>
+        <PasswordInputField
+          autoFocus={autoFocus}
+          appearance="plain"
+          className={styles.inputField}
+          autoComplete="current-password"
+          label={t('input.password')}
+          placeholder={t('description.enter_password')}
+          isDanger={!!errors.password}
+          errorMessage={errors.password?.message}
+          {...register('password', { required: t('error.password_required') })}
+        />
 
-      {errorMessage && <ErrorMessage className={styles.formErrors}>{errorMessage}</ErrorMessage>}
+        {errorMessage && <ErrorMessage className={styles.formErrors}>{errorMessage}</ErrorMessage>}
+      </div>
 
       {isForgotPasswordEnabled && (
         <ForgotPasswordLink className={styles.link} identifier={identifier} value={value} />
       )}
 
-      <CaptchaBox />
-      <Button title="action.continue" name="submit" htmlType="submit" isLoading={isSubmitting} />
+      <CaptchaBox className={styles.captcha} />
+      <Button
+        className={styles.submit}
+        title="action.continue"
+        name="submit"
+        htmlType="submit"
+        icon={<SubmitArrowButtonIcon />}
+        iconPlacement="edge"
+        isLoading={isSubmitting}
+      />
 
       <SwitchToVerificationMethodsLink
         hasVerificationCode={identifier !== SignInIdentifier.Username && isVerificationCodeEnabled}

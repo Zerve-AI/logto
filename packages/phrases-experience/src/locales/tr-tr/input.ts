@@ -10,6 +10,7 @@ const input = {
   label_with_optional: '{{label}} (İsteğe bağlı)',
   email_address: 'E-posta adresi',
   email_placeholder: 'E-postanızı girin',
+  enter_email: 'E-postayı girin',
 };
 
 export default Object.freeze(input);

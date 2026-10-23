@@ -51,3 +51,45 @@
     border-radius: var(--radius);
   }
 }
+
+:global(body.desktop .zerveAuthShell),
+:global(body.mobile .zerveAuthShell) {
+  .centered {
+    .container {
+      margin-block: 0;
+    }
+
+    .header {
+      margin-bottom: 20px;
+      text-align: center;
+    }
+
+    .title {
+      color: var(--color-neutral-10);
+      font-weight: 600;
+      letter-spacing: -0.02em;
+      line-height: 1.2;
+    }
+
+    .description {
+      margin-top: 20px;
+      color: #a1a1aa;
+      font-size: 14px;
+      font-weight: 500;
+      line-height: 20px;
+      text-align: start;
+    }
+  }
+}
+
+:global(body.mobile .zerveAuthShell) {
+  .centered .title {
+    font-size: 24px;
+  }
+}
+
+:global(body.desktop .zerveAuthShell) {
+  .centered .title {
+    font-size: 28px;
+  }
+}

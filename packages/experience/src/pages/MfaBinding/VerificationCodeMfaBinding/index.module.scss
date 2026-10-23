@@ -3,3 +3,12 @@
 .switchLink {
   margin-top: _.unit(6);
 }
+
+:global(body.desktop .zerveAuthShell),
+:global(body.mobile .zerveAuthShell) {
+  .switchLink {
+    align-self: center;
+    justify-content: center;
+    margin-top: 20px;
+  }
+}

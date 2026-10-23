@@ -45,3 +45,39 @@
     margin-top: _.unit(6);
   }
 }
+
+:global(body.desktop .zerveAuthShell),
+:global(body.mobile .zerveAuthShell) {
+  .scopesCard,
+  .organizationSelector,
+  .footerButton,
+  .terms,
+  .redirectUri,
+  .notYouHint {
+    margin-top: 20px;
+  }
+
+  .notYouHint {
+    color: var(--color-neutral-50);
+    font-size: 14px;
+    font-weight: 500;
+    line-height: 20px;
+  }
+
+  .terms,
+  .redirectUri {
+    color: #a1a1aa;
+    font-size: 14px;
+    font-weight: 500;
+    line-height: 20px;
+  }
+}
+
+@media (max-width: 480px) {
+  :global(body.desktop .zerveAuthShell),
+  :global(body.mobile .zerveAuthShell) {
+    .footerButton {
+      flex-direction: column;
+    }
+  }
+}

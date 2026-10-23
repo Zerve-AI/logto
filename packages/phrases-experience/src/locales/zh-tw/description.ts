@@ -17,6 +17,7 @@ const description = {
   passcode_sent: '驗證碼已經發送',
   resend_after_seconds: '還沒收到？ <span>{{seconds}}</span> 秒後重發',
   resend_passcode: '還沒收到？ <a>重發驗證碼</a>',
+  verification_code: '驗證碼',
   create_account_id_exists: '帳號 {{value}} 已存在，繼續登錄。',
   link_account_id_exists: ' {{type}} 為 {{value}} 的帳號已註冊，你要綁定至這個帳號嗎？',
   sign_in_id_does_not_exist: '未找到帳號 {{value}}，創建一個新帳號？',

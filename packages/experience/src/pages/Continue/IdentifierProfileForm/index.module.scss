@@ -17,3 +17,22 @@
     margin-top: _.unit(-3);
   }
 }
+
+:global(body.desktop .zerveAuthShell),
+:global(body.mobile .zerveAuthShell) {
+  .inputField {
+    margin: 0 0 20px;
+  }
+
+  .inputField:has(+ .formErrors) {
+    margin-bottom: 0;
+  }
+
+  .formErrors {
+    margin: 8px 0 20px;
+    color: #ff9a7f;
+    font-size: 12px;
+    font-weight: 500;
+    line-height: 20px;
+  }
+}

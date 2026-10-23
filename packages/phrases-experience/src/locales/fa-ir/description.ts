@@ -17,6 +17,7 @@ const description = {
   passcode_sent: 'کد تأیید مجدداً ارسال شد',
   resend_after_seconds: 'هنوز دریافت نکرده‌اید؟ ارسال مجدد پس از <span>{{seconds}}</span> ثانیه',
   resend_passcode: 'هنوز دریافت نکرده‌اید؟ <a>ارسال مجدد کد تأیید</a>',
+  verification_code: 'کد تأیید',
   create_account_id_exists: 'حسابی با {{value}} از قبل وجود دارد. ادامه برای ورود.',
   link_account_id_exists: 'حساب با {{type}} {{value}} از قبل وجود دارد. آیا می‌خواهید پیوند دهید؟',
   sign_in_id_does_not_exist: 'هیچ حسابی برای {{value}} یافت نشد. یک حساب جدید ایجاد کنید؟',

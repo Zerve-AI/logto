@@ -1,5 +1,5 @@
 import classNames from 'classnames';
-import { useCallback, useContext, useEffect } from 'react';
+import { type ReactNode, useCallback, useContext, useEffect } from 'react';
 import { useForm, Controller } from 'react-hook-form';
 import { useTranslation } from 'react-i18next';
 
@@ -25,6 +25,10 @@ type Props = {
   readonly onSubmit?: (identifier: IdentifierInputType, value: string) => Promise<void> | void;
   readonly errorMessage?: string;
   readonly clearErrorMessage?: () => void;
+  readonly submitIcon?: ReactNode;
+  readonly appearance?: 'plain';
+  readonly label?: string;
+  readonly placeholder?: string;
 };
 
 type FormState = {
@@ -39,6 +43,10 @@ const IdentifierProfileForm = ({
   onSubmit,
   errorMessage,
   clearErrorMessage,
+  submitIcon,
+  appearance,
+  label,
+  placeholder,
 }: Props) => {
   const { t } = useTranslation();
   const { experienceSettings } = useContext(PageContext);
@@ -111,6 +119,9 @@ const IdentifierProfileForm = ({
             autoFocus={autoFocus}
             className={styles.inputField}
             {...field}
+            appearance={appearance}
+            {...(label ? { label } : {})}
+            {...(placeholder ? { placeholder } : {})}
             isDanger={!!errors.identifier || !!errorMessage}
             errorMessage={errors.identifier?.message}
             enabledTypes={enabledTypes}
@@ -120,7 +131,13 @@ const IdentifierProfileForm = ({
 
       {errorMessage && <ErrorMessage className={styles.formErrors}>{errorMessage}</ErrorMessage>}
 
-      <Button title="action.continue" htmlType="submit" isLoading={isSubmitting} />
+      <Button
+        title="action.continue"
+        htmlType="submit"
+        icon={submitIcon}
+        iconPlacement={submitIcon ? 'edge' : 'inline'}
+        isLoading={isSubmitting}
+      />
 
       <input hidden type="submit" />
     </form>

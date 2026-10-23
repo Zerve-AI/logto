@@ -10,6 +10,7 @@ const input = {
   label_with_optional: "{{label}} (Необов'язково)",
   email_address: 'Адреса електронної пошти',
   email_placeholder: 'Введіть електронну пошту',
+  enter_email: 'Введіть електронну пошту',
 };
 
 export default Object.freeze(input);

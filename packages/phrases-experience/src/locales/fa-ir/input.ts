@@ -10,6 +10,7 @@ const input = {
   label_with_optional: '{{label}} (اختیاری)',
   email_address: 'نشانی ایمیل',
   email_placeholder: 'ایمیل خود را وارد کنید',
+  enter_email: 'ایمیل را وارد کنید',
 };
 
 export default Object.freeze(input);

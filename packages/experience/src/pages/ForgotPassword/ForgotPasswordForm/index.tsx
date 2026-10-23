@@ -1,9 +1,11 @@
+import { SignInIdentifier } from '@logto/schemas';
 import classNames from 'classnames';
 import { useCallback, useContext, useEffect } from 'react';
 import { useForm, Controller } from 'react-hook-form';
 import { useTranslation } from 'react-i18next';
 
 import UserInteractionContext from '@/Providers/UserInteractionContextProvider/UserInteractionContext';
+import SubmitArrowButtonIcon from '@/components/Button/SubmitArrowButtonIcon';
 import { SmartInputField } from '@/components/InputFields';
 import CaptchaBox from '@/containers/CaptchaBox';
 import useSendVerificationCode from '@/hooks/use-send-verification-code';
@@ -37,6 +39,8 @@ const ForgotPasswordForm = ({ className, autoFocus, defaultValue = '', enabledTy
   );
 
   const { setForgotPasswordIdentifierInputValue } = useContext(UserInteractionContext);
+  const isEmailOnly = enabledTypes.length === 1 && enabledTypes[0] === SignInIdentifier.Email;
+  const isPhoneOnly = enabledTypes.length === 1 && enabledTypes[0] === SignInIdentifier.Phone;
 
   const {
     handleSubmit,
@@ -104,6 +108,11 @@ const ForgotPasswordForm = ({ className, autoFocus, defaultValue = '', enabledTy
             autoFocus={autoFocus}
             className={styles.inputField}
             {...field}
+            appearance="plain"
+            {...(isEmailOnly
+              ? { label: t('input.email'), placeholder: t('input.enter_email') }
+              : {})}
+            {...(isPhoneOnly ? { label: t('input.phone_number') } : {})}
             defaultValue={defaultValues?.identifier?.value}
             isDanger={!!errors.identifier}
             errorMessage={errors.identifier?.message}
@@ -114,8 +123,15 @@ const ForgotPasswordForm = ({ className, autoFocus, defaultValue = '', enabledTy
 
       {errorMessage && <ErrorMessage className={styles.formErrors}>{errorMessage}</ErrorMessage>}
 
-      <CaptchaBox />
-      <Button title="action.continue" htmlType="submit" isLoading={isSubmitting} />
+      <CaptchaBox className={styles.captcha} />
+      <Button
+        className={styles.submit}
+        title="action.continue"
+        htmlType="submit"
+        icon={<SubmitArrowButtonIcon />}
+        iconPlacement="edge"
+        isLoading={isSubmitting}
+      />
 
       <input hidden type="submit" />
     </form>

@@ -146,7 +146,7 @@
   width: 100%;
   height: 100%;
   object-fit: cover;
-  opacity: 0.05;
+  opacity: 5%;
   pointer-events: none;
 }
 
@@ -276,13 +276,21 @@
   }
 }
 
-:global(body.mobile) .split .aside :global(a),
-:global(body.mobile) .split .aside :global(a:hover),
-:global(body.desktop) .split .aside :global(a),
-:global(body.desktop) .split .aside :global(a:hover) {
-  color: var(--color-static-white);
-  text-decoration: underline;
-  text-underline-offset: 3px;
+/* Every anchor in the card. The agreement checkbox overrides this with its own colors. */
+:global(body.mobile .zerveAuthShell) .stage :global(a),
+:global(body.mobile .zerveAuthShell) .stage :global(a:active),
+:global(body.desktop .zerveAuthShell) .stage :global(a),
+:global(body.desktop .zerveAuthShell) .stage :global(a:active) {
+  color: #a1a1aa;
+  font-weight: 500;
+  text-decoration: none;
+}
+
+:global(body.mobile .zerveAuthShell) .stage :global(a:hover),
+:global(body.desktop .zerveAuthShell) .stage :global(a:hover) {
+  color: #fff;
+  font-weight: 600;
+  text-decoration: none;
 }
 
 @media (max-width: 900px) {

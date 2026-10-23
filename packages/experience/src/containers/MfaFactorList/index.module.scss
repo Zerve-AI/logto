@@ -4,3 +4,10 @@
   @include _.flex-column;
   gap: _.unit(3);
 }
+
+:global(body.desktop .zerveAuthShell),
+:global(body.mobile .zerveAuthShell) {
+  .factorList {
+    gap: 20px;
+  }
+}

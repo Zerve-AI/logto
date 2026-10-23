@@ -18,6 +18,7 @@ const description = {
   resend_after_seconds:
     'Nie otrzymałeś jeszcze? Wyślij ponownie za <span>{{seconds}}</span> sekund',
   resend_passcode: 'Nie otrzymałeś jeszcze? <a>Wyślij ponownie kod weryfikacyjny</a>',
+  verification_code: 'Kod weryfikacyjny',
   create_account_id_exists: 'Konto z {{value}} już istnieje. Kontynuuj logowanie.',
   link_account_id_exists: 'Konto z {{type}} {{value}} już istnieje. Czy chcesz je połączyć?',
   sign_in_id_does_not_exist: 'Nie znaleziono konta dla {{value}}. Utworzyć nowe?',

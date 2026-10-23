@@ -13,10 +13,12 @@ const description = {
   switch_account: 'Switch account',
   or: 'or',
   and: 'and',
-  enter_passcode: 'The verification code has been sent to your {{address}} {{target}}',
+  enter_passcode: 'The verification code has been sent to {{target}}',
   passcode_sent: 'The verification code has been resent',
-  resend_after_seconds: 'Not received yet? Resend after <span>{{seconds}}</span> seconds',
-  resend_passcode: 'Not received yet? <a>Resend verification code</a>',
+  resend_after_seconds:
+    "Haven't received the code yet? Resend after <span>{{seconds}}</span> seconds",
+  resend_passcode: "Haven't received the code yet? <a>Resend code</a>",
+  verification_code: 'Verification code',
   create_account_id_exists: 'An account with {{value}} already exists. Continue to sign in.',
   link_account_id_exists:
     'The account with {{type}} {{value}} already exists. Would you like to link?',
@@ -45,7 +47,7 @@ const description = {
   no_account: 'No account yet? ',
   have_account: 'Already have an account?',
   enter_password: 'Enter password',
-  enter_password_for: 'Sign in with the password to {{method}} {{value}}',
+  enter_password_for: 'Sign in with the password for {{value}}',
   enter_username: 'Set username',
   enter_username_description:
     'Username is an alternative for sign-in. Username should contain only letters, numbers, and underscores.',

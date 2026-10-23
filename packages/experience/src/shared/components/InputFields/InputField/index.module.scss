@@ -164,11 +164,17 @@
   }
 
   .errorMessage {
+    margin-top: 8px;
+    margin-inline-start: 0;
+    color: #ff9a7f;
     font-size: 12px;
+    font-weight: 500;
+    line-height: 20px;
   }
 
   .container.plain .inputField {
     height: 40px;
+    border-radius: 8px;
     border-color: #2e2e33;
 
     input {
