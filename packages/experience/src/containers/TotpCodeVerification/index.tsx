@@ -4,7 +4,7 @@ import { useTranslation } from 'react-i18next';
 import SubmitArrowButtonIcon from '@/components/Button/SubmitArrowButtonIcon';
 import Button from '@/shared/components/Button';
 import VerificationCodeInput from '@/shared/components/VerificationCode';
-import { UserMfaFlow } from '@/types';
+import { type UserMfaFlow } from '@/types';
 
 import styles from './index.module.scss';
 import useTotpCodeVerification from './use-totp-code-verification';
@@ -74,8 +74,8 @@ const TotpCodeVerification = <T extends UserMfaFlow>(props: Props<T>) => {
         title="action.continue"
         type="primary"
         className={styles.continueButton}
-        icon={props.flow === UserMfaFlow.MfaBinding ? <SubmitArrowButtonIcon /> : undefined}
-        iconPlacement={props.flow === UserMfaFlow.MfaBinding ? 'edge' : 'inline'}
+        icon={<SubmitArrowButtonIcon />}
+        iconPlacement="edge"
         isLoading={isSubmitting}
         onClick={() => {
           if (!isCodeReady(codeInput)) {

@@ -3,3 +3,23 @@
 .switchFactorLink {
   margin-top: _.unit(6);
 }
+
+:global(body.desktop .zerveAuthShell),
+:global(body.mobile .zerveAuthShell) {
+  .content {
+    display: flex;
+    flex-direction: column;
+    align-items: stretch;
+  }
+
+  // The code field's own top margin would stack with the centered header gap.
+  .content > :first-child {
+    margin-top: 0;
+  }
+
+  .switchFactorLink {
+    align-self: center;
+    justify-content: center;
+    margin-top: 20px;
+  }
+}
