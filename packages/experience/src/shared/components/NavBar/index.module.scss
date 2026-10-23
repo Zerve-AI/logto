@@ -68,3 +68,54 @@
     display: none;
   }
 }
+
+:global(body.desktop .zerveAuthShell),
+:global(body.mobile .zerveAuthShell) {
+  .compact {
+    min-height: 0;
+    justify-content: flex-start;
+    margin-bottom: 20px;
+    padding: 0;
+
+    .navButton {
+      position: static;
+      transform: none;
+      color: #a1a1aa;
+      font-size: 12px;
+      font-weight: 500;
+      line-height: 20px;
+      column-gap: 2px;
+      text-decoration: none;
+
+      > span {
+        display: inline;
+      }
+
+      > svg,
+      svg {
+        width: 16px;
+        height: 16px;
+      }
+
+      &:hover {
+        color: #fff;
+        font-weight: 600;
+        text-decoration: none;
+      }
+    }
+
+    .skipButton {
+      color: #a1a1aa;
+      font-size: 12px;
+      font-weight: 500;
+      line-height: 20px;
+      text-decoration: none;
+
+      &:hover {
+        color: #fff;
+        font-weight: 600;
+        text-decoration: none;
+      }
+    }
+  }
+}

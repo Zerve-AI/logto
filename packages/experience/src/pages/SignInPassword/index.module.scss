@@ -40,3 +40,46 @@
     }
   }
 }
+
+:global(body.desktop .zerveAuthShell),
+:global(body.mobile .zerveAuthShell) {
+  .passwordField {
+    display: flex;
+    flex-direction: column;
+  }
+
+  .inputField,
+  .formErrors {
+    margin: 0;
+  }
+
+  .form .link,
+  .submit,
+  .switch {
+    margin: 20px 0 0;
+  }
+
+  /* An empty captcha container is still a flex item, which doubles the 20px gap. */
+  .captcha:empty {
+    height: 0;
+    margin: 0;
+    overflow: hidden;
+  }
+
+  .captcha:not(:empty) {
+    margin: 20px 0 0;
+  }
+
+  .formErrors {
+    margin-top: 8px;
+    color: #ff9a7f;
+    font-size: 12px;
+    font-weight: 500;
+    line-height: 20px;
+  }
+
+  .switch {
+    align-self: center;
+    justify-content: center;
+  }
+}

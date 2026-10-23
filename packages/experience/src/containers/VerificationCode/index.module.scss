@@ -7,8 +7,15 @@
     width: 100%;
   }
 
+  .label {
+    margin-bottom: _.unit(2);
+    color: var(--color-type-secondary);
+    font: var(--font-label-2);
+    align-self: start;
+  }
+
   .inputField {
-    margin-bottom: _.unit(8);
+    margin-bottom: _.unit(6);
 
     &.withError {
       margin-bottom: _.unit(2);
@@ -16,6 +23,7 @@
   }
 
   .message {
+    margin-top: _.unit(6);
     font: var(--font-body-2);
     color: var(--color-type-secondary);
   }
@@ -27,8 +35,50 @@
     align-self: start;
   }
 
-  .switch,
-  .continueButton {
+  .switch {
     margin-top: _.unit(6);
+  }
+}
+
+:global(body.desktop .zerveAuthShell),
+:global(body.mobile .zerveAuthShell) {
+  .form {
+    gap: 20px;
+  }
+
+  .codeField {
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+  }
+
+  .label,
+  .inputField,
+  .inputField.withError,
+  .message,
+  .switch {
+    margin: 0;
+  }
+
+  .label {
+    align-self: stretch;
+    color: #f4f4f7;
+    font-size: 13px;
+    font-weight: 500;
+    line-height: 1.3;
+  }
+
+  .message {
+    align-self: center;
+    color: #a1a1aa;
+    font-size: 14px;
+    font-weight: 500;
+    line-height: 20px;
+    text-align: center;
+  }
+
+  .form .switch {
+    align-self: center;
+    justify-content: center;
   }
 }

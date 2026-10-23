@@ -11,6 +11,7 @@ type Props = {
   readonly errorMessage?: string;
   readonly clearErrorMessage?: () => void;
   readonly maxLength?: number;
+  readonly appearance?: 'plain';
 };
 
 const SetPassword = (props: Props) => {

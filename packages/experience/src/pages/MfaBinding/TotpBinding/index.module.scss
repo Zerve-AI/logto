@@ -10,3 +10,16 @@
 .switchLink {
   align-self: start;
 }
+
+:global(body.desktop .zerveAuthShell),
+:global(body.mobile .zerveAuthShell) {
+  .container {
+    gap: 20px;
+    margin-bottom: 0;
+  }
+
+  .switchLink {
+    align-self: center;
+    justify-content: center;
+  }
+}

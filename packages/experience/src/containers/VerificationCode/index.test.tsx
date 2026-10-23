@@ -131,7 +131,7 @@ describe('<VerificationCode />', () => {
      * Apply the resource with resend_passcode for testing nested translation
      * Since the 'resend_passcode' phrase need be rendered into the following structure for testing:
      * ```
-     * <div>Not received yet? <a>Resend verification code</a></div>
+     * <div>Haven't received the code yet? <a>Resend code</a></div>
      * ```
      * otherwise this phrase will be rendered as 'description.resend_passcode'.
      * That will cause the resend button cannot be clicked.
@@ -152,7 +152,7 @@ describe('<VerificationCode />', () => {
     act(() => {
       jest.advanceTimersByTime(1e3 * 60);
     });
-    const resendButton = getByText('Resend verification code');
+    const resendButton = getByText('Resend code');
 
     await waitFor(() => {
       fireEvent.click(resendButton);

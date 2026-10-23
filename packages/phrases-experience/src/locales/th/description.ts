@@ -17,6 +17,7 @@ const description = {
   passcode_sent: 'ได้ส่งรหัสยืนยันใหม่อีกครั้งแล้ว',
   resend_after_seconds: 'ยังไม่ได้รับใช่ไหม? ขอรหัสใหม่ได้หลัง <span>{{seconds}}</span> วินาที',
   resend_passcode: 'ยังไม่ได้รับใช่ไหม? <a>ขอรหัสยืนยันใหม่</a>',
+  verification_code: 'รหัสยืนยัน',
   create_account_id_exists: 'บัญชี {{value}} มีอยู่แล้ว ดำเนินการเข้าสู่ระบบต่อ',
   link_account_id_exists: 'บัญชี {{type}} {{value}} นี้มีอยู่แล้ว คุณต้องการเชื่อมโยงหรือไม่?',
   sign_in_id_does_not_exist: 'ไม่พบบัญชีสำหรับ {{value}} สร้างบัญชีใหม่หรือไม่?',

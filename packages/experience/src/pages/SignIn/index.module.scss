@@ -64,14 +64,4 @@
   .singleSignOn + .createAccount {
     margin-top: 8px;
   }
-
-  .singleSignOn .link,
-  .createAccount .link,
-  .singleSignOn .link:hover,
-  .createAccount .link:hover {
-    color: var(--color-static-white);
-    font: inherit;
-    font-weight: bold;
-    text-decoration: none;
-  }
 }

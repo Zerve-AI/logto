@@ -10,6 +10,7 @@ const input = {
   label_with_optional: '{{label}} (ไม่บังคับ)',
   email_address: 'ที่อยู่อีเมล',
   email_placeholder: 'ป้อนอีเมลของคุณ',
+  enter_email: 'ป้อนอีเมล',
 };
 
 export default Object.freeze(input);

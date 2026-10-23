@@ -17,6 +17,7 @@ const description = {
   passcode_sent: 'Код підтвердження було повторно надіслано',
   resend_after_seconds: 'Не отримали код? Повторна відправка через <span>{{seconds}}</span> секунд',
   resend_passcode: 'Не отримали код? <a>Надіслати повторно</a>',
+  verification_code: 'Код підтвердження',
   create_account_id_exists: 'Обліковий запис {{value}} вже існує. Продовжити вхід.',
   link_account_id_exists: "Обліковий запис з {{type}} {{value}} вже існує. Бажаєте зв'язати?",
   sign_in_id_does_not_exist: 'Обліковий запис для {{value}} не знайдено. Створити новий?',

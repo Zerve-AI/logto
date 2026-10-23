@@ -3,6 +3,7 @@ import { useCallback, useEffect } from 'react';
 import { useForm } from 'react-hook-form';
 import { useTranslation } from 'react-i18next';
 
+import SubmitArrowButtonIcon from '@/components/Button/SubmitArrowButtonIcon';
 import { PasswordInputField } from '@/components/InputFields';
 import Button from '@/shared/components/Button';
 import ErrorMessage from '@/shared/components/ErrorMessage';
@@ -17,13 +18,21 @@ type Props = {
   readonly onSubmit: (password: string) => Promise<void>;
   readonly errorMessage?: string;
   readonly clearErrorMessage?: () => void;
+  readonly appearance?: 'plain';
 };
 
 type FieldState = {
   newPassword: string;
 };
 
-const Lite = ({ className, autoFocus, onSubmit, errorMessage, clearErrorMessage }: Props) => {
+const Lite = ({
+  className,
+  autoFocus,
+  onSubmit,
+  errorMessage,
+  clearErrorMessage,
+  appearance,
+}: Props) => {
   const { t } = useTranslation();
 
   const {
@@ -53,12 +62,17 @@ const Lite = ({ className, autoFocus, onSubmit, errorMessage, clearErrorMessage 
   );
 
   return (
-    <form className={classNames(styles.form, className)} onSubmit={onSubmitHandler}>
+    <form
+      className={classNames(styles.form, appearance === 'plain' && styles.plain, className)}
+      onSubmit={onSubmitHandler}
+    >
       <HiddenIdentifierInput />
       <PasswordInputField
         className={styles.inputField}
+        appearance={appearance}
         autoComplete="new-password"
         label={t('input.password')}
+        {...(appearance === 'plain' ? { placeholder: t('description.enter_password') } : {})}
         autoFocus={autoFocus}
         isDanger={!!errors.newPassword}
         errorMessage={errors.newPassword?.message}
@@ -74,6 +88,8 @@ const Lite = ({ className, autoFocus, onSubmit, errorMessage, clearErrorMessage 
         name="submit"
         title="action.save_password"
         htmlType="submit"
+        icon={appearance === 'plain' ? <SubmitArrowButtonIcon /> : undefined}
+        iconPlacement={appearance === 'plain' ? 'edge' : 'inline'}
         isLoading={isSubmitting}
       />
 

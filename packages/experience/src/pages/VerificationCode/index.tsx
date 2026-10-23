@@ -61,6 +61,7 @@ const VerificationCode = () => {
 
   return (
     <SecondaryPageLayout
+      isHeaderCentered
       title={`description.verify_${type}`}
       description="description.enter_passcode"
       descriptionProps={{

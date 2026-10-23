@@ -17,6 +17,7 @@ const description = {
   passcode_sent: '確認コードを再送します',
   resend_after_seconds: 'まだ届いていませんか？ <span>{{seconds}}</span> 秒後に再送',
   resend_passcode: 'まだ届いていませんか？ <a>認証コードを再送</a>',
+  verification_code: '認証コード',
   create_account_id_exists: 'アカウント {{value}} が既に存在しています。ログインを続けます。',
   link_account_id_exists: '{{type}} {{value}}でアカウントが既に存在しています。リンクしますか？',
   sign_in_id_does_not_exist:

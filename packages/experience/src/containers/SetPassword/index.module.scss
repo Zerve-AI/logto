@@ -41,3 +41,26 @@
     }
   }
 }
+
+:global(body.desktop .zerveAuthShell),
+:global(body.mobile .zerveAuthShell) {
+  .plain {
+    .inputField,
+    .formErrors {
+      margin: 0 0 20px;
+    }
+
+    .inputField:has(+ .formErrors) {
+      margin-bottom: 0;
+    }
+
+    .formErrors {
+      margin-top: 8px;
+      margin-inline-start: 0;
+      color: #ff9a7f;
+      font-size: 12px;
+      font-weight: 500;
+      line-height: 20px;
+    }
+  }
+}

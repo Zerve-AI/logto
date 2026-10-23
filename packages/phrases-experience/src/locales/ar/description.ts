@@ -17,6 +17,7 @@ const description = {
   passcode_sent: 'تم إعادة إرسال رمز التحقق',
   resend_after_seconds: 'لم تستلمه بعد؟ إعادة إرسال بعد <span>{{seconds}}</span> ثانية',
   resend_passcode: 'لم تستلمه بعد؟ <a>إعادة إرسال رمز التحقق</a>',
+  verification_code: 'رمز التحقق',
   create_account_id_exists: 'الحساب {{value}} موجود بالفعل. تابع لتسجيل الدخول.',
   link_account_id_exists: 'الحساب بنوع {{type}} {{value}} موجود بالفعل. هل ترغب في ربطه؟',
   sign_in_id_does_not_exist: 'لم يتم العثور على حساب لـ {{value}}. إنشاء حساب جديد؟',

@@ -1,12 +1,11 @@
 import { ReservedResource } from '@logto/core-kit';
 import { type ConsentInfoResponse } from '@logto/schemas';
 import { useCallback, useEffect, useMemo, useState } from 'react';
-import { isMobile } from 'react-device-detect';
 import { Trans, useTranslation } from 'react-i18next';
 
-import LayoutAsidePortal from '@/Layout/AppLayout/LayoutAsidePortal';
 import LandingPageLayout from '@/Layout/LandingPageLayout';
 import { consent, getConsentInfo } from '@/apis/consent';
+import SubmitArrowButtonIcon from '@/components/Button/SubmitArrowButtonIcon';
 import TermsLinks from '@/components/TermsLinks';
 import TextLink from '@/components/TextLink';
 import useApi from '@/hooks/use-api';
@@ -136,7 +135,12 @@ const Consent = () => {
   const asideContent = (
     <div className={styles.notYouHint}>
       {t('description.not_you')}{' '}
-      <TextLink replace to="/sign-in" text="action.use_another_account" />
+      <TextLink
+        replace
+        className={styles.accountLink}
+        to="/sign-in"
+        text="action.use_another_account"
+      />
     </div>
   );
 
@@ -178,7 +182,13 @@ const Consent = () => {
             }}
           />
         )}
-        <Button title="action.authorize" isLoading={isConsentLoading} onClick={consentHandler} />
+        <Button
+          title="action.authorize"
+          icon={<SubmitArrowButtonIcon />}
+          iconPlacement="edge"
+          isLoading={isConsentLoading}
+          onClick={consentHandler}
+        />
       </div>
       {!showTerms && redirectUriOrigin && (
         <div className={styles.redirectUri}>
@@ -225,7 +235,7 @@ const Consent = () => {
         </div>
       )}
 
-      {isMobile ? asideContent : <LayoutAsidePortal>{asideContent}</LayoutAsidePortal>}
+      {asideContent}
     </LandingPageLayout>
   );
 };

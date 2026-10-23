@@ -24,6 +24,7 @@ const ForgotPassword = () => {
 
   return (
     <SecondaryPageLayout
+      isHeaderCentered
       title="description.reset_password"
       description="description.reset_password_description"
       descriptionProps={{

@@ -42,3 +42,31 @@
     }
   }
 }
+
+:global(body.desktop .zerveAuthShell),
+:global(body.mobile .zerveAuthShell) {
+  .passcode {
+    justify-content: space-between;
+
+    input {
+      flex: none;
+      width: 40px;
+      height: 40px;
+      border-radius: 8px;
+      border: 1px solid #2e2e33;
+      background: #1d1d20;
+      font-size: 16px;
+      font-weight: 500;
+      color: #fff;
+    }
+  }
+
+  .passcode + .errorMessage {
+    margin-top: 8px;
+    margin-inline-start: 0;
+    color: #ff9a7f;
+    font-size: 12px;
+    font-weight: 500;
+    line-height: 20px;
+  }
+}

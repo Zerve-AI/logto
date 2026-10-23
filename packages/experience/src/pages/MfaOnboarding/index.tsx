@@ -1,4 +1,5 @@
 import SecondaryPageLayout from '@/Layout/SecondaryPageLayout';
+import SubmitArrowButtonIcon from '@/components/Button/SubmitArrowButtonIcon';
 import useEnableMfa from '@/hooks/use-enable-mfa';
 import useSkipMfa from '@/hooks/use-skip-mfa';
 import Button from '@/shared/components/Button';
@@ -9,11 +10,18 @@ const MfaOnboarding = () => {
 
   return (
     <SecondaryPageLayout
+      isHeaderCentered
       title="mfa.onboarding"
       description="mfa.onboarding_description"
       onSkip={skipMfa}
     >
-      <Button type="primary" title="mfa.enable_mfa" onClick={enableMfa} />
+      <Button
+        type="primary"
+        title="mfa.enable_mfa"
+        icon={<SubmitArrowButtonIcon />}
+        iconPlacement="edge"
+        onClick={enableMfa}
+      />
     </SecondaryPageLayout>
   );
 };

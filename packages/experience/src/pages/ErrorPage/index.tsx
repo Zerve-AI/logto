@@ -7,6 +7,7 @@ import StaticPageLayout from '@/Layout/StaticPageLayout';
 import PageContext from '@/Providers/PageContextProvider/PageContext';
 import EmptyStateDark from '@/assets/icons/empty-state-dark.svg?react';
 import EmptyState from '@/assets/icons/empty-state.svg?react';
+import SubmitArrowButtonIcon from '@/components/Button/SubmitArrowButtonIcon';
 import useNavigateWithPreservedSearchParams from '@/hooks/use-navigate-with-preserved-search-params';
 import Button from '@/shared/components/Button';
 import DynamicT from '@/shared/components/DynamicT';
@@ -41,10 +42,11 @@ const ErrorPage = ({
   const errorMessage = Boolean(rawMessage ?? message);
 
   return (
-    <StaticPageLayout>
+    <StaticPageLayout className={styles.page}>
       <PageMeta titleKey={title} />
       {history.length > 1 && (
         <NavBar
+          isCompact
           isHidden={isNavbarHidden}
           onBack={() => {
             navigate(-1);
@@ -64,6 +66,8 @@ const ErrorPage = ({
           <Button
             className={styles.actionButton}
             title={primaryAction.title}
+            icon={<SubmitArrowButtonIcon />}
+            iconPlacement="edge"
             onClick={() => {
               if (primaryAction.onClick) {
                 primaryAction.onClick();

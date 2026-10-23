@@ -19,7 +19,7 @@ const action = {
   sign_in_with: 'Continue with {{name}}',
   forgot_password: 'Forgot your password?',
   switch_to: 'Switch to {{method}}',
-  sign_in_via_passcode: 'Sign in with verification code',
+  sign_in_via_passcode: 'Sign in with a verification code',
   sign_in_via_password: 'Sign in with password',
   sign_in_via_passkey: 'Sign in with passkey',
   change: 'Change {{method}}',

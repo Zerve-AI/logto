@@ -6,6 +6,7 @@ import { validate } from 'superstruct';
 
 import SecondaryPageLayout from '@/Layout/SecondaryPageLayout';
 import UserInteractionContext from '@/Providers/UserInteractionContextProvider/UserInteractionContext';
+import SubmitArrowButtonIcon from '@/components/Button/SubmitArrowButtonIcon';
 import useSendMfaPayload from '@/hooks/use-send-mfa-payload';
 import useTextHandler from '@/hooks/use-text-handler';
 import ErrorPage from '@/pages/ErrorPage';
@@ -36,6 +37,7 @@ const BackupCodeBinding = () => {
 
   return (
     <SecondaryPageLayout
+      isHeaderCentered
       isNavBarHidden
       title="mfa.save_backup_code"
       description="mfa.save_backup_code_description"
@@ -69,6 +71,8 @@ const BackupCodeBinding = () => {
         </div>
         <Button
           title="action.continue"
+          icon={<SubmitArrowButtonIcon />}
+          iconPlacement="edge"
           isLoading={isSubmitting}
           onClick={async () => {
             setIsSubmitting(true);

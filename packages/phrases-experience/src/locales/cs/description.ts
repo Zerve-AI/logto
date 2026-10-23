@@ -18,6 +18,7 @@ const description = {
   resend_after_seconds:
     'Stále jsi ho neobdržel/a? Odeslat znovu za <span>{{seconds}}</span> sekund',
   resend_passcode: 'Stále jsi ho neobdržel/a? <a>Odeslat ověřovací kód znovu</a>',
+  verification_code: 'Ověřovací kód',
   create_account_id_exists: 'Účet s {{value}} již existuje. Pokračuj v přihlášení.',
   link_account_id_exists: 'Účet s {{type}} {{value}} již existuje. Chceš ho propojit?',
   sign_in_id_does_not_exist: 'Pro {{value}} nebyl nalezen žádný účet. Chceš vytvořit nový?',

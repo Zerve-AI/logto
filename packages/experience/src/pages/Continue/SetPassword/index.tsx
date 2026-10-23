@@ -86,12 +86,14 @@ const SetPassword = ({ interactionEvent }: Props) => {
 
   return (
     <SecondaryPageLayout
+      isHeaderCentered
       title="description.set_password"
       description={requirementsDescription && <span>{requirementsDescription}</span>}
       descriptionProps={{ min, count }}
     >
       <SetPasswordForm
         autoFocus
+        appearance="plain"
         errorMessage={errorMessage}
         maxLength={max}
         clearErrorMessage={clearErrorMessage}

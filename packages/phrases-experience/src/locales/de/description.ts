@@ -17,6 +17,7 @@ const description = {
   passcode_sent: 'Der Bestätigungscode wurde erneut gesendet',
   resend_after_seconds: 'Noch nicht erhalten? Erneut senden nach <span>{{seconds}}</span> Sekunden',
   resend_passcode: 'Noch nicht erhalten? <a>Bestätigungscode erneut senden</a>',
+  verification_code: 'Bestätigungscode',
   create_account_id_exists: 'Ein Konto mit {{value}} existiert bereits. Weiter zur Anmeldung.',
   link_account_id_exists:
     'Das Konto mit {{type}} {{value}} existiert bereits, möchtest du es mit deinem Konto verknüpfen?',

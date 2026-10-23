@@ -6,6 +6,7 @@ import { validate } from 'superstruct';
 
 import SecondaryPageLayout from '@/Layout/SecondaryPageLayout';
 import UserInteractionContext from '@/Providers/UserInteractionContextProvider/UserInteractionContext';
+import SubmitArrowButtonIcon from '@/components/Button/SubmitArrowButtonIcon';
 import SwitchMfaFactorsLink from '@/components/SwitchMfaFactorsLink';
 import useSkipMfa from '@/hooks/use-skip-mfa';
 import useSkipOptionalMfa from '@/hooks/use-skip-optional-mfa';
@@ -55,12 +56,15 @@ const WebAuthnBinding = () => {
 
   return (
     <SecondaryPageLayout
+      isHeaderCentered
       title="mfa.create_a_passkey"
       description="mfa.create_passkey_description"
       onSkip={conditional(skippable && (suggestion ? skipOptionalMfa : skipMfa))}
     >
       <Button
         title="mfa.create_a_passkey"
+        icon={<SubmitArrowButtonIcon />}
+        iconPlacement="edge"
         isLoading={isCreatingPasskey}
         onClick={async () => {
           setIsCreatingPasskey(true);

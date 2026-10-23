@@ -3,6 +3,7 @@ import classNames from 'classnames';
 import { useState, useEffect, useCallback, useMemo, useRef } from 'react';
 import { useTranslation, Trans } from 'react-i18next';
 
+import SubmitArrowButtonIcon from '@/components/Button/SubmitArrowButtonIcon';
 import SwitchToVerificationMethodsLink from '@/components/SwitchToVerificationMethodsLink';
 import TextLink from '@/components/TextLink';
 import Button from '@/shared/components/Button';
@@ -98,12 +99,31 @@ const VerificationCode = ({
 
   return (
     <form className={classNames(styles.form, className)}>
-      <VerificationCodeInput
-        name="passcode"
-        className={classNames(styles.inputField, errorMessage && styles.withError)}
-        value={codeInput}
-        error={errorMessage}
-        onChange={setCodeInput}
+      <div className={styles.codeField}>
+        <div className={styles.label}>{t('description.verification_code')}</div>
+        <VerificationCodeInput
+          name="passcode"
+          className={classNames(styles.inputField, errorMessage && styles.withError)}
+          value={codeInput}
+          error={errorMessage}
+          onChange={setCodeInput}
+        />
+      </div>
+      <Button
+        title="action.continue"
+        type="primary"
+        icon={<SubmitArrowButtonIcon />}
+        iconPlacement="edge"
+        isLoading={isSubmitting}
+        className={styles.continueButton}
+        onClick={() => {
+          if (!isCodeInputReady) {
+            setInputErrorMessage(t('error.invalid_passcode'));
+            return;
+          }
+
+          void handleSubmit(codeInput);
+        }}
       />
       <div className={styles.message}>
         {isRunning ? (
@@ -137,20 +157,6 @@ const VerificationCode = ({
           className={styles.switch}
         />
       )}
-      <Button
-        title="action.continue"
-        type="primary"
-        isLoading={isSubmitting}
-        className={styles.continueButton}
-        onClick={() => {
-          if (!isCodeInputReady) {
-            setInputErrorMessage(t('error.invalid_passcode'));
-            return;
-          }
-
-          void handleSubmit(codeInput);
-        }}
-      />
     </form>
   );
 };

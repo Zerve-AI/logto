@@ -24,7 +24,60 @@ const getAuthVariant = (pathname: string): AuthMarketingVariant | undefined => {
     return 'sign-up';
   }
 
+  if (pathname === '/mfa-onboarding') {
+    return 'sign-up';
+  }
+
+  if (pathname === '/mfa-binding' || pathname.startsWith('/mfa-binding/')) {
+    return 'sign-up';
+  }
+
+  if (pathname === '/continue/password') {
+    return 'sign-up';
+  }
+
   if (pathname === '/sign-in' || pathname.startsWith('/sign-in/')) {
+    return 'sign-in';
+  }
+
+  if (pathname === '/consent') {
+    return 'sign-in';
+  }
+
+  if (pathname === '/forgot-password' || pathname.startsWith('/forgot-password/')) {
+    return 'sign-in';
+  }
+
+  if (
+    pathname === '/unknown-session' ||
+    pathname === '/account-suspended' ||
+    pathname === '/one-time-token/error'
+  ) {
+    return 'sign-in';
+  }
+
+  // Unmatched paths render the error page, so the 404 card uses the sign-in shell.
+  const unshelledRoutePrefixes = [
+    '/callback',
+    '/direct',
+    '/one-time-token',
+    '/switch-account',
+    '/create-passkey',
+    '/mfa-verification',
+    '/continue',
+    '/social',
+    '/single-sign-on',
+    '/device',
+    '/identifier-sign-in',
+    '/identifier-register',
+    '/reset-password',
+    '/springboard',
+  ];
+  const staysUnshelled = unshelledRoutePrefixes.some(
+    (prefix) => pathname === prefix || pathname.startsWith(`${prefix}/`)
+  );
+
+  if (!staysUnshelled) {
     return 'sign-in';
   }
 };

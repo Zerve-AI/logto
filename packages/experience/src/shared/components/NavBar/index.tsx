@@ -17,9 +17,18 @@ type Props = {
   readonly onClose?: () => void;
   readonly onBack?: () => void;
   readonly onSkip?: () => void;
+  readonly isCompact?: boolean;
 };
 
-const NavBar = ({ title, type = 'back', isHidden, onClose, onBack, onSkip }: Props) => {
+const NavBar = ({
+  title,
+  type = 'back',
+  isHidden,
+  onClose,
+  onBack,
+  onSkip,
+  isCompact = false,
+}: Props) => {
   const { t } = useTranslation();
 
   const isClosable = type === 'close';
@@ -50,7 +59,9 @@ const NavBar = ({ title, type = 'back', isHidden, onClose, onBack, onSkip }: Pro
   }, [handleBack, isClosable, onClose]);
 
   return (
-    <div className={classNames(styles.navBar, isHidden && styles.hidden)}>
+    <div
+      className={classNames(styles.navBar, isHidden && styles.hidden, isCompact && styles.compact)}
+    >
       <div
         role="button"
         tabIndex={0}
