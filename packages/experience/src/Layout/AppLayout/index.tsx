@@ -24,6 +24,7 @@ import styles from './index.module.scss';
 
 const mfaBindingVerificationStateGuard = object({
   flow: literal(UserMfaFlow.MfaBinding),
+  mfaFlowState: object(),
 });
 
 const getAuthVariant = (pathname: string, state: unknown): AuthMarketingVariant | undefined => {
