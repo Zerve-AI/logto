@@ -46,6 +46,11 @@
   .content .link:active {
     color: var(--color-neutral-50);
   }
+
+  .content .link,
+  .content .link:active {
+    font-weight: inherit;
+  }
 }
 
 /* The marketing panel is hidden here, so the agreement links must read as links without hover. */
@@ -64,4 +69,5 @@
 :global(body.desktop .zerveAuthShell) .content .link:hover,
 :global(body.mobile .zerveAuthShell) .content .link:hover {
   color: var(--color-static-white);
+  font-weight: inherit;
 }

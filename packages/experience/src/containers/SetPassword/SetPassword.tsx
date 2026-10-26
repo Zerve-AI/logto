@@ -3,7 +3,8 @@ import { useCallback, useEffect, useState } from 'react';
 import { useForm } from 'react-hook-form';
 import { useTranslation } from 'react-i18next';
 
-import { InputField } from '@/components/InputFields';
+import SubmitArrowButtonIcon from '@/components/Button/SubmitArrowButtonIcon';
+import { InputField, PasswordInputField } from '@/components/InputFields';
 import ClearIcon from '@/shared/assets/icons/clear-icon.svg?react';
 import Button from '@/shared/components/Button';
 import ErrorMessage from '@/shared/components/ErrorMessage';
@@ -20,6 +21,7 @@ type Props = {
   readonly onSubmit: (password: string) => Promise<void>;
   readonly errorMessage?: string;
   readonly clearErrorMessage?: () => void;
+  readonly appearance?: 'plain';
 };
 
 type FieldState = {
@@ -33,6 +35,7 @@ const SetPassword = ({
   onSubmit,
   errorMessage,
   clearErrorMessage,
+  appearance,
 }: Props) => {
   const { t } = useTranslation();
 
@@ -67,62 +70,101 @@ const SetPassword = ({
   );
 
   return (
-    <form className={classNames(styles.form, className)} onSubmit={onSubmitHandler}>
+    <form
+      className={classNames(styles.form, appearance === 'plain' && styles.plain, className)}
+      onSubmit={onSubmitHandler}
+    >
       <HiddenIdentifierInput />
-      <InputField
-        className={styles.inputField}
-        type={showPassword ? 'text' : 'password'}
-        autoComplete="new-password"
-        label={t('input.password')}
-        autoFocus={autoFocus}
-        isDanger={!!errors.newPassword}
-        errorMessage={errors.newPassword?.message}
-        aria-invalid={!!errors.newPassword}
-        {...register('newPassword', {
-          required: t('error.password_required'),
-        })}
-        isSuffixFocusVisible={!!watch('newPassword')}
-        suffix={
-          <IconButton
-            onClick={() => {
-              resetField('newPassword');
-            }}
-          >
-            <ClearIcon />
-          </IconButton>
-        }
-      />
+      {appearance === 'plain' ? (
+        <>
+          <PasswordInputField
+            className={styles.inputField}
+            appearance="plain"
+            autoComplete="new-password"
+            label={t('input.password')}
+            placeholder={t('description.enter_password')}
+            autoFocus={autoFocus}
+            isDanger={!!errors.newPassword}
+            errorMessage={errors.newPassword?.message}
+            aria-invalid={!!errors.newPassword}
+            {...register('newPassword', {
+              required: t('error.password_required'),
+            })}
+          />
+          <PasswordInputField
+            className={styles.inputField}
+            appearance="plain"
+            autoComplete="new-password"
+            label={t('input.confirm_password')}
+            errorMessage={errors.confirmPassword?.message}
+            aria-invalid={!!errors.confirmPassword}
+            {...register('confirmPassword', {
+              validate: (value) =>
+                value === watch('newPassword') || t('error.passwords_do_not_match'),
+            })}
+          />
+        </>
+      ) : (
+        <>
+          <InputField
+            className={styles.inputField}
+            type={showPassword ? 'text' : 'password'}
+            autoComplete="new-password"
+            label={t('input.password')}
+            autoFocus={autoFocus}
+            isDanger={!!errors.newPassword}
+            errorMessage={errors.newPassword?.message}
+            aria-invalid={!!errors.newPassword}
+            {...register('newPassword', {
+              required: t('error.password_required'),
+            })}
+            isSuffixFocusVisible={!!watch('newPassword')}
+            suffix={
+              <IconButton
+                onClick={() => {
+                  resetField('newPassword');
+                }}
+              >
+                <ClearIcon />
+              </IconButton>
+            }
+          />
 
-      <InputField
-        className={styles.inputField}
-        type={showPassword ? 'text' : 'password'}
-        autoComplete="new-password"
-        label={t('input.confirm_password')}
-        errorMessage={errors.confirmPassword?.message}
-        aria-invalid={!!errors.confirmPassword}
-        {...register('confirmPassword', {
-          validate: (value) => value === watch('newPassword') || t('error.passwords_do_not_match'),
-        })}
-        isSuffixFocusVisible={!!watch('confirmPassword')}
-        suffix={
-          <IconButton
-            onClick={() => {
-              resetField('confirmPassword');
-            }}
-          >
-            <ClearIcon />
-          </IconButton>
-        }
-      />
+          <InputField
+            className={styles.inputField}
+            type={showPassword ? 'text' : 'password'}
+            autoComplete="new-password"
+            label={t('input.confirm_password')}
+            errorMessage={errors.confirmPassword?.message}
+            aria-invalid={!!errors.confirmPassword}
+            {...register('confirmPassword', {
+              validate: (value) =>
+                value === watch('newPassword') || t('error.passwords_do_not_match'),
+            })}
+            isSuffixFocusVisible={!!watch('confirmPassword')}
+            suffix={
+              <IconButton
+                onClick={() => {
+                  resetField('confirmPassword');
+                }}
+              >
+                <ClearIcon />
+              </IconButton>
+            }
+          />
+
+          <TogglePassword isChecked={showPassword} onChange={setShowPassword} />
+        </>
+      )}
 
       {errorMessage && <ErrorMessage className={styles.formErrors}>{errorMessage}</ErrorMessage>}
-
-      <TogglePassword isChecked={showPassword} onChange={setShowPassword} />
 
       <Button
         name="submit"
         title="action.save_password"
         htmlType="submit"
+        icon={appearance === 'plain' ? <SubmitArrowButtonIcon /> : undefined}
+        iconPlacement={appearance === 'plain' ? 'edge' : 'inline'}
         isLoading={isSubmitting}
       />
 

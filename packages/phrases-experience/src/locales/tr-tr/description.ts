@@ -17,6 +17,7 @@ const description = {
   passcode_sent: 'Doğrulama kodu yeniden gönderildi',
   resend_after_seconds: 'Henüz almadınız mı? <span>{{seconds}}</span> saniye sonra tekrar gönderin',
   resend_passcode: 'Henüz almadınız mı? <a>Doğrulama kodunu tekrar gönderin</a>',
+  verification_code: 'Doğrulama kodu',
   create_account_id_exists: '{{value}} ile bir hesap zaten var. Giriş yapmaya devam edin.',
   link_account_id_exists: '{{type}} {{value}} olan hesap zaten var, bağlamak ister misiniz?',
   sign_in_id_does_not_exist: '{{value}} için hesap bulunamadı. Yeni bir tane oluşturulsun mu?',

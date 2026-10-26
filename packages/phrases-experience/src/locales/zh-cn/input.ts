@@ -10,6 +10,7 @@ const input = {
   label_with_optional: '{{label}}（可选）',
   email_address: '电子邮箱',
   email_placeholder: '输入你的电子邮箱',
+  enter_email: '输入电子邮箱',
 };
 
 export default Object.freeze(input);

@@ -17,6 +17,7 @@ const description = {
   passcode_sent: '验证码已经发送',
   resend_after_seconds: '还没收到？ <span>{{seconds}}</span> 秒后重发',
   resend_passcode: '还没收到？ <a>重发验证码</a>',
+  verification_code: '验证码',
   create_account_id_exists: '账号 {{value}} 已存在，继续登录。',
   link_account_id_exists: ' {{type}}为 {{value}} 的账号已注册，你要绑定至这个账号吗？',
   sign_in_id_does_not_exist: '未找到账号 {{value}}，创建一个新账号？',

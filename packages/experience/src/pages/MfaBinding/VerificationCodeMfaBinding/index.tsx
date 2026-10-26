@@ -1,13 +1,15 @@
-import { InteractionEvent, type SignInIdentifier } from '@logto/schemas';
+import { InteractionEvent, SignInIdentifier } from '@logto/schemas';
 import { conditional } from '@silverhand/essentials';
 import { type TFuncKey } from 'i18next';
 import { useCallback, useContext, useState } from 'react';
+import { useTranslation } from 'react-i18next';
 import { useLocation } from 'react-router-dom';
 import { validate } from 'superstruct';
 
 import SecondaryPageLayout from '@/Layout/SecondaryPageLayout';
 import UserInteractionContext from '@/Providers/UserInteractionContextProvider/UserInteractionContext';
 import { sendVerificationCode } from '@/apis/experience';
+import SubmitArrowButtonIcon from '@/components/Button/SubmitArrowButtonIcon';
 import SwitchMfaFactorsLink from '@/components/SwitchMfaFactorsLink';
 import useErrorHandler from '@/hooks/use-error-handler';
 import useNavigateWithPreservedSearchParams from '@/hooks/use-navigate-with-preserved-search-params';
@@ -34,6 +36,7 @@ const VerificationCodeMfaBinding = ({
   descriptionKey,
   invalidInputErrorKey,
 }: Props) => {
+  const { t } = useTranslation();
   const { state } = useLocation();
   const [, mfaFlowState] = validate(state, mfaFlowStateGuard);
   const { setVerificationId, setIdentifierInputValue } = useContext(UserInteractionContext);
@@ -91,12 +94,19 @@ const VerificationCodeMfaBinding = ({
 
   return (
     <SecondaryPageLayout
+      isHeaderCentered
       title={titleKey}
       description={descriptionKey}
       onSkip={conditional(skippable && (suggestion ? skipOptionalMfa : skipMfa))}
     >
       <IdentifierProfileForm
         autoFocus
+        appearance="plain"
+        label={t(identifierType === SignInIdentifier.Email ? 'input.email' : 'input.phone_number')}
+        {...(identifierType === SignInIdentifier.Email
+          ? { placeholder: t('input.enter_email') }
+          : {})}
+        submitIcon={<SubmitArrowButtonIcon />}
         errorMessage={errorMessage}
         clearErrorMessage={clearErrorMessage}
         defaultType={identifierType}

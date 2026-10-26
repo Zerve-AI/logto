@@ -1,3 +1,4 @@
+import classNames from 'classnames';
 import type { TFuncKey } from 'i18next';
 import { type ReactElement } from 'react';
 
@@ -19,6 +20,8 @@ type Props = {
   readonly notification?: TFuncKey;
   readonly onSkip?: () => void;
   readonly isNavBarHidden?: boolean;
+  /** Centers the title and description, and tightens the back control, inside the auth shell. */
+  readonly isHeaderCentered?: boolean;
   readonly children: React.ReactNode;
 };
 
@@ -30,15 +33,17 @@ const SecondaryPageLayout = ({
   notification,
   onSkip,
   isNavBarHidden,
+  isHeaderCentered = false,
   children,
 }: Props) => {
   const { isMobile } = usePlatform();
   const navigate = useNavigateWithPreservedSearchParams();
 
   return (
-    <div className={styles.wrapper}>
+    <div className={classNames(styles.wrapper, isHeaderCentered && styles.centered)}>
       <PageMeta titleKey={title} />
       <NavBar
+        isCompact={isHeaderCentered}
         isHidden={isNavBarHidden}
         onSkip={onSkip}
         onBack={() => {

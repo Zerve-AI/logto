@@ -34,3 +34,18 @@
     font: var(--font-label-1);
   }
 }
+
+:global(body.desktop .zerveAuthShell),
+:global(body.mobile .zerveAuthShell) {
+  .container {
+    gap: 20px;
+    padding-bottom: 0;
+  }
+
+  .hint {
+    color: #a1a1aa;
+    font-size: 14px;
+    font-weight: 500;
+    line-height: 20px;
+  }
+}

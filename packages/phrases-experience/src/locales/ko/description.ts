@@ -17,6 +17,7 @@ const description = {
   passcode_sent: '비밀번호가 재전송되었어요.',
   resend_after_seconds: '아직 못 받으셨나요? <span>{{seconds}}</span> 초 후에 다시 보내기',
   resend_passcode: '아직 못 받으셨나요? <a>인증 코드를 다시 보내기</a>',
+  verification_code: '인증 코드',
   create_account_id_exists: '계정 {{value}}이(가) 이미 존재해요. 로그인을 계속합니다.',
   link_account_id_exists: '{{type}} {{value}}와/과 연동된 계정이 이미 존재해요. 연동할까요?',
   sign_in_id_does_not_exist: '{{value}}에 대한 계정을 찾을 수 없어요. 새로 만드시겠어요?',

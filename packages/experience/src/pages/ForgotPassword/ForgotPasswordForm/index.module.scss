@@ -17,3 +17,34 @@
     margin-top: _.unit(-3);
   }
 }
+
+:global(body.desktop .zerveAuthShell),
+:global(body.mobile .zerveAuthShell) {
+  .inputField,
+  .formErrors {
+    margin: 0;
+  }
+
+  .submit {
+    margin-top: 20px;
+  }
+
+  .captcha:empty {
+    height: 0;
+    margin: 0;
+    overflow: hidden;
+  }
+
+  /* The captcha box also sets a bottom margin, which stacks with Continue. */
+  .captcha:not(:empty) {
+    margin: 20px 0 0;
+  }
+
+  .formErrors {
+    margin-top: 8px;
+    color: #ff9a7f;
+    font-size: 12px;
+    font-weight: 500;
+    line-height: 20px;
+  }
+}

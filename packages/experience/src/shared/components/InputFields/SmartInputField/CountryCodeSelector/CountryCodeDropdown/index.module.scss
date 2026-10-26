@@ -1,5 +1,37 @@
+@use 'sass:color';
+@use 'sass:math';
 @use '@/shared/scss/underscore' as _;
 
+$gray-400: #505054;
+
+@mixin custom-scrollbar($color: $gray-400, $size: 8px) {
+  &::-webkit-scrollbar-track {
+    padding-right: math.div($size, 2);
+    background-color: transparent;
+    border-radius: math.div($size, 2);
+    box-shadow: inset 0 0 6px rgba(0, 0, 0, 30%);
+  }
+
+  &::-webkit-scrollbar {
+    width: $size;
+    height: $size;
+    background-color: transparent;
+  }
+
+  &::-webkit-scrollbar-thumb {
+    background-color: $color;
+    border-radius: math.div($size, 2);
+    box-shadow: inset 0 0 6px rgba(0, 0, 0, 30%);
+
+    &:hover {
+      background-color: color.adjust($color, $lightness: 5%);
+    }
+  }
+
+  &::-webkit-scrollbar-corner {
+    background-color: transparent;
+  }
+}
 
 .dropdownOverlay {
   background: transparent;
@@ -37,6 +69,7 @@
 }
 
 .countryList {
+  @include custom-scrollbar;
   margin: 0 _.unit(-3);
   padding: 0 _.unit(3);
   list-style: none;

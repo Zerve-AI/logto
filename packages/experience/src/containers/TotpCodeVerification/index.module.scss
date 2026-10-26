@@ -7,3 +7,14 @@
 .continueButton {
   margin-top: _.unit(6);
 }
+
+:global(body.desktop .zerveAuthShell),
+:global(body.mobile .zerveAuthShell) {
+  .totpCodeInput {
+    margin-top: 20px;
+  }
+
+  .continueButton {
+    margin-top: 20px;
+  }
+}

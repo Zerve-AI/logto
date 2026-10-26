@@ -32,6 +32,7 @@ const SignInPassword = () => {
 
   return (
     <SecondaryPageLayout
+      isHeaderCentered
       title="description.enter_password"
       description="description.enter_password_for"
       descriptionProps={{

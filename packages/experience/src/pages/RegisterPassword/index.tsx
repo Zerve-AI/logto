@@ -85,12 +85,14 @@ const RegisterPassword = () => {
 
   return (
     <SecondaryPageLayout
+      isHeaderCentered
       title="description.new_password"
       description={requirementsDescription && <span>{requirementsDescription}</span>}
       descriptionProps={{ min, count }}
     >
       <SetPassword
         autoFocus
+        appearance="plain"
         errorMessage={errorMessage}
         maxLength={max}
         clearErrorMessage={clearErrorMessage}

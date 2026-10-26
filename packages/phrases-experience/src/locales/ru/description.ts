@@ -17,6 +17,7 @@ const description = {
   passcode_sent: 'Код подтверждения был отправлен повторно',
   resend_after_seconds: 'Еще не получили? Отправить повторно через <span>{{seconds}}</span> секунд',
   resend_passcode: 'Еще не получили? <a>Отправить повторно код подтверждения</a>',
+  verification_code: 'Код подтверждения',
   create_account_id_exists: 'Учетная запись {{value}} уже существует. Продолжить вход.',
   link_account_id_exists: 'Учетная запись для {{value}} уже существует, хотите привязать?',
   sign_in_id_does_not_exist: 'Учетная запись для {{value}} не найдена. Создать новую?',

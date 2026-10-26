@@ -1,11 +1,16 @@
 import { CaptchaType, RecaptchaEnterpriseMode } from '@logto/schemas';
+import classNames from 'classnames';
 import { useContext } from 'react';
 
 import CaptchaContext from '@/Providers/CaptchaContextProvider/CaptchaContext';
 
 import styles from './index.module.scss';
 
-const CaptchaBox = () => {
+type Props = {
+  readonly className?: string;
+};
+
+const CaptchaBox = ({ className }: Props) => {
   const { captchaConfig, widgetRef, isCaptchaRequired } = useContext(CaptchaContext);
 
   // Check if widget rendering is needed
@@ -20,7 +25,7 @@ const CaptchaBox = () => {
     return null;
   }
 
-  return <div ref={widgetRef} className={styles.captchaBox} />;
+  return <div ref={widgetRef} className={classNames(styles.captchaBox, className)} />;
 };
 
 export default CaptchaBox;

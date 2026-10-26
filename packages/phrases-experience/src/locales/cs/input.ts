@@ -10,6 +10,7 @@ const input = {
   label_with_optional: '{{label}} (Volitelné)',
   email_address: 'E-mailová adresa',
   email_placeholder: 'Zadejte svůj e-mail',
+  enter_email: 'Zadejte e-mail',
 };
 
 export default Object.freeze(input);
