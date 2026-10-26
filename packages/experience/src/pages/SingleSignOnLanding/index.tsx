@@ -1,16 +1,19 @@
 import { AgreeToTermsPolicy, experience } from '@logto/schemas';
-import { useTranslation } from 'react-i18next';
 import { Navigate } from 'react-router-dom';
 
-import FocusedAuthPageLayout from '@/Layout/FocusedAuthPageLayout';
+import SecondaryPageLayout from '@/Layout/SecondaryPageLayout';
 import SingleSignOnForm from '@/components/SingleSignOnForm';
+import TextLink from '@/components/TextLink';
+import useNavigateWithPreservedSearchParams from '@/hooks/use-navigate-with-preserved-search-params';
 import { useSieMethods } from '@/hooks/use-sie';
 import useTerms from '@/hooks/use-terms';
 
+import styles from './index.module.scss';
+
 const SingleSignOnLanding = () => {
-  const { t } = useTranslation();
   const { singleSignOnEnabled } = useSieMethods();
   const { agreeToTermsPolicy } = useTerms();
+  const navigate = useNavigateWithPreservedSearchParams();
 
   // Fallback to sign-in page if SSO is not enabled
   if (!singleSignOnEnabled) {
@@ -18,21 +21,23 @@ const SingleSignOnLanding = () => {
   }
 
   return (
-    <FocusedAuthPageLayout
-      pageMeta={{ titleKey: 'action.single_sign_on' }}
+    <SecondaryPageLayout
+      isHeaderCentered
       title="action.single_sign_on"
-      description={t('description.single_sign_on_email_form')}
-      footerTermsDisplayPolicies={[AgreeToTermsPolicy.Automatic]}
-      authOptionsLink={{
-        to: `/${experience.routes.signIn}`,
-        text: 'description.all_sign_in_options',
+      onBack={() => {
+        navigate(`/${experience.routes.signIn}`);
       }}
     >
       <SingleSignOnForm
         /* Should display terms and privacy checkbox when we need to confirm the terms and privacy policy for both sign-in and sign-up */
         isTermsAndPrivacyCheckboxVisible={agreeToTermsPolicy === AgreeToTermsPolicy.Manual}
       />
-    </FocusedAuthPageLayout>
+      <TextLink
+        className={styles.optionsLink}
+        to={`/${experience.routes.signIn}`}
+        text="description.all_sign_in_options"
+      />
+    </SecondaryPageLayout>
   );
 };
 

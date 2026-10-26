@@ -39,6 +39,7 @@ const SingleSignOnConnectors = () => {
 
   return (
     <SecondaryPageLayout
+      isHeaderCentered
       title="action.single_sign_on"
       description="description.single_sign_on_connectors_list"
       descriptionProps={{ email: ssoEmail }}

@@ -1,9 +1,10 @@
 import { AgreeToTermsPolicy, SignInIdentifier } from '@logto/schemas';
 import { useCallback, useContext, useEffect } from 'react';
 import { Controller, useForm } from 'react-hook-form';
+import { useTranslation } from 'react-i18next';
 
 import UserInteractionContext from '@/Providers/UserInteractionContextProvider/UserInteractionContext';
-import LockIcon from '@/assets/icons/lock.svg?react';
+import SubmitArrowButtonIcon from '@/components/Button/SubmitArrowButtonIcon';
 import TermsAndPrivacyCheckbox from '@/containers/TermsAndPrivacyCheckbox';
 import useOnSubmit from '@/hooks/use-check-single-sign-on';
 import useTerms from '@/hooks/use-terms';
@@ -25,6 +26,7 @@ type Props = {
 };
 
 const SingleSignOnForm = ({ isTermsAndPrivacyCheckboxVisible }: Props) => {
+  const { t } = useTranslation();
   const { errorMessage, clearErrorMessage, onSubmit } = useOnSubmit();
   const { ssoEmail } = useContext(UserInteractionContext);
   const { termsValidation, agreeToTermsPolicy } = useTerms();
@@ -92,7 +94,10 @@ const SingleSignOnForm = ({ isTermsAndPrivacyCheckboxVisible }: Props) => {
             autoFocus
             className={styles.inputField}
             {...field}
-            isDanger={!!errors.identifier}
+            appearance="plain"
+            label={t('input.email')}
+            placeholder={t('input.email_placeholder')}
+            isDanger={!!errors.identifier || !!errorMessage}
             defaultValue={defaultValues?.identifier?.value}
             errorMessage={errors.identifier?.message}
             enabledTypes={[SignInIdentifier.Email]}
@@ -107,9 +112,11 @@ const SingleSignOnForm = ({ isTermsAndPrivacyCheckboxVisible }: Props) => {
       )}
 
       <Button
+        className={styles.submit}
         title="action.single_sign_on"
         htmlType="submit"
-        icon={<LockIcon />}
+        icon={<SubmitArrowButtonIcon />}
+        iconPlacement="edge"
         isLoading={isSubmitting}
       />
 

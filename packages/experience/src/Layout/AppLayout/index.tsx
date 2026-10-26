@@ -54,6 +54,11 @@ const getAuthVariant = (pathname: string, state: unknown): AuthMarketingVariant 
     return 'sign-in';
   }
 
+  // Enterprise SSO uses the sign-in marketing panel. The stage photo is chosen separately.
+  if (pathname === '/single-sign-on' || pathname.startsWith('/single-sign-on/')) {
+    return 'sign-in';
+  }
+
   if (pathname === '/consent') {
     return 'sign-in';
   }
@@ -84,7 +89,6 @@ const getAuthVariant = (pathname: string, state: unknown): AuthMarketingVariant 
     '/mfa-verification',
     '/continue',
     '/social',
-    '/single-sign-on',
     '/device',
     '/identifier-sign-in',
     '/identifier-register',
@@ -129,6 +133,8 @@ const AppLayout = () => {
 
   const { pathname, state } = useLocation();
   const authVariant = getAuthVariant(pathname, state);
+  const isSingleSignOnRoute =
+    pathname === '/single-sign-on' || pathname.startsWith('/single-sign-on/');
 
   const isFromAICoResearcher = useMemo(() => {
     try {
@@ -165,7 +171,11 @@ const AppLayout = () => {
               <div
                 className={classNames(
                   styles.stage,
-                  authVariant === 'sign-up' ? styles.signUpStage : styles.signInStage
+                  authVariant === 'sign-up'
+                    ? styles.signUpStage
+                    : isSingleSignOnRoute
+                      ? styles.ssoStage
+                      : styles.signInStage
                 )}
               >
                 {!prefersReducedMotion && (

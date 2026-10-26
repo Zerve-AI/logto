@@ -26,7 +26,7 @@ type Props = {
  * FocusedAuthPageLayout Component
  *
  * This layout component is designed for focused authentication pages that serve as the first screen
- * for specific auth methods, such as identifier sign-in, identifier-register, and single sign-on landing pages.
+ * for specific auth methods, such as identifier sign-in and identifier registration.
  */
 const FocusedAuthPageLayout = ({
   children,

@@ -21,3 +21,28 @@
     margin-bottom: _.unit(4);
   }
 }
+
+:global(body.desktop .zerveAuthShell),
+:global(body.mobile .zerveAuthShell) {
+  .inputField,
+  .formErrors,
+  .terms {
+    margin: 0;
+  }
+
+  .submit {
+    margin-top: 20px;
+  }
+
+  .terms {
+    margin-top: 20px;
+  }
+
+  .formErrors {
+    margin-top: 8px;
+    color: #ff9a7f;
+    font-size: 12px;
+    font-weight: 500;
+    line-height: 20px;
+  }
+}
