@@ -36,7 +36,7 @@ const SetExtraProfile = ({ interactionEvent }: Props) => {
   }, [experienceSettings?.customProfileFields]);
 
   return (
-    <SecondaryPageLayout title="description.about_yourself">
+    <SecondaryPageLayout isHeaderCentered title="description.about_yourself">
       <ExtraProfileForm
         customProfileFields={[...(experienceSettings?.customProfileFields ?? [])]}
         defaultValues={defaultValues}

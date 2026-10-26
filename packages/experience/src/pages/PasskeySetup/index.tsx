@@ -5,8 +5,8 @@ import { useLocation } from 'react-router-dom';
 import { validate } from 'superstruct';
 
 import SecondaryPageLayout from '@/Layout/SecondaryPageLayout';
-import SectionLayout from '@/Layout/SectionLayout';
 import { createSignInPasskeyRegistrationOptions, skipPasskeyBinding } from '@/apis/experience';
+import SubmitArrowButtonIcon from '@/components/Button/SubmitArrowButtonIcon';
 import useApi from '@/hooks/use-api';
 import useErrorHandler from '@/hooks/use-error-handler';
 import useGlobalRedirectTo from '@/hooks/use-global-redirect-to';
@@ -15,8 +15,6 @@ import useSubmitInteractionErrorHandler from '@/hooks/use-submit-interaction-err
 import ErrorPage from '@/pages/ErrorPage';
 import Button from '@/shared/components/Button';
 import { continueFlowStateGuard } from '@/types/guard';
-
-import styles from './index.module.scss';
 
 type RegistrationState = {
   verificationId: string;
@@ -95,19 +93,20 @@ const PasskeySetup = () => {
   }
 
   return (
-    <SecondaryPageLayout title="passkey_sign_in.setup_page.title" onSkip={onSkip}>
-      <SectionLayout
+    <SecondaryPageLayout
+      isHeaderCentered
+      title="passkey_sign_in.setup_page.title"
+      description="passkey_sign_in.setup_page.description"
+      onSkip={onSkip}
+    >
+      <Button
         title="passkey_sign_in.setup_page.subtitle"
-        description="passkey_sign_in.setup_page.description"
-      >
-        <Button
-          className={styles.button}
-          title="passkey_sign_in.setup_page.subtitle"
-          isLoading={isSubmitting}
-          disabled={!registrationResult}
-          onClick={onCreatePasskey}
-        />
-      </SectionLayout>
+        icon={<SubmitArrowButtonIcon />}
+        iconPlacement="edge"
+        isLoading={isSubmitting}
+        disabled={!registrationResult}
+        onClick={onCreatePasskey}
+      />
     </SecondaryPageLayout>
   );
 };

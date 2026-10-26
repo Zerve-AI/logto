@@ -3,8 +3,9 @@ import { useState } from 'react';
 import { useTranslation } from 'react-i18next';
 import { Navigate } from 'react-router-dom';
 
-import FocusedAuthPageLayout from '@/Layout/FocusedAuthPageLayout';
+import SecondaryPageLayout from '@/Layout/SecondaryPageLayout';
 import useConsumeOneTimeTokenParameters from '@/hooks/use-consume-one-time-token-parameters';
+import useNavigateWithPreservedSearchParams from '@/hooks/use-navigate-with-preserved-search-params';
 import usePrefilledIdentifier from '@/hooks/use-prefilled-identifier';
 import ErrorPage from '@/pages/ErrorPage';
 import { identifierInputDescriptionMap } from '@/utils/form';
@@ -37,6 +38,7 @@ import { useResetPasswordMethods } from './use-reset-password-methods';
  */
 const ResetPasswordLanding = () => {
   const { t } = useTranslation();
+  const navigate = useNavigateWithPreservedSearchParams();
   const { oneTimeToken, loginHint } = useConsumeOneTimeTokenParameters();
   const [magicLinkError, setMagicLinkError] = useState<ResetPasswordMagicLinkError>();
   const enabledMethods = useResetPasswordMethods();
@@ -56,45 +58,37 @@ const ResetPasswordLanding = () => {
     );
   }
 
-  if (oneTimeToken) {
-    return (
-      <FocusedAuthPageLayout
-        pageMeta={{
-          titleKey: 'description.reset_password',
-        }}
-        title="description.reset_password"
-        description={t('description.reset_password_magic_link_description')}
-        authOptionsLink={{
-          to: `/${experience.routes.signIn}`,
-          text: 'description.back_to_sign_in',
-        }}
-      >
-        <OneTimeTokenForm token={oneTimeToken} loginHint={loginHint} onError={setMagicLinkError} />
-      </FocusedAuthPageLayout>
-    );
-  }
-
-  // Fallback to sign-in page
-  if (enabledMethods.length === 0) {
+  // Fallback to sign-in page when self-service reset is unavailable and this is not a magic link.
+  if (!oneTimeToken && enabledMethods.length === 0) {
     return <Navigate to={`/${experience.routes.signIn}`} />;
   }
 
   return (
-    <FocusedAuthPageLayout
-      pageMeta={{
-        titleKey: 'description.reset_password',
-      }}
+    <SecondaryPageLayout
+      isHeaderCentered
       title="description.reset_password"
-      description={t('description.reset_password_description', {
-        types: enabledMethods.map((method) => t(identifierInputDescriptionMap[method])),
-      })}
-      authOptionsLink={{
-        to: `/${experience.routes.signIn}`,
-        text: 'description.back_to_sign_in',
+      description={
+        oneTimeToken
+          ? 'description.reset_password_magic_link_description'
+          : 'description.reset_password_description'
+      }
+      descriptionProps={
+        oneTimeToken
+          ? undefined
+          : {
+              types: enabledMethods.map((method) => t(identifierInputDescriptionMap[method])),
+            }
+      }
+      onBack={() => {
+        navigate(`/${experience.routes.signIn}`);
       }}
     >
-      <ForgotPasswordForm autoFocus defaultValue={prefilledValue} enabledTypes={enabledMethods} />
-    </FocusedAuthPageLayout>
+      {oneTimeToken ? (
+        <OneTimeTokenForm token={oneTimeToken} loginHint={loginHint} onError={setMagicLinkError} />
+      ) : (
+        <ForgotPasswordForm autoFocus defaultValue={prefilledValue} enabledTypes={enabledMethods} />
+      )}
+    </SecondaryPageLayout>
   );
 };
 

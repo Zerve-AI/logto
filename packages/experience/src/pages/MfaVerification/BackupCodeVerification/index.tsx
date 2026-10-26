@@ -4,7 +4,7 @@ import { useCallback, type FormEvent } from 'react';
 import { useForm } from 'react-hook-form';
 
 import SecondaryPageLayout from '@/Layout/SecondaryPageLayout';
-import SectionLayout from '@/Layout/SectionLayout';
+import SubmitArrowButtonIcon from '@/components/Button/SubmitArrowButtonIcon';
 import { InputField } from '@/components/InputFields';
 import SwitchMfaFactorsLink from '@/components/SwitchMfaFactorsLink';
 import useMfaFlowState from '@/hooks/use-mfa-factors-state';
@@ -45,26 +45,35 @@ const BackupCodeVerification = () => {
   }
 
   return (
-    <SecondaryPageLayout title="mfa.verify_mfa_factors">
-      <SectionLayout
-        title="mfa.enter_a_backup_code"
-        description="mfa.enter_backup_code_description"
-      >
+    <SecondaryPageLayout
+      isHeaderCentered
+      title="mfa.enter_a_backup_code"
+      description="mfa.enter_backup_code_description"
+    >
+      <div className={styles.content}>
         <form onSubmit={onSubmitHandler}>
           <InputField
+            appearance="plain"
             autoComplete="off"
             label={t('input.backup_code')}
-            className={styles.backupCodeInput}
+            placeholder={t('input.backup_code')}
             {...register('code')}
           />
-          <Button title="action.continue" htmlType="submit" isLoading={isSubmitting} />
+          <Button
+            className={styles.submit}
+            title="action.continue"
+            htmlType="submit"
+            icon={<SubmitArrowButtonIcon />}
+            iconPlacement="edge"
+            isLoading={isSubmitting}
+          />
         </form>
-      </SectionLayout>
-      <SwitchMfaFactorsLink
-        flow={UserMfaFlow.MfaVerification}
-        flowState={flowState}
-        className={styles.switchFactorLink}
-      />
+        <SwitchMfaFactorsLink
+          flow={UserMfaFlow.MfaVerification}
+          flowState={flowState}
+          className={styles.switchFactorLink}
+        />
+      </div>
     </SecondaryPageLayout>
   );
 };

@@ -16,6 +16,11 @@
   user-select: none;
   overflow: hidden;
 
+  &.disabled:not(.loading),
+  &:disabled:not(.loading) {
+    cursor: not-allowed;
+  }
+
   .content {
     position: relative;
     transition: padding-inline-start 0.2s ease;

@@ -5,3 +5,10 @@
   flex-direction: column;
   gap: _.unit(4);
 }
+
+:global(body.desktop .zerveAuthShell),
+:global(body.mobile .zerveAuthShell) {
+  .form {
+    gap: 20px;
+  }
+}

@@ -17,3 +17,22 @@
 .link {
   cursor: pointer;
 }
+
+:global(body.desktop .zerveAuthShell),
+:global(body.mobile .zerveAuthShell) {
+  .codeInput {
+    margin-top: 0;
+  }
+
+  .message {
+    margin-top: 12px;
+    color: #a1a1aa;
+    font-size: 14px;
+    font-weight: 500;
+    line-height: 20px;
+  }
+
+  .continueButton {
+    margin-top: 20px;
+  }
+}

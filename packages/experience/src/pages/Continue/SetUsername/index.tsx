@@ -1,8 +1,10 @@
 import { SignInIdentifier } from '@logto/schemas';
 import { useContext } from 'react';
+import { useTranslation } from 'react-i18next';
 
 import SecondaryPageLayout from '@/Layout/SecondaryPageLayout';
 import UserInteractionContext from '@/Providers/UserInteractionContextProvider/UserInteractionContext';
+import SubmitArrowButtonIcon from '@/components/Button/SubmitArrowButtonIcon';
 import { useUsernamePolicyDescription } from '@/hooks/use-sie';
 import { type ContinueFlowInteractionEvent } from '@/types';
 
@@ -15,6 +17,7 @@ type Props = {
 };
 
 const SetUsername = ({ interactionEvent }: Props) => {
+  const { t } = useTranslation();
   const { onSubmit, errorMessage, clearErrorMessage } = useSetUsername(interactionEvent);
   const usernamePolicyDescription = useUsernamePolicyDescription();
 
@@ -32,6 +35,7 @@ const SetUsername = ({ interactionEvent }: Props) => {
 
   return (
     <SecondaryPageLayout
+      isHeaderCentered
       title="description.enter_username"
       description={
         usernamePolicyDescription
@@ -42,6 +46,10 @@ const SetUsername = ({ interactionEvent }: Props) => {
     >
       <IdentifierProfileForm
         autoFocus
+        appearance="plain"
+        label={t('input.username')}
+        placeholder={t('input.username')}
+        submitIcon={<SubmitArrowButtonIcon />}
         errorMessage={errorMessage}
         clearErrorMessage={clearErrorMessage}
         defaultType={SignInIdentifier.Username}

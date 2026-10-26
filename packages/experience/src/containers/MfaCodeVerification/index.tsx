@@ -2,6 +2,7 @@ import { type SignInIdentifier } from '@logto/schemas';
 import { useCallback, useEffect, useState } from 'react';
 import { Trans, useTranslation } from 'react-i18next';
 
+import SubmitArrowButtonIcon from '@/components/Button/SubmitArrowButtonIcon';
 import TextLink from '@/components/TextLink';
 import Button from '@/shared/components/Button';
 import VerificationCodeInput from '@/shared/components/VerificationCode';
@@ -109,6 +110,8 @@ const MfaCodeVerification = ({ identifierType, verificationId }: Props) => {
         title="action.continue"
         type="primary"
         className={styles.continueButton}
+        icon={<SubmitArrowButtonIcon />}
+        iconPlacement="edge"
         isLoading={isSubmitting}
         onClick={() => {
           if (!isCodeReady(codeInput)) {

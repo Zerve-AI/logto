@@ -2,7 +2,6 @@ import { MfaFactor, SignInIdentifier } from '@logto/schemas';
 import { useContext } from 'react';
 
 import SecondaryPageLayout from '@/Layout/SecondaryPageLayout';
-import SectionLayout from '@/Layout/SectionLayout';
 import UserInteractionContext from '@/Providers/UserInteractionContextProvider/UserInteractionContext';
 import SwitchMfaFactorsLink from '@/components/SwitchMfaFactorsLink';
 import MfaCodeVerification from '@/containers/MfaCodeVerification';
@@ -30,24 +29,23 @@ const PhoneVerificationCode = () => {
   const maskedPhone = flowState.maskedIdentifiers?.[MfaFactor.PhoneVerificationCode];
 
   return (
-    <SecondaryPageLayout title="mfa.verify_mfa_factors">
-      <SectionLayout
-        title="mfa.enter_phone_verification_code"
-        description="mfa.enter_phone_verification_code_description"
-        descriptionProps={{ identifier: maskedPhone }}
-      >
-        {verificationId ? (
-          <MfaCodeVerification
-            identifierType={SignInIdentifier.Phone}
-            verificationId={verificationId}
-          />
-        ) : null}
-      </SectionLayout>
-      <SwitchMfaFactorsLink
-        flow={UserMfaFlow.MfaVerification}
-        flowState={flowState}
-        className={styles.switchFactorLink}
-      />
+    <SecondaryPageLayout
+      isHeaderCentered
+      title="mfa.enter_phone_verification_code"
+      description="mfa.enter_phone_verification_code_description"
+      descriptionProps={{ identifier: maskedPhone }}
+    >
+      <div className={styles.content}>
+        <MfaCodeVerification
+          identifierType={SignInIdentifier.Phone}
+          verificationId={verificationId}
+        />
+        <SwitchMfaFactorsLink
+          flow={UserMfaFlow.MfaVerification}
+          flowState={flowState}
+          className={styles.switchFactorLink}
+        />
+      </div>
     </SecondaryPageLayout>
   );
 };

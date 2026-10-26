@@ -1,16 +1,13 @@
-import { MfaFactor } from '@logto/schemas';
 import { type Nullable } from '@silverhand/essentials';
 import classNames from 'classnames';
 import { type SyntheticEvent, useCallback, useMemo, useState } from 'react';
 import { Outlet, useLocation } from 'react-router-dom';
-import { literal, object, validate } from 'superstruct';
 
 import noiseVideoUrl from '@/assets/auth/noise-video.mp4';
 import TextLink from '@/components/TextLink';
 import usePlatform from '@/hooks/use-platform';
 import usePrefersReducedMotion from '@/hooks/use-prefers-reduced-motion';
 import useTerms from '@/hooks/use-terms';
-import { UserMfaFlow } from '@/types';
 import { layoutClassNames } from '@/utils/consts';
 
 import { AICoResearcherLogo } from './AICoResearcherLogo';
@@ -22,13 +19,11 @@ import MarketingPanel, { type AuthMarketingVariant } from './MarketingPanel';
 import ZerveLogo from './MarketingPanel/ZerveLogo';
 import styles from './index.module.scss';
 
-const mfaBindingVerificationStateGuard = object({
-  flow: literal(UserMfaFlow.MfaBinding),
-  mfaFlowState: object(),
-});
+const isPrefixedRoute = (pathname: string, route: string) =>
+  pathname === route || pathname.startsWith(`${route}/`);
 
-const getAuthVariant = (pathname: string, state: unknown): AuthMarketingVariant | undefined => {
-  if (pathname === '/register' || pathname.startsWith('/register/')) {
+const getAuthVariant = (pathname: string): AuthMarketingVariant | undefined => {
+  if (isPrefixedRoute(pathname, '/register') || isPrefixedRoute(pathname, '/identifier-register')) {
     return 'sign-up';
   }
 
@@ -40,17 +35,12 @@ const getAuthVariant = (pathname: string, state: unknown): AuthMarketingVariant 
     return 'sign-up';
   }
 
-  if (pathname === '/continue/password') {
+  // Profile completion, including its verification step, uses the sign-up panel.
+  if (isPrefixedRoute(pathname, '/continue')) {
     return 'sign-up';
   }
 
-  // Email and phone MFA binding verify the code on the shared continue route.
-  const [, mfaBindingVerificationState] = validate(state, mfaBindingVerificationStateGuard);
-  if (pathname === '/continue/verification-code' && mfaBindingVerificationState) {
-    return 'sign-up';
-  }
-
-  if (pathname === '/sign-in' || pathname.startsWith('/sign-in/')) {
+  if (isPrefixedRoute(pathname, '/sign-in') || isPrefixedRoute(pathname, '/identifier-sign-in')) {
     return 'sign-in';
   }
 
@@ -63,11 +53,10 @@ const getAuthVariant = (pathname: string, state: unknown): AuthMarketingVariant 
     return 'sign-in';
   }
 
-  if (pathname === '/forgot-password' || pathname.startsWith('/forgot-password/')) {
-    return 'sign-in';
-  }
-
-  if (pathname === `/${UserMfaFlow.MfaVerification}/${MfaFactor.TOTP}`) {
+  if (
+    isPrefixedRoute(pathname, '/forgot-password') ||
+    isPrefixedRoute(pathname, '/reset-password')
+  ) {
     return 'sign-in';
   }
 
@@ -80,21 +69,7 @@ const getAuthVariant = (pathname: string, state: unknown): AuthMarketingVariant 
   }
 
   // Unmatched paths render the error page, so the 404 card uses the sign-in shell.
-  const unshelledRoutePrefixes = [
-    '/callback',
-    '/direct',
-    '/one-time-token',
-    '/switch-account',
-    '/create-passkey',
-    '/mfa-verification',
-    '/continue',
-    '/social',
-    '/device',
-    '/identifier-sign-in',
-    '/identifier-register',
-    '/reset-password',
-    '/springboard',
-  ];
+  const unshelledRoutePrefixes = ['/callback', '/direct', '/one-time-token', '/springboard'];
   const staysUnshelled = unshelledRoutePrefixes.some(
     (prefix) => pathname === prefix || pathname.startsWith(`${prefix}/`)
   );
@@ -131,8 +106,8 @@ const AppLayout = () => {
     [asidePortalContainer, register]
   );
 
-  const { pathname, state } = useLocation();
-  const authVariant = getAuthVariant(pathname, state);
+  const { pathname } = useLocation();
+  const authVariant = getAuthVariant(pathname);
   const isSingleSignOnRoute =
     pathname === '/single-sign-on' || pathname.startsWith('/single-sign-on/');
 

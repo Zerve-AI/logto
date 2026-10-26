@@ -2,12 +2,16 @@ import { AgreeToTermsPolicy, experience, SignInMode } from '@logto/schemas';
 import { useTranslation } from 'react-i18next';
 import { Navigate } from 'react-router-dom';
 
-import FocusedAuthPageLayout from '@/Layout/FocusedAuthPageLayout';
+import LandingPageLayout from '@/Layout/LandingPageLayout';
 import SingleSignOnFormModeContextProvider from '@/Providers/SingleSignOnFormModeContextProvider';
 import IdentifierRegisterForm from '@/components/IdentifierRegisterForm';
+import TextLink from '@/components/TextLink';
+import TermsAndPrivacyLinks from '@/containers/TermsAndPrivacyLinks';
 import { useSieMethods } from '@/hooks/use-sie';
+import useTerms from '@/hooks/use-terms';
 import { identifierInputDescriptionMap } from '@/utils/form';
 
+import styles from './index.module.scss';
 import useIdentifierSignUpMethods from './use-identifier-sign-up-methods';
 
 /**
@@ -23,6 +27,7 @@ const IdentifierRegister = () => {
   const { t } = useTranslation();
   const signUpMethods = useIdentifierSignUpMethods();
   const { signInMode } = useSieMethods();
+  const { agreeToTermsPolicy } = useTerms();
 
   /**
    * Fallback to sign-in page in the following cases:
@@ -34,22 +39,24 @@ const IdentifierRegister = () => {
   }
 
   return (
-    <FocusedAuthPageLayout
-      pageMeta={{ titleKey: 'description.create_your_account' }}
-      title="description.create_account"
-      description={t('description.identifier_register_description', {
+    <LandingPageLayout
+      title="description.create_an_account"
+      subTitle={t('description.identifier_register_description', {
         types: signUpMethods.map((identifier) => t(identifierInputDescriptionMap[identifier])),
       })}
-      footerTermsDisplayPolicies={[AgreeToTermsPolicy.Automatic]}
-      authOptionsLink={{
-        to: `/${experience.routes.register}`,
-        text: 'description.all_account_creation_options',
-      }}
     >
       <SingleSignOnFormModeContextProvider>
         <IdentifierRegisterForm signUpMethods={signUpMethods} />
       </SingleSignOnFormModeContextProvider>
-    </FocusedAuthPageLayout>
+      {agreeToTermsPolicy === AgreeToTermsPolicy.Automatic && (
+        <TermsAndPrivacyLinks className={styles.terms} />
+      )}
+      <TextLink
+        className={styles.optionsLink}
+        to={`/${experience.routes.register}`}
+        text="description.all_account_creation_options"
+      />
+    </LandingPageLayout>
   );
 };
 

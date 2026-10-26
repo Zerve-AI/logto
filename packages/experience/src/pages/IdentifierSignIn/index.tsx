@@ -2,13 +2,22 @@ import { AgreeToTermsPolicy, experience } from '@logto/schemas';
 import { useTranslation } from 'react-i18next';
 import { Navigate } from 'react-router-dom';
 
-import FocusedAuthPageLayout from '@/Layout/FocusedAuthPageLayout';
+import LandingPageLayout from '@/Layout/LandingPageLayout';
 import SingleSignOnFormModeContextProvider from '@/Providers/SingleSignOnFormModeContextProvider';
 import IdentifierSignInForm from '@/components/IdentifierSignInForm';
 import PasswordSignInForm from '@/components/PasswordSignInForm';
+import TextLink from '@/components/TextLink';
+import TermsAndPrivacyLinks from '@/containers/TermsAndPrivacyLinks';
+import useTerms from '@/hooks/use-terms';
 import { identifierInputDescriptionMap } from '@/utils/form';
 
+import styles from './index.module.scss';
 import useIdentifierSignInMethods from './use-identifier-sign-in-methods';
+
+const footerTermsDisplayPolicies = new Set([
+  AgreeToTermsPolicy.Automatic,
+  AgreeToTermsPolicy.ManualRegistrationOnly,
+]);
 
 /**
  * Identifier sign-in page
@@ -24,8 +33,12 @@ import useIdentifierSignInMethods from './use-identifier-sign-in-methods';
  */
 const IdentifierSignIn = () => {
   const { t } = useTranslation();
+  const { agreeToTermsPolicy } = useTerms();
 
   const { signInMethods, isPasswordOnly } = useIdentifierSignInMethods();
+  const shouldDisplayFooterTerms = Boolean(
+    agreeToTermsPolicy && footerTermsDisplayPolicies.has(agreeToTermsPolicy)
+  );
 
   // Fallback to sign-in page if no sign-in methods are available
   if (signInMethods.length === 0) {
@@ -33,20 +46,11 @@ const IdentifierSignIn = () => {
   }
 
   return (
-    <FocusedAuthPageLayout
-      pageMeta={{ titleKey: 'description.sign_in' }}
-      title="description.sign_in"
-      description={t('description.identifier_sign_in_description', {
+    <LandingPageLayout
+      title="description.sign_in_to_your_account"
+      subTitle={t('description.identifier_sign_in_description', {
         types: signInMethods.map(({ identifier }) => t(identifierInputDescriptionMap[identifier])),
       })}
-      footerTermsDisplayPolicies={[
-        AgreeToTermsPolicy.Automatic,
-        AgreeToTermsPolicy.ManualRegistrationOnly,
-      ]}
-      authOptionsLink={{
-        to: `/${experience.routes.signIn}`,
-        text: 'description.all_sign_in_options',
-      }}
     >
       <SingleSignOnFormModeContextProvider>
         {isPasswordOnly ? (
@@ -55,7 +59,13 @@ const IdentifierSignIn = () => {
           <IdentifierSignInForm signInMethods={signInMethods} />
         )}
       </SingleSignOnFormModeContextProvider>
-    </FocusedAuthPageLayout>
+      {shouldDisplayFooterTerms && <TermsAndPrivacyLinks className={styles.terms} />}
+      <TextLink
+        className={styles.optionsLink}
+        to={`/${experience.routes.signIn}`}
+        text="description.all_sign_in_options"
+      />
+    </LandingPageLayout>
   );
 };
 
