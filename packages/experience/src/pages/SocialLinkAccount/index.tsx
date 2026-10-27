@@ -56,7 +56,11 @@ const SocialLinkAccount = () => {
   const { relatedUser } = state;
 
   return (
-    <SecondaryPageLayout title={getPageTitle(signUpMethods)}>
+    <SecondaryPageLayout
+      isHeaderCentered
+      title={getPageTitle(signUpMethods)}
+      description="description.social_bind_with_existing"
+    >
       <SocialLinkAccountContainer
         connectorId={connectorId}
         verificationId={verificationId}

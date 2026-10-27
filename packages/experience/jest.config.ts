@@ -22,7 +22,7 @@ const config: Config.InitialOptions = {
       },
     ],
     '\\.(svg)$': 'jest-transformer-svg',
-    '\\.(png|mp4)$': 'jest-transform-stub',
+    '\\.(gif|png|mp4)$': 'jest-transform-stub',
   },
   moduleNameMapper: {
     // Ensure CSS modules are stubbed before applying path aliases.

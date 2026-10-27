@@ -2,9 +2,11 @@ import type { MissingProfile } from '@logto/schemas';
 import { SignInIdentifier } from '@logto/schemas';
 import type { TFuncKey } from 'i18next';
 import { useContext } from 'react';
+import { useTranslation } from 'react-i18next';
 
 import SecondaryPageLayout from '@/Layout/SecondaryPageLayout';
 import UserInteractionContext from '@/Providers/UserInteractionContextProvider/UserInteractionContext';
+import SubmitArrowButtonIcon from '@/components/Button/SubmitArrowButtonIcon';
 import useSendVerificationCode from '@/hooks/use-send-verification-code';
 import type { ContinueFlowInteractionEvent, VerificationCodeIdentifier } from '@/types';
 import { UserFlow } from '@/types';
@@ -63,6 +65,7 @@ const formSettings: Record<
 };
 
 const SetEmailOrPhone = ({ missingProfile, interactionEvent }: Props) => {
+  const { t } = useTranslation();
   const { onSubmit, errorMessage, clearErrorMessage } = useSendVerificationCode(UserFlow.Continue);
   const { setIdentifierInputValue } = useContext(UserInteractionContext);
 
@@ -78,9 +81,20 @@ const SetEmailOrPhone = ({ missingProfile, interactionEvent }: Props) => {
   };
 
   return (
-    <SecondaryPageLayout {...pageContent[missingProfile]}>
+    <SecondaryPageLayout isHeaderCentered {...pageContent[missingProfile]}>
       <IdentifierProfileForm
         autoFocus
+        submitIcon={<SubmitArrowButtonIcon />}
+        {...(missingProfile === 'email'
+          ? {
+              appearance: 'plain' as const,
+              label: t('input.email'),
+              placeholder: t('input.enter_email'),
+            }
+          : {})}
+        {...(missingProfile === 'phone'
+          ? { appearance: 'plain' as const, label: t('input.phone_number') }
+          : {})}
         errorMessage={errorMessage}
         clearErrorMessage={clearErrorMessage}
         {...formSettings[missingProfile]}

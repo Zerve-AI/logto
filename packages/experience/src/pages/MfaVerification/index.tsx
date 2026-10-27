@@ -13,7 +13,11 @@ const MfaVerification = () => {
   }
 
   return (
-    <SecondaryPageLayout title="mfa.verify_mfa_factors" description="mfa.verify_mfa_description">
+    <SecondaryPageLayout
+      isHeaderCentered
+      title="mfa.verify_mfa_factors"
+      description="mfa.verify_mfa_description"
+    >
       <MfaFactorList flow={UserMfaFlow.MfaVerification} flowState={flowState} />
     </SecondaryPageLayout>
   );

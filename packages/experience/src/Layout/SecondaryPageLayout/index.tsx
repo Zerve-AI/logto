@@ -22,6 +22,7 @@ type Props = {
   readonly isNavBarHidden?: boolean;
   /** Centers the title and description, and tightens the back control, inside the auth shell. */
   readonly isHeaderCentered?: boolean;
+  readonly onBack?: () => void;
   readonly children: React.ReactNode;
 };
 
@@ -34,6 +35,7 @@ const SecondaryPageLayout = ({
   onSkip,
   isNavBarHidden,
   isHeaderCentered = false,
+  onBack,
   children,
 }: Props) => {
   const { isMobile } = usePlatform();
@@ -41,12 +43,17 @@ const SecondaryPageLayout = ({
 
   return (
     <div className={classNames(styles.wrapper, isHeaderCentered && styles.centered)}>
-      <PageMeta titleKey={title} />
+      <PageMeta titleKey={title} titleKeyInterpolation={titleProps} />
       <NavBar
         isCompact={isHeaderCentered}
         isHidden={isNavBarHidden}
         onSkip={onSkip}
         onBack={() => {
+          if (onBack) {
+            onBack();
+            return;
+          }
+
           navigate(-1);
         }}
       />

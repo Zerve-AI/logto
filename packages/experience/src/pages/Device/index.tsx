@@ -5,6 +5,7 @@ import { useTranslation } from 'react-i18next';
 import { useNavigate, useSearchParams } from 'react-router-dom';
 
 import LandingPageLayout from '@/Layout/LandingPageLayout';
+import SubmitArrowButtonIcon from '@/components/Button/SubmitArrowButtonIcon';
 import { InputField } from '@/components/InputFields';
 import useToast from '@/hooks/use-toast';
 import Button from '@/shared/components/Button';
@@ -159,32 +160,38 @@ const Device = () => {
   };
 
   return (
-    <LandingPageLayout title="description.device_activation">
-      <div className={styles.content}>
-        <div className={styles.description}>
-          {t(
-            errorMessage
-              ? 'description.device_activation_error_description'
-              : 'description.device_activation_description'
-          )}
-        </div>
-        <form onSubmit={handleContinue}>
-          <InputField
-            autoFocus
-            className={styles.inputField}
-            errorMessage={errorMessage}
-            isDanger={Boolean(errorMessage)}
-            label={t('input.code')}
-            name="device_user_code"
-            value={userCode}
-            onChange={(event) => {
-              setClientErrorKey(undefined);
-              setUserCode(normalizeDisplayValue(event.currentTarget.value));
-            }}
-          />
-          <Button htmlType="submit" isLoading={isSubmitting} title="action.continue" />
-        </form>
-      </div>
+    <LandingPageLayout
+      title="description.device_activation"
+      subTitle={t(
+        errorMessage
+          ? 'description.device_activation_error_description'
+          : 'description.device_activation_description'
+      )}
+    >
+      <form className={styles.form} onSubmit={handleContinue}>
+        <InputField
+          autoFocus
+          appearance="plain"
+          errorMessage={errorMessage}
+          isDanger={Boolean(errorMessage)}
+          label={t('input.code')}
+          name="device_user_code"
+          placeholder={t('input.code')}
+          value={userCode}
+          onChange={(event) => {
+            setClientErrorKey(undefined);
+            setUserCode(normalizeDisplayValue(event.currentTarget.value));
+          }}
+        />
+        <Button
+          className={styles.submit}
+          htmlType="submit"
+          icon={<SubmitArrowButtonIcon />}
+          iconPlacement="edge"
+          isLoading={isSubmitting}
+          title="action.continue"
+        />
+      </form>
     </LandingPageLayout>
   );
 };

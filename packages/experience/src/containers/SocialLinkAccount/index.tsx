@@ -2,8 +2,8 @@ import { SignInIdentifier, SignInMode } from '@logto/schemas';
 import classNames from 'classnames';
 import type { TFuncKey } from 'i18next';
 import { useState } from 'react';
-import { useTranslation } from 'react-i18next';
 
+import SubmitArrowButtonIcon from '@/components/Button/SubmitArrowButtonIcon';
 import TextLink from '@/components/TextLink';
 import { useSieMethods } from '@/hooks/use-sie';
 import useSocialRegister from '@/hooks/use-social-register';
@@ -42,7 +42,6 @@ const getCreateAccountActionText = (signUpMethods: string[]): TFuncKey => {
 };
 
 const SocialLinkAccount = ({ connectorId, verificationId, className, relatedUser }: Props) => {
-  const { t } = useTranslation();
   const { signUpMethods, signInMode } = useSieMethods();
 
   const bindSocialRelatedUser = useBindSocialRelatedUser();
@@ -56,10 +55,10 @@ const SocialLinkAccount = ({ connectorId, verificationId, className, relatedUser
 
   return (
     <div className={classNames(styles.container, className)}>
-      <div className={styles.desc}>{t('description.social_bind_with_existing')}</div>
-
       <Button
         title="action.bind"
+        icon={<SubmitArrowButtonIcon />}
+        iconPlacement="edge"
         i18nProps={{ address: type === 'email' ? maskEmail(value) : maskPhone(value) }}
         isLoading={isBindingUser}
         onClick={async () => {

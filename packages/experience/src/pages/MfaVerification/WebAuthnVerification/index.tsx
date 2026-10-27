@@ -4,8 +4,8 @@ import { useLocation } from 'react-router-dom';
 import { validate } from 'superstruct';
 
 import SecondaryPageLayout from '@/Layout/SecondaryPageLayout';
-import SectionLayout from '@/Layout/SectionLayout';
 import UserInteractionContext from '@/Providers/UserInteractionContextProvider/UserInteractionContext';
+import SubmitArrowButtonIcon from '@/components/Button/SubmitArrowButtonIcon';
 import SwitchMfaFactorsLink from '@/components/SwitchMfaFactorsLink';
 import useWebAuthnOperation from '@/hooks/use-webauthn-operation';
 import ErrorPage from '@/pages/ErrorPage';
@@ -36,14 +36,16 @@ const WebAuthnVerification = () => {
   }
 
   return (
-    <SecondaryPageLayout title="mfa.verify_mfa_factors">
-      <SectionLayout
-        title="mfa.verify_via_passkey"
-        description="mfa.verify_via_passkey_description"
-      >
+    <SecondaryPageLayout
+      isHeaderCentered
+      title="mfa.verify_via_passkey"
+      description="mfa.verify_via_passkey_description"
+    >
+      <div className={styles.content}>
         <Button
           title="action.verify_via_passkey"
-          className={styles.verifyButton}
+          icon={<SubmitArrowButtonIcon />}
+          iconPlacement="edge"
           isLoading={isVerifying}
           onClick={async () => {
             setIsVerifying(true);
@@ -51,11 +53,12 @@ const WebAuthnVerification = () => {
             setIsVerifying(false);
           }}
         />
-      </SectionLayout>
-      <SwitchMfaFactorsLink
-        flow={UserMfaFlow.MfaVerification}
-        flowState={{ availableFactors, skippable }}
-      />
+        <SwitchMfaFactorsLink
+          flow={UserMfaFlow.MfaVerification}
+          flowState={{ availableFactors, skippable }}
+          className={styles.switchLink}
+        />
+      </div>
     </SecondaryPageLayout>
   );
 };

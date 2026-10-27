@@ -1,5 +1,20 @@
 @use '@/shared/scss/underscore' as _;
 
-.verifyButton {
-  margin: _.unit(4) 0;
+.switchLink {
+  margin-top: _.unit(6);
+}
+
+:global(body.desktop .zerveAuthShell),
+:global(body.mobile .zerveAuthShell) {
+  .content {
+    display: flex;
+    flex-direction: column;
+    align-items: stretch;
+  }
+
+  .switchLink {
+    align-self: center;
+    justify-content: center;
+    margin-top: 20px;
+  }
 }

@@ -190,8 +190,13 @@
     }
   }
 
+  /* Error state keeps the same border. The message under the field carries the error. */
   .container.plain.danger .inputField {
-    border-color: var(--color-danger-default);
+    border-color: #2e2e33;
+
+    &:focus-within {
+      border-color: var(--zerve-input-focus-border-color);
+    }
   }
 }
 

@@ -158,6 +158,10 @@
   background-image: url('../../assets/auth/sign-up-background.png');
 }
 
+.ssoStage {
+  background-image: url('../../assets/auth/sso-background.png');
+}
+
 :global(body.mobile) {
   .container {
     padding-bottom: env(safe-area-inset-bottom);

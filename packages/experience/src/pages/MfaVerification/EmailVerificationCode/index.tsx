@@ -2,7 +2,6 @@ import { MfaFactor, SignInIdentifier } from '@logto/schemas';
 import { useContext } from 'react';
 
 import SecondaryPageLayout from '@/Layout/SecondaryPageLayout';
-import SectionLayout from '@/Layout/SectionLayout';
 import UserInteractionContext from '@/Providers/UserInteractionContextProvider/UserInteractionContext';
 import SwitchMfaFactorsLink from '@/components/SwitchMfaFactorsLink';
 import MfaCodeVerification from '@/containers/MfaCodeVerification';
@@ -30,24 +29,23 @@ const EmailVerificationCode = () => {
   const maskedEmail = flowState.maskedIdentifiers?.[MfaFactor.EmailVerificationCode];
 
   return (
-    <SecondaryPageLayout title="mfa.verify_mfa_factors">
-      <SectionLayout
-        title="mfa.enter_email_verification_code"
-        description="mfa.enter_email_verification_code_description"
-        descriptionProps={{ identifier: maskedEmail }}
-      >
-        {verificationId ? (
-          <MfaCodeVerification
-            identifierType={SignInIdentifier.Email}
-            verificationId={verificationId}
-          />
-        ) : null}
-      </SectionLayout>
-      <SwitchMfaFactorsLink
-        flow={UserMfaFlow.MfaVerification}
-        flowState={flowState}
-        className={styles.switchFactorLink}
-      />
+    <SecondaryPageLayout
+      isHeaderCentered
+      title="mfa.enter_email_verification_code"
+      description="mfa.enter_email_verification_code_description"
+      descriptionProps={{ identifier: maskedEmail }}
+    >
+      <div className={styles.content}>
+        <MfaCodeVerification
+          identifierType={SignInIdentifier.Email}
+          verificationId={verificationId}
+        />
+        <SwitchMfaFactorsLink
+          flow={UserMfaFlow.MfaVerification}
+          flowState={flowState}
+          className={styles.switchFactorLink}
+        />
+      </div>
     </SecondaryPageLayout>
   );
 };

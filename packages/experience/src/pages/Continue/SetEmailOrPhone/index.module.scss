@@ -4,3 +4,14 @@
   margin-top: _.unit(6);
   @include _.text-hint;
 }
+
+:global(body.desktop .zerveAuthShell),
+:global(body.mobile .zerveAuthShell) {
+  .description {
+    margin-top: 20px;
+    color: #a1a1aa;
+    font-size: 14px;
+    font-weight: 500;
+    line-height: 20px;
+  }
+}

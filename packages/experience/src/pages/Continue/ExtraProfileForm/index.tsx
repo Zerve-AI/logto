@@ -4,6 +4,7 @@ import { useState } from 'react';
 import { Controller, FormProvider, useForm } from 'react-hook-form';
 import * as s from 'superstruct';
 
+import SubmitArrowButtonIcon from '@/components/Button/SubmitArrowButtonIcon';
 import AvatarUploadField from '@/components/InputFields/AvatarUploadField';
 import PrimitiveProfileInputField from '@/components/InputFields/PrimitiveProfileInputField';
 import Button from '@/shared/components/Button';
@@ -105,6 +106,8 @@ const ExtraProfileForm = ({ customProfileFields, defaultValues, onSubmit }: Prop
         <Button
           title="action.continue"
           htmlType="submit"
+          icon={<SubmitArrowButtonIcon />}
+          iconPlacement="edge"
           isLoading={isSubmitting}
           isDisabled={isAvatarUploading}
         />

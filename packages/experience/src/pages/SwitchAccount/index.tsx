@@ -1,10 +1,10 @@
 import { experience, type ConsentInfoResponse } from '@logto/schemas';
-import { useContext, useEffect, useState } from 'react';
+import { useEffect, useState } from 'react';
 import { useSearchParams } from 'react-router-dom';
 
-import StaticPageLayout from '@/Layout/StaticPageLayout';
-import PageContext from '@/Providers/PageContextProvider/PageContext';
+import SecondaryPageLayout from '@/Layout/SecondaryPageLayout';
 import { getConsentInfo } from '@/apis/consent';
+import SubmitArrowButtonIcon from '@/components/Button/SubmitArrowButtonIcon';
 import TextLink from '@/components/TextLink';
 import useApi from '@/hooks/use-api';
 import useErrorHandler from '@/hooks/use-error-handler';
@@ -13,10 +13,7 @@ import UserProfile from '@/pages/Consent/UserProfile';
 import { getRedirectUriOrigin } from '@/pages/Consent/util';
 import ErrorPage from '@/pages/ErrorPage';
 import Button from '@/shared/components/Button';
-import DynamicT from '@/shared/components/DynamicT';
 import LoadingLayer from '@/shared/components/LoadingLayer';
-import PageMeta from '@/shared/components/PageMeta';
-import { getBrandingLogoUrl } from '@/shared/utils/logo';
 
 import styles from './index.module.scss';
 
@@ -25,7 +22,6 @@ import styles from './index.module.scss';
  * is trying to sign-in with another account (e.g., using a magic link).
  */
 const SwitchAccount = () => {
-  const { experienceSettings, theme } = useContext(PageContext);
   const navigate = useNavigateWithPreservedSearchParams();
   const handleError = useErrorHandler();
 
@@ -51,40 +47,29 @@ const SwitchAccount = () => {
     return <ErrorPage title="error.unknown" message="error.unknown" />;
   }
 
-  if (!experienceSettings || !consentData) {
+  if (!consentData) {
     return <LoadingLayer />;
   }
 
-  const {
-    color: { isDarkModeEnabled },
-    branding,
-  } = experienceSettings;
-  const logoUrl = getBrandingLogoUrl({ theme, branding, isDarkModeEnabled });
   const redirectUriOrigin = consentData.redirectUri
     ? getRedirectUriOrigin(consentData.redirectUri)
     : undefined;
 
   return (
-    <StaticPageLayout>
-      <PageMeta titleKey="description.switch_account" />
-      <div className={styles.container}>
-        {logoUrl && <img className={styles.logo} src={logoUrl} alt="app logo" />}
-        <div className={styles.title}>
-          <DynamicT
-            forKey="description.switch_account_title"
-            interpolation={{ account: consentData.user.primaryEmail }}
-          />
-        </div>
+    <SecondaryPageLayout
+      isHeaderCentered
+      isNavBarHidden
+      title="description.switch_account_title"
+      titleProps={{ account: consentData.user.primaryEmail }}
+      description="description.switch_account_description"
+    >
+      <div className={styles.content}>
         <UserProfile user={consentData.user} className={styles.userProfile} />
-        <div className={styles.message}>
-          <DynamicT forKey="description.switch_account_description" />
-        </div>
         <Button
-          className={styles.button}
-          type="primary"
-          size="large"
           title="action.continue_as"
           i18nProps={{ name: loginHint }}
+          icon={<SubmitArrowButtonIcon />}
+          iconPlacement="edge"
           onClick={() => {
             navigate(
               { pathname: `/${experience.routes.oneTimeToken}`, search: `?${params.toString()}` },
@@ -92,18 +77,17 @@ const SwitchAccount = () => {
             );
           }}
         />
-        <div className={styles.linkButton}>
-          <TextLink
-            text="action.back_to_current_account"
-            onClick={() => {
-              if (redirectUriOrigin) {
-                window.location.assign(redirectUriOrigin);
-              }
-            }}
-          />
-        </div>
+        <TextLink
+          className={styles.linkButton}
+          text="action.back_to_current_account"
+          onClick={() => {
+            if (redirectUriOrigin) {
+              window.location.assign(redirectUriOrigin);
+            }
+          }}
+        />
       </div>
-    </StaticPageLayout>
+    </SecondaryPageLayout>
   );
 };
 

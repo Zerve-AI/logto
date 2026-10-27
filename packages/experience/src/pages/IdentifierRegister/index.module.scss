@@ -1,0 +1,17 @@
+:global(body.desktop .zerveAuthShell),
+:global(body.mobile .zerveAuthShell) {
+  .terms {
+    margin-top: 20px;
+    text-align: center;
+    color: var(--color-neutral-50);
+    font-size: 14px;
+    font-weight: 500;
+    line-height: 20px;
+  }
+
+  .optionsLink {
+    display: block;
+    margin-top: 20px;
+    text-align: center;
+  }
+}

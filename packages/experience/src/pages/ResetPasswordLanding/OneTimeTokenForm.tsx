@@ -11,6 +11,7 @@ import { useTranslation } from 'react-i18next';
 
 import UserInteractionContext from '@/Providers/UserInteractionContextProvider/UserInteractionContext';
 import { identifyForgotPasswordWithOneTimeToken } from '@/apis/experience';
+import SubmitArrowButtonIcon from '@/components/Button/SubmitArrowButtonIcon';
 import { SmartInputField } from '@/components/InputFields';
 import useApi from '@/hooks/use-api';
 import useNavigateWithPreservedSearchParams from '@/hooks/use-navigate-with-preserved-search-params';
@@ -179,6 +180,9 @@ const OneTimeTokenForm = ({ className, token, loginHint = '', onError }: Props) 
             autoFocus
             className={styles.inputField}
             {...field}
+            appearance="plain"
+            label={t('input.email')}
+            placeholder={t('input.enter_email')}
             defaultValue={defaultValues?.identifier?.value}
             disabled={isVerificationPending}
             isDanger={!!errors.identifier}
@@ -188,7 +192,14 @@ const OneTimeTokenForm = ({ className, token, loginHint = '', onError }: Props) 
         )}
       />
 
-      <Button title="action.continue" htmlType="submit" isLoading={isVerificationPending} />
+      <Button
+        className={styles.submit}
+        title="action.continue"
+        htmlType="submit"
+        icon={<SubmitArrowButtonIcon />}
+        iconPlacement="edge"
+        isLoading={isVerificationPending}
+      />
 
       <input hidden disabled={isVerificationPending} type="submit" />
     </form>
