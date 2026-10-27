@@ -43,7 +43,7 @@ const SecondaryPageLayout = ({
 
   return (
     <div className={classNames(styles.wrapper, isHeaderCentered && styles.centered)}>
-      <PageMeta titleKey={title} />
+      <PageMeta titleKey={title} titleKeyInterpolation={titleProps} />
       <NavBar
         isCompact={isHeaderCentered}
         isHidden={isNavBarHidden}
