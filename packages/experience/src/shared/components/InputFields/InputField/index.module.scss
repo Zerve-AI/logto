@@ -140,7 +140,7 @@
   .inputField {
     height: 48px;
     border: _.border(var(--color-line-border));
-    border-radius: 10px;
+    border-radius: var(--radius);
     background: transparent;
 
     input::placeholder {
@@ -174,7 +174,7 @@
 
   .container.plain .inputField {
     height: 40px;
-    border-radius: 8px;
+    border-radius: var(--radius);
     border-color: #2e2e33;
 
     input {
